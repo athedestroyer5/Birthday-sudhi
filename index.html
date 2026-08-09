@@ -3,240 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Friend ✨</title>
+    <title>For My Pagli 🎀</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --purple: #4b0082;
             --cherry: #d2143a;
+            --pink: #ff85a2;
+            --vanilla: #fff9e6;
             --white: #ffffff;
             --black: #000000;
         }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-            background-color: var(--black);
-        }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
 
-        /* --- Animations --- */
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
+        .stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; transition: 0.8s ease; }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
+        /* --- STAGE 1: BULB --- */
+        #stage-bulb { display: flex; background: var(--black); }
+        .bulb { font-size: 80px; cursor: pointer; animation: floating 3s infinite; filter: drop-shadow(0 0 15px var(--purple)); }
 
-        /* --- STAGE 1: BLACK ROOM --- */
-        .stage {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            transition: opacity 0.8s ease;
-        }
+        /* --- STAGE 2: QUIZ --- */
+        #stage-quiz { background: linear-gradient(135deg, #1a001a, var(--cherry)); }
+        .opt-btn { background: rgba(255,255,255,0.15); border: 2px solid white; color: white; padding: 15px; margin: 10px; border-radius: 15px; cursor: pointer; font-weight: 600; width: 140px; transition: 0.3s; animation: floating 4s infinite; }
+        .opt-btn:hover { background: white; color: var(--cherry); }
 
-        #stage-bulb { z-index: 100; }
+        /* --- STAGE 3: LOADING --- */
+        #stage-loading { background: #000; }
+        .bar-bg { width: 250px; height: 12px; background: #222; border-radius: 10px; overflow: hidden; margin-top: 20px; }
+        .bar-fill { height: 100%; width: 0%; background: var(--cherry); box-shadow: 0 0 15px var(--cherry); }
+
+        /* --- STAGE 4: RESPONSE SCREEN --- */
+        #stage-response { background: var(--black); }
+        .msg-title { font-family: 'Dancing Script'; font-size: 3rem; color: var(--pink); margin-bottom: 20px; }
+
+        /* --- STAGE 5: THE CAKE --- */
+        #stage-cake { background: var(--vanilla); color: #333; }
+        .cake-container { position: relative; width: 220px; height: 130px; background: #fdf0d5; border-radius: 20px 20px 5px 5px; border-bottom: 15px solid #ead7c3; margin-top: 60px; cursor: pointer; box-shadow: 0 10px 0 #d9bf9e; }
+        .candle { position: absolute; width: 12px; height: 45px; background: var(--pink); top: -45px; border-radius: 5px 5px 0 0; transition: 0.5s; cursor: pointer; }
+        .flame { position: absolute; top: -18px; left: -2px; width: 16px; height: 16px; background: #ffca3a; border-radius: 50% 50% 20% 50%; transform: rotate(-45deg); animation: flicker 0.1s infinite; box-shadow: 0 0 10px orange; }
         
-        .msg-pop {
-            color: #9370db;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            font-family: 'Dancing Script', cursive;
-            animation: pulse 2s infinite;
-        }
+        .dancing-cat { position: absolute; right: 20px; bottom: 40px; width: 120px; z-index: 5; }
+        .talking-cat { width: 100px; margin-bottom: 10px; }
 
-        .bulb {
-            font-size: 80px;
-            cursor: pointer;
-            animation: floating 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px var(--purple));
-        }
+        /* --- WISH MODAL --- */
+        #wish-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
+        #wish-modal input { padding: 15px; border-radius: 30px; border: 2px solid var(--pink); width: 280px; font-size: 1rem; margin-bottom: 15px; outline: none; text-align: center; }
 
-        /* --- STAGE 2: QUIZ (Purple/Cherry) --- */
-        #stage-quiz {
-            display: none;
-            background: linear-gradient(135deg, #1a001a 0%, var(--purple) 50%, var(--cherry) 100%);
-            opacity: 0;
-        }
+        /* --- UNIVERSE ANIMATION --- */
+        #universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; display: none; z-index: 2000; }
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.6; animation: twinkle 2s infinite; }
+        .walking-man { position: absolute; bottom: 20%; left: -10%; font-size: 50px; transition: 4s cubic-bezier(0.45, 0.05, 0.55, 0.95); z-index: 2002; }
+        .gift-box { position: absolute; bottom: 21%; left: 50%; transform: translateX(-50%); font-size: 40px; display: none; z-index: 2001; transition: 4s; }
 
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: center;
-            color: white;
-            width: 85%;
-            max-width: 400px;
-        }
+        /* --- UI ELEMENTS --- */
+        #error-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(210, 20, 58, 0.9); padding: 15px 30px; border-radius: 50px; display: none; z-index: 1000; font-weight: bold; box-shadow: 0 0 20px rgba(0,0,0,0.5); border: 2px solid white; }
+        .action-btn { padding: 12px 30px; background: var(--cherry); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .action-btn:hover { transform: scale(1.1); background: var(--pink); }
 
-        .opt-btn {
-            background: rgba(210, 20, 58, 0.2);
-            border: 2px solid var(--cherry);
-            color: white;
-            padding: 12px;
-            margin: 8px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            animation: floating 4s ease-in-out infinite;
-        }
-
-        /* --- STAGE 3: LOADING (Black) --- */
-        #stage-loading {
-            display: none;
-            background: var(--black);
-            opacity: 0;
-        }
-
-        .loader-container {
-            width: 250px;
-            text-align: center;
-        }
-
-        .bar-bg {
-            width: 100%;
-            height: 12px;
-            background: #222;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-
-        .bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--cherry);
-            box-shadow: 0 0 15px var(--cherry);
-        }
-
-        /* --- ERROR MESSAGE --- */
-        #error-msg {
-            position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--cherry);
-            color: white; padding: 20px 40px;
-            border-radius: 50px; font-weight: bold;
-            display: none; z-index: 1000;
-        }
+        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes flicker { 0% { opacity: 0.9; transform: rotate(-45deg) scale(1); } 50% { opacity: 1; transform: rotate(-45deg) scale(1.2); } }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
     </style>
 </head>
 <body>
 
-    <div id="error-msg">itna bhi nahi pata 😂</div>
+    <div id="error-toast">itna bhi nahi pata 😂</div>
 
-    <!-- Stage 1: The Bulb -->
+    <!-- Stage 1 -->
     <div id="stage-bulb" class="stage">
-        <div class="msg-pop">Want to light up?</div>
-        <div class="bulb" onclick="toQuiz()">💡</div>
+        <p style="font-family: 'Dancing Script'; font-size: 2.2rem; color: #a29bfe;">Want to light up?</p>
+        <div class="bulb" onclick="playMagic(); nextStage('stage-quiz')">💡</div>
     </div>
 
-    <!-- Stage 2: The Question -->
+    <!-- Stage 2 -->
     <div id="stage-quiz" class="stage">
-        <div class="card">
-            <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">What I call you? 😁</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr;">
-                <button class="opt-btn" onclick="wrong()">Sudhi</button>
-                <button class="opt-btn" onclick="wrong()">Sudhiksha</button>
-                <button class="opt-btn" style="animation-delay: 0.5s;" onclick="toLoading()">Pagli 🎀</button>
-                <button class="opt-btn" style="animation-delay: 1s;" onclick="wrong()">Devi ji 🙏</button>
-            </div>
+        <h2 style="font-family: 'Dancing Script'; font-size: 2.8rem; margin-bottom: 30px;">What I call you? 😁</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button class="opt-btn" onclick="showError()">Sudhi</button>
+            <button class="opt-btn" onclick="showError()">Sudhiksha</button>
+            <button class="opt-btn" style="animation-delay: 0.5s" onclick="playMagic(); nextStage('stage-loading')">Pagli 🎀</button>
+            <button class="opt-btn" onclick="showError()">Devi ji 🙏</button>
         </div>
     </div>
 
-    <!-- Stage 3: Loading Screen -->
+    <!-- Stage 3: Loading -->
     <div id="stage-loading" class="stage">
-        <div class="loader-container" id="loading-box">
-            <h2 style="color: white; font-family: 'Dancing Script';">Wait a minute...</h2>
-            <div class="bar-bg">
-                <div class="bar-fill" id="bar"></div>
-            </div>
-        </div>
-
-        <div id="excite-question" style="display: none; text-align: center; color: white;">
-            <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">Are u exited?</h2>
-            <button class="opt-btn" style="width: 100px;" onclick="exciteResponse('yes')">Yes</button>
-            <button class="opt-btn" style="width: 100px;" onclick="exciteResponse('no')">No</button>
-            <p id="excite-msg" style="margin-top: 20px; font-weight: bold; color: #ff85a2;"></p>
+        <h2 style="font-family: 'Dancing Script'; font-size: 2rem;">Wait a minute...</h2>
+        <div class="bar-bg"><div id="bar" class="bar-fill"></div></div>
+        <div id="excite-box" style="display: none; margin-top: 30px;">
+            <p style="font-size: 1.5rem;">Are u excited?</p>
+            <button class="opt-btn" style="animation: none;" onclick="handleExcite('yes')">Yes</button>
+            <button class="opt-btn" style="animation: none;" onclick="handleExcite('no')">No</button>
         </div>
     </div>
 
-    <!-- Sounds -->
+    <!-- Stage 4: Separate Response -->
+    <div id="stage-response" class="stage">
+        <h1 id="response-text" class="msg-title"></h1>
+        <button class="action-btn" onclick="nextStage('stage-cake')">Let's go! ✨</button>
+    </div>
+
+    <!-- Stage 5: THE CAKE -->
+    <div id="stage-cake" class="stage">
+        <img src="https://media.tenor.com/J8Y8V0p16p0AAAAi/happy-cat-meme-happy-cat.gif" class="dancing-cat">
+        <div style="z-index: 10;">
+            <img src="https://media.tenor.com/7p40W19mZRAAAAAi/cat-meme.gif" class="talking-cat">
+            <p style="font-weight: bold; color: #d81b60; margin: 0;">Blow the candles and cut the cake!</p>
+            
+            <div class="cake-container" id="main-cake" onclick="eatCake()">
+                <div class="candle" id="c1" style="left: 45px;" onclick="blow(1, event)"><div class="flame"></div></div>
+                <div class="candle" id="c2" style="left: 105px;" onclick="blow(2, event)"><div class="flame"></div></div>
+                <div class="candle" id="c3" style="left: 165px;" onclick="blow(3, event)"><div class="flame"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wish Modal -->
+    <div id="wish-modal">
+        <img src="https://media.tenor.com/Zifm0_9p6Y8AAAAi/cat-meme.gif" width="160">
+        <h2 style="color: white; font-family: 'Dancing Script'; font-size: 2.2rem; margin-top: 15px;">First type your wish 😉</h2>
+        <input type="text" id="wish-input" placeholder="Type your wish here..." required>
+        <button class="action-btn" onclick="submitWish()">Send Wish to Stars ⭐</button>
+    </div>
+
+    <!-- Stage 6: Universe -->
+    <div id="universe">
+        <div id="stars-container"></div>
+        <div class="walking-man" id="man">🚶‍♂️</div>
+        <div class="gift-box" id="box">🎁</div>
+        <h2 id="uni-msg" style="position: absolute; top: 40%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2.5rem; color: #fff; display: none;">Your wish is traveling through the universe... ⭐</h2>
+    </div>
+
+    <!-- Audio Effects -->
+    <audio id="eat-sound" src="https://www.myinstants.com/media/sounds/crunch.mp3"></audio>
     <audio id="magic-sound" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
     <audio id="buzzer-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
     <script>
-        function playMagic() {
-            document.getElementById('magic-sound').play();
+        let candlesBlown = 0;
+        const magicSound = document.getElementById('magic-sound');
+        const buzzerSound = document.getElementById('buzzer-sound');
+
+        function playMagic() { magicSound.play().catch(()=>{}); }
+
+        function nextStage(id) {
+            document.querySelectorAll('.stage').forEach(s => { s.style.display = 'none'; s.style.opacity = '0'; });
+            const target = document.getElementById(id);
+            target.style.display = 'flex';
+            setTimeout(() => target.style.opacity = '1', 50);
+            if(id === 'stage-loading') startLoading();
         }
 
-        function toQuiz() {
-            playMagic();
-            document.getElementById('stage-bulb').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('stage-bulb').style.display = 'none';
-                const quiz = document.getElementById('stage-quiz');
-                quiz.style.display = 'flex';
-                setTimeout(() => quiz.style.opacity = '1', 50);
-            }, 800);
+        function showError() {
+            buzzerSound.play().catch(()=>{});
+            const toast = document.getElementById('error-toast');
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 1800);
         }
 
-        function wrong() {
-            document.getElementById('buzzer-sound').play();
-            const err = document.getElementById('error-msg');
-            err.style.display = 'block';
-            setTimeout(() => err.style.display = 'none', 1500);
+        function startLoading() {
+            let w = 0;
+            const bar = document.getElementById('bar');
+            const intrvl = setInterval(() => {
+                if(w >= 100) { clearInterval(intrvl); document.getElementById('excite-box').style.display = 'block'; }
+                else { w++; bar.style.width = w + '%'; }
+            }, 35);
         }
 
-        function toLoading() {
-            playMagic();
-            document.getElementById('stage-quiz').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('stage-quiz').style.display = 'none';
-                const load = document.getElementById('stage-loading');
-                load.style.display = 'flex';
-                setTimeout(() => load.style.opacity = '1', 50);
-                
-                // Start Loading Bar
-                let width = 0;
-                const bar = document.getElementById('bar');
-                const interval = setInterval(() => {
-                    if (width >= 100) {
-                        clearInterval(interval);
-                        showExcite();
-                    } else {
-                        width++;
-                        bar.style.width = width + '%';
-                    }
-                }, 50); // Speed of loading
-            }, 800);
+        function handleExcite(choice) {
+            const resp = document.getElementById('response-text');
+            resp.innerText = choice === 'yes' ? "Okay waiting is over! 😉" : "I know u r excited don't tell lie 😁";
+            nextStage('stage-response');
         }
 
-        function showExcite() {
-            document.getElementById('loading-box').style.display = 'none';
-            document.getElementById('excite-question').style.display = 'block';
-        }
-
-        function exciteResponse(choice) {
-            const msg = document.getElementById('excite-msg');
-            if(choice === 'yes') {
-                msg.innerText = "okay waiting is over! ✨";
-                // Transition to Page 1 could go here next
-            } else {
-                msg.innerText = "i know u r exited don't tell lie 😁";
+        function blow(num, event) {
+            event.stopPropagation();
+            document.getElementById('c' + num).style.opacity = '0';
+            candlesBlown++;
+            if(candlesBlown === 3) {
+                setTimeout(() => { document.getElementById('wish-modal').style.display = 'flex'; }, 600);
             }
+        }
+
+        function submitWish() {
+            const wishVal = document.getElementById('wish-input').value;
+            if(!wishVal) return alert("Write something first!");
+
+            // Sending to your Formspree in background
+            fetch("https://formspree.io/f/xoeaeqjp", {
+                method: "POST",
+                body: JSON.stringify({ wish: wishVal }),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            document.getElementById('wish-modal').style.display = 'none';
+            runUniverseAnimation();
+        }
+
+        function runUniverseAnimation() {
+            const uni = document.getElementById('universe');
+            uni.style.display = 'block';
+            
+            // Generate Stars
+            const container = document.getElementById('stars-container');
+            for(let i=0; i<150; i++) {
+                const s = document.createElement('div');
+                s.className = 'star';
+                const size = Math.random() * 3 + 'px';
+                s.style.width = s.style.height = size;
+                s.style.top = Math.random() * 100 + 'vh';
+                s.style.left = Math.random() * 100 + 'vw';
+                container.appendChild(s);
+            }
+
+            const man = document.getElementById('man');
+            const box = document.getElementById('box');
+
+            setTimeout(() => {
+                man.style.left = "45%";
+                setTimeout(() => {
+                    box.style.display = "block";
+                    man.innerText = "🏃‍♂️";
+                    setTimeout(() => {
+                        man.style.bottom = "80%"; man.style.left = "80%"; man.style.opacity = "0";
+                        box.style.bottom = "81%"; box.style.left = "82%"; box.style.opacity = "0";
+                        document.getElementById('uni-msg').style.display = "block";
+                        setTimeout(() => {
+                            uni.style.opacity = "0";
+                            setTimeout(() => uni.style.display = "none", 1000);
+                        }, 4000);
+                    }, 1500);
+                }, 2500);
+            }, 100);
+        }
+
+        function eatCake() {
+            if(candlesBlown < 3) return;
+            document.getElementById('eat-sound').play();
+            const cake = document.getElementById('main-cake');
+            cake.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                cake.style.transform = "scale(1)";
+                cake.style.opacity = "0.6";
+                alert("Yummm! Happy Birthday Pagli! 🎂🍰✨");
+            }, 100);
         }
     </script>
 </body>
