@@ -3,257 +3,949 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Pagli 🎀</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <title>A Letter For My Pagli 🎀</title>
+    <!-- Google Fonts for Instagram Reel Aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --purple: #2d0036;
-            --cherry: #d2143a;
-            --pink: #ff85a2;
-            --soft-pink: #fff0f3;
-            --vanilla: #fdf5e6;
+            --bg-pink-soft: #FFF5F7;
+            --card-cream: #FFFFFF;
+            --rose-primary: #E88295;
+            --rose-soft: #FFEBF0;
+            --text-dark: #5A434B;
+            --text-muted: #8A6E77;
+            --gold-accent: #E0A96D;
+            --cherry: #D2143A;
+            --glass-border: rgba(232, 130, 149, 0.25);
         }
 
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        .stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: 0.8s ease; }
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background-color: #000000;
+            color: var(--text-dark);
+        }
 
-        /* --- STAGE 1 & 2: INTRO --- */
-        #stage-bulb { display: flex; background: #000; color: white; }
-        #stage-quiz { background: linear-gradient(135deg, var(--purple), var(--cherry)); color: white; }
-        
-        .bulb { font-size: 80px; cursor: pointer; animation: floating 3s infinite; }
-        .opt-btn { background: rgba(255,255,255,0.1); border: 2px solid white; color: white; padding: 12px 25px; margin: 10px; border-radius: 15px; cursor: pointer; transition: 0.3s; }
-        .opt-btn:hover { background: white; color: var(--cherry); }
+        /* --- STAGE SYSTEM --- */
+        .stage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            padding: 20px;
+        }
 
-        /* --- STAGE 4: THE CAKE (Pink & White) --- */
-        #stage-cake { background: var(--soft-pink); color: #444; }
-        
-        .cake-area { position: relative; width: 300px; height: 300px; display: flex; justify-content: center; align-items: flex-end; }
-        
-        /* The Vanilla Cake */
-        .cake { width: 200px; height: 120px; background: #fff9e6; border-radius: 20px 20px 0 0; position: relative; border-bottom: 10px solid #f3e5ab; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .cake::after { content: ''; position: absolute; top: 30px; left: 0; width: 100%; height: 20px; background: rgba(255, 133, 162, 0.3); }
+        .stage.active {
+            display: flex;
+            opacity: 1;
+        }
 
-        .candle { position: absolute; width: 12px; height: 45px; background: var(--pink); top: -45px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
-        .flame { position: absolute; top: -15px; left: 2px; width: 10px; height: 15px; background: #ffa500; border-radius: 50% 50% 20% 50%; transform: rotate(-45deg); animation: flicker 0.1s infinite; }
+        /* --- ANIMATIONS --- */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
 
-        .dancing-cat { position: absolute; left: -100px; bottom: 0; width: 120px; }
-        .talking-cat { position: absolute; right: -100px; bottom: 0; width: 100px; }
+        @keyframes twinklePink {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
 
-        /* --- UNIVERSE --- */
-        #stage-universe { background: #050505; color: white; overflow: hidden; }
-        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle 2s infinite; }
-        
-        .actor { position: absolute; bottom: 10%; left: -50px; font-size: 50px; transition: all 3s ease; z-index: 10; }
-        .big-star { position: absolute; font-size: 100px; bottom: -150px; left: 50%; transform: translateX(-50%); transition: all 3s ease; filter: drop-shadow(0 0 20px gold); }
+        @keyframes flickerFlame {
+            0% { transform: rotate(-45deg) scale(1); opacity: 0.9; }
+            50% { transform: rotate(-45deg) scale(1.15); opacity: 1; }
+            100% { transform: rotate(-45deg) scale(0.95); opacity: 0.85; }
+        }
 
-        /* --- ERROR POPUP --- */
-        #custom-error { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: white; color: var(--cherry); padding: 15px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.5s; z-index: 2000; border: 2px solid var(--pink); }
+        /* --- STAGE 1: DARK ROOM --- */
+        #stage-bulb {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+            color: #ffffff;
+        }
 
-        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes flicker { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
-        @keyframes twinkle { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 1; } }
+        .bulb-icon {
+            font-size: 90px;
+            cursor: pointer;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+            animation: floatSlow 3.5s ease-in-out infinite;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
 
-        /* Wish Form Aesthetic */
-        #wish-box { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); width: 80%; max-width: 320px; }
-        #wish-box input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--pink); margin-top: 15px; outline: none; box-sizing: border-box; }
+        .bulb-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 0 40px var(--rose-primary));
+        }
+
+        .prompt-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #e2d4f7;
+            margin-bottom: 30px;
+        }
+
+        /* --- STAGE 2: PASSWORD SCREEN (PINK & WHITE THEME) --- */
+        #stage-quiz {
+            background: linear-gradient(135deg, #FFF0F3 0%, #FFD6E0 50%, #FFC2D1 100%);
+            color: var(--text-dark);
+        }
+
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star-pixel {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+            animation: twinklePink var(--duration) infinite ease-in-out;
+        }
+
+        .glass-card-pink {
+            position: relative;
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid #ffffff;
+            padding: 40px 30px;
+            border-radius: 32px;
+            box-shadow: 0 20px 45px rgba(232, 130, 149, 0.2);
+            width: 90%;
+            max-width: 420px;
+        }
+
+        .quiz-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+        }
+
+        .grid-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn-pink-option {
+            background: #ffffff;
+            border: 1.5px solid var(--glass-border);
+            color: var(--text-dark);
+            padding: 15px 10px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(232, 130, 149, 0.08);
+        }
+
+        .btn-pink-option:hover {
+            background: var(--rose-primary);
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.3);
+        }
+
+        /* --- CENTERED ERROR NOTIFICATION --- */
+        #error-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--cherry);
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--rose-primary);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        #error-toast.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* --- STAGE 3, 4 & 5: LOADING, EXCITE, RESPONSE --- */
+        #stage-loading, #stage-excite, #stage-response {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .loader-box {
+            width: 260px;
+            text-align: center;
+        }
+
+        .loader-track {
+            width: 100%;
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .loader-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--rose-primary);
+            box-shadow: 0 0 15px var(--rose-primary);
+            transition: width 0.05s linear;
+        }
+
+        .btn-dark-stage {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 14px 30px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-dark-stage:hover {
+            background: var(--rose-primary);
+            border-color: var(--rose-primary);
+        }
+
+        /* --- INSTAGRAM AESTHETIC CARDS --- */
+        .aesthetic-card {
+            width: 90vw;
+            max-width: 420px;
+            background: var(--card-cream);
+            border-radius: 32px;
+            padding: 35px 25px;
+            box-shadow: 0 20px 40px rgba(232, 130, 149, 0.15);
+            border: 2px solid #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Badge Pills */
+        .pill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--rose-soft);
+            color: var(--rose-primary);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .chibi-avatar-frame {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #FFF0F3;
+            border: 3px solid #FFE3E8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.15);
+            overflow: hidden;
+        }
+
+        .chibi-avatar-frame img {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+        }
+
+        .letter-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .letter-sub {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: var(--rose-primary);
+            margin-bottom: 12px;
+        }
+
+        .divider-dots {
+            color: var(--rose-primary);
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            margin: 10px 0;
+            opacity: 0.6;
+        }
+
+        .letter-body-text {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        /* ENVELOPE BUTTON (FROM SCREENSHOT) */
+        .envelope-card-btn {
+            width: 100%;
+            background: #FFF3F5;
+            border: 2px dashed #FFD4DD;
+            border-radius: 22px;
+            padding: 22px 15px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .envelope-card-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(232, 130, 149, 0.15);
+        }
+
+        .wax-seal-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--rose-primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(232, 130, 149, 0.4);
+            margin-bottom: 8px;
+        }
+
+        .btn-next-step {
+            background: var(--rose-primary);
+            color: #ffffff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 6px 18px rgba(232, 130, 149, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-next-step:hover {
+            transform: translateY(-2px);
+        }
+
+        /* MUSIC WIDGET */
+        .music-widget {
+            width: 100%;
+            background: #FFF0F3;
+            border-radius: 20px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .music-info {
+            text-align: left;
+        }
+
+        .music-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .music-sub {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .play-btn-circle {
+            width: 42px;
+            height: 42px;
+            background: var(--rose-primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(232, 130, 149, 0.3);
+        }
+
+        /* CAKE & CANDLES SECTION */
+        .cake-wrapper {
+            position: relative;
+            width: 190px;
+            height: 120px;
+            margin: 15px 0 10px 0;
+            cursor: pointer;
+        }
+
+        .cake-layer-bottom {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 85px;
+            background: #FFF9E6;
+            border-radius: 16px 16px 6px 6px;
+            box-shadow: 0 10px 20px rgba(232, 130, 149, 0.12), inset 0 -6px 0 rgba(0,0,0,0.04);
+            border-bottom: 5px solid #F3E1B9;
+        }
+
+        .cake-frosting-top {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 28px;
+            background: var(--rose-primary);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .drip-item {
+            position: absolute;
+            top: 20px;
+            background: var(--rose-primary);
+            width: 14px;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .candle-item {
+            position: absolute;
+            width: 8px;
+            height: 40px;
+            background: #FF6B8B;
+            top: -40px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.4s ease;
+        }
+
+        .candle-flame {
+            position: absolute;
+            top: -16px;
+            left: -3px;
+            width: 14px;
+            height: 18px;
+            background: radial-gradient(circle, #FFEA00, #FF6A00);
+            border-radius: 50% 50% 20% 50%;
+            transform: rotate(-45deg);
+            animation: flickerFlame 0.12s infinite;
+            box-shadow: 0 0 10px #FF9E00;
+        }
+
+        /* MEME CAT ROW IN CAKE CARD */
+        .card-memes-row {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .meme-box {
+            width: 75px;
+            height: 75px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+        }
+
+        .meme-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* WISH WIDGET / BOUQUET CARDS */
+        .wish-flower-card {
+            width: 100%;
+            background: #FFF8F9;
+            border: 1px solid #FFE3E8;
+            border-radius: 20px;
+            padding: 18px;
+            margin-top: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .wish-flower-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.15);
+        }
+
+        .wish-card-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: var(--rose-primary);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .wish-card-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* WISH MODAL OVERLAY */
+        #wish-overlay-input {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 700;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .wish-field {
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid var(--rose-primary);
+            color: #ffffff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            text-align: center;
+            width: 85%;
+            max-width: 360px;
+            padding: 10px;
+            outline: none;
+            margin: 20px 0;
+        }
+
+        /* FULL LETTER MODAL */
+        #letter-full-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 600;
+            padding: 20px;
+        }
+
+        /* --- STAGE 7: UNIVERSE ANIMATION --- */
+        #stage-universe {
+            background-color: #000000;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .actor-gift-box {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 55px;
+            z-index: 10;
+            transition: bottom 3.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
+        }
+
+        .actor-star-descend {
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 90px;
+            filter: drop-shadow(0 0 30px var(--gold-accent));
+            z-index: 11;
+            transition: top 2.5s cubic-bezier(0.25, 1, 0.5, 1), bottom 3.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .universe-msg {
+            position: absolute;
+            top: 20%;
+            width: 90%;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.6rem;
+            color: #ffffff;
+            opacity: 0;
+            transition: opacity 1s ease;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
     </style>
 </head>
 <body>
 
-    <div id="custom-error">itna bhi nahi pata 😂 🌸</div>
+    <!-- CUSTOM AUDIO PLAYER PLACEHOLDER -->
+    <!-- REPLACE 'YOUR_SONG_URL_HERE' WITH YOUR DIRECT MP3 SONG LINK -->
+    <audio id="custom-bg-music" src="YOUR_SONG_URL_HERE" loop></audio>
 
-    <!-- STAGE 1: BULB -->
-    <div id="stage-bulb" class="stage">
-        <p style="font-family: 'Dancing Script'; font-size: 2rem;">Want to light up?</p>
-        <div class="bulb" onclick="nextStage('stage-quiz')">💡</div>
+    <!-- Sleek Error Notification -->
+    <div id="error-toast">itna bhi nahi pata 😂</div>
+
+    <!-- STAGE 1: THE BULB -->
+    <div id="stage-bulb" class="stage active">
+        <p class="prompt-text">Want to light up?</p>
+        <div class="bulb-icon" onclick="playMagic(); switchStage('stage-quiz'); initPinkStars('star-field-quiz', 160);">💡</div>
     </div>
 
-    <!-- STAGE 2: QUIZ -->
+    <!-- STAGE 2: PASSWORD (PINK & WHITE STARRY THEME) -->
     <div id="stage-quiz" class="stage">
-        <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">What I call you? 😁</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr;">
-            <button class="opt-btn" onclick="showError()">Sudhi</button>
-            <button class="opt-btn" onclick="showError()">Sudhiksha</button>
-            <button class="opt-btn" onclick="nextStage('stage-loading')">Pagli 🎀</button>
-            <button class="opt-btn" onclick="showError()">Devi ji 🙏</button>
+        <div class="stars-container" id="star-field-quiz"></div>
+        <div class="glass-card-pink">
+            <h2 class="quiz-title">What I call you? 😁</h2>
+            <div class="grid-options">
+                <button class="btn-pink-option" onclick="triggerError()">Sudhi</button>
+                <button class="btn-pink-option" onclick="triggerError()">Sudhiksha</button>
+                <button class="btn-pink-option" onclick="playMagic(); runLoadingStage();">Pagli 🎀</button>
+                <button class="btn-pink-option" onclick="triggerError()">Devi ji 🙏</button>
+            </div>
         </div>
     </div>
 
-    <!-- STAGE 3: LOADING -->
-    <div id="stage-loading" class="stage" style="background: #000; color: white;">
-        <h2 style="font-family: 'Dancing Script';">Wait a minute...</h2>
-        <div style="width: 250px; height: 10px; background: #222; border-radius: 10px; overflow: hidden;">
-            <div id="bar" style="width: 0%; height: 100%; background: var(--pink);"></div>
-        </div>
-        <div id="excite-box" style="display: none; margin-top: 30px;">
-            <p>Are u excited?</p>
-            <button class="opt-btn" onclick="handleExcite('yes')">Yes</button>
-            <button class="opt-btn" onclick="handleExcite('no')">No</button>
+    <!-- STAGE 3: LOADING BAR -->
+    <div id="stage-loading" class="stage">
+        <div class="loader-box">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ffffff;">Wait a minute...</h2>
+            <div class="loader-track">
+                <div class="loader-fill" id="progress-bar"></div>
+            </div>
         </div>
     </div>
 
-    <!-- STAGE 4: RESPONSE -->
-    <div id="stage-response" class="stage" style="background: #000; color: white;">
-        <h1 id="response-text" style="font-family: 'Dancing Script'; font-size: 3rem;"></h1>
-        <button class="opt-btn" onclick="nextStage('stage-cake')">Let's see Page 1! ✨</button>
+    <!-- STAGE 4: ARE YOU EXCITED? -->
+    <div id="stage-excite" class="stage">
+        <h1 style="font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--rose-primary); margin-bottom: 25px;">Are u excited?</h1>
+        <div style="display: flex; gap: 20px;">
+            <button class="btn-dark-stage" style="width: 120px;" onclick="handleExciteChoice('yes')">Yes</button>
+            <button class="btn-dark-stage" style="width: 120px;" onclick="handleExciteChoice('no')">No</button>
+        </div>
     </div>
 
-    <!-- STAGE 5: THE CAKE PAGE -->
-    <div id="stage-cake" class="stage">
-        <div class="cake-area">
-            <!-- Dancing Cat -->
-            <img src="https://media.tenor.com/J8Y8V0p16p0AAAAi/happy-cat-meme-happy-cat.gif" class="dancing-cat" style="transform: scaleX(-1);">
+    <!-- STAGE 5: RESPONSE SCREEN -->
+    <div id="stage-response" class="stage">
+        <h1 id="response-msg-text" style="font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: #ffffff; margin-bottom: 30px; padding: 0 20px;"></h1>
+        <button class="btn-dark-stage" style="padding: 14px 35px; background: var(--rose-primary); border: none;" onclick="switchStage('stage-letter')">Open Letter 🌸</button>
+    </div>
+
+    <!-- STAGE 6: LETTER ENVELOPE SCREEN (SCREEN 1 OF P1) -->
+    <div id="stage-letter" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+        <div class="aesthetic-card">
+            <div class="pill-badge">🌸 MADE WITH SO MUCH LOVE 🌸</div>
             
-            <div style="z-index: 5; text-align: center;">
-                <p style="font-weight: bold; color: var(--cherry); margin-bottom: 10px;">Blow & Cut the Cake!</p>
-                <div class="cake" id="main-cake" onclick="eatCake()">
-                    <div class="candle" id="c1" style="left: 40px;" onclick="blow(1, event)"><div class="flame"></div></div>
-                    <div class="candle" id="c2" style="left: 95px;" onclick="blow(2, event)"><div class="flame"></div></div>
-                    <div class="candle" id="c3" style="left: 150px;" onclick="blow(3, event)"><div class="flame"></div></div>
+            <div class="chibi-avatar-frame">
+                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Chibi Cat">
+            </div>
+
+            <h1 class="letter-heading">Hello Cutieee</h1>
+            <h2 class="letter-sub">happy birthday ♡</h2>
+
+            <div class="divider-dots">✿ ------------ ✿</div>
+
+            <!-- Envelope Wax Seal Button (From Screenshot) -->
+            <div class="envelope-card-btn" onclick="openLetterModal()">
+                <div class="wax-seal-btn">✉️</div>
+                <p style="font-size: 0.82rem; font-weight: 600; color: var(--rose-primary); letter-spacing: 1px;">READ MY LETTER →</p>
+            </div>
+
+            <button class="btn-next-step" onclick="switchStage('stage-cake')">Next: Cut the Cake 🍰 →</button>
+        </div>
+    </div>
+
+    <!-- STAGE 7: CAKE & CANDLES SCREEN (SCREEN 2 OF P1) -->
+    <div id="stage-cake" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+        <div class="aesthetic-card">
+            <div class="pill-badge">✿ MAKE A WISH & CUT THE CAKE ✿</div>
+
+            <div class="cake-wrapper">
+                <div class="cake-layer-bottom" id="main-cake-element" onclick="handleCakeEat()">
+                    <div class="cake-frosting-top"></div>
+                    <div class="drip-item" style="left: 12px; height: 28px;"></div>
+                    <div class="drip-item" style="left: 50px; height: 38px;"></div>
+                    <div class="drip-item" style="left: 100px; height: 22px;"></div>
+                    <div class="drip-item" style="left: 148px; height: 34px;"></div>
+                    
+                    <!-- 3 Candles -->
+                    <div class="candle-item" id="candle-1" style="left: 32px;" onclick="tapCandle(1, event)"><div class="candle-flame"></div></div>
+                    <div class="candle-item" id="candle-2" style="left: 90px;" onclick="tapCandle(2, event)"><div class="candle-flame"></div></div>
+                    <div class="candle-item" id="candle-3" style="left: 148px;" onclick="tapCandle(3, event)"><div class="candle-flame"></div></div>
                 </div>
             </div>
 
-            <!-- Talking Cat -->
-            <img src="https://media.tenor.com/7p40W19mZRAAAAAi/cat-meme.gif" class="talking-cat">
-        </div>
+            <!-- MEME CAT PLACEHOLDERS -->
+            <div class="card-memes-row">
+                <div class="meme-box">
+                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif" alt="Dancing Cat">
+                </div>
+                <div class="meme-box">
+                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif" alt="Talking Cat">
+                </div>
+            </div>
 
-        <!-- Wish Form (Inside Page 1) -->
-        <div id="wish-modal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,133,162,0.4); backdrop-filter: blur(5px); z-index: 100; justify-content: center; align-items: center;">
-            <div id="wish-box">
-                <img src="https://media.tenor.com/Zifm0_9p6Y8AAAAi/cat-meme.gif" width="100">
-                <h3 style="margin: 0; color: var(--cherry);">First type your wish 😉</h3>
-                <input type="text" id="wish-input" placeholder="What's your secret wish?">
-                <button class="opt-btn" style="background: var(--pink); border: none; margin-top: 15px; width: 100%;" onclick="submitWish()">Send to the Stars ✨</button>
+            <!-- Music Player Widget -->
+            <div class="music-widget">
+                <div class="music-info">
+                    <p class="music-title">Special Song For You</p>
+                    <p class="music-sub">WITH LOVE ♡</p>
+                </div>
+                <div class="play-btn-circle" onclick="playMusicToggle(this)">▶</div>
+            </div>
+
+            <button class="btn-next-step" onclick="switchStage('stage-bouquet')">Next: Bouquet of Wishes 🌸 →</button>
+        </div>
+    </div>
+
+    <!-- STAGE 8: BOUQUET OF WISHES SCREEN (SCREEN 3 OF P1) -->
+    <div id="stage-bouquet" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+        <div class="aesthetic-card">
+            <div class="pill-badge">✿ A TINY BOUQUET OF WISHES ✿</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px;">pick each flower — there's a little wish inside ♡</p>
+
+            <div class="wish-flower-card" onclick="alert('Wishing you endless smiles and late-night jokes! 🌸')">
+                <p class="wish-card-title">✿ THE WAY YOU LAUGH ✿</p>
+                <p class="wish-card-text">"Your laugh is one of those sounds that just makes a room feel warmer. Wishing you a year full of moments that bring it out again and again."</p>
+            </div>
+
+            <div class="wish-flower-card" onclick="alert('Thank you for being the most supportive friend! ✨')">
+                <p class="wish-card-title">✿ THE WAY YOU SHOW UP ✿</p>
+                <p class="wish-card-text">"You remember the small things — the random text on a hard day, the quiet patience. Wishing you the same softness back this year."</p>
             </div>
         </div>
     </div>
 
-    <!-- STAGE 6: UNIVERSE ANIMATION -->
-    <div id="stage-universe" class="stage">
-        <div id="stars"></div>
-        <div id="man" class="actor">🚶‍♂️</div>
-        <div id="gift" class="actor" style="display: none;">🎁</div>
-        <div id="hero-star" class="big-star">⭐</div>
-        <h2 id="uni-text" style="font-family: 'Dancing Script'; font-size: 2.5rem; position: absolute; top: 20%; width: 100%; opacity: 0;">Sending your wish to the universe...</h2>
+    <!-- FULL LETTER MODAL -->
+    <div id="letter-full-modal">
+        <div class="aesthetic-card" style="max-height: 85vh; overflow-y: auto; background: #FFF8F6; border: 2px solid var(--rose-primary);">
+            <div class="pill-badge">✿ A LETTER, JUST FOR YOU ✿</div>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 10px;">My Madam Jii,</h2>
+            <div class="divider-dots">✿ ------------ ✿</div>
+            <p class="letter-body-text">
+                There's no card big enough for everything I'd like to say, so I made you this little digital garden.
+                <br><br>
+                Thank you for the small and unseen things — the way you check in, the jokes only we get, and the quiet patience when I'm being too much. I noticed. I still notice.
+                <br><br>
+                I hope today you feel celebrated. I hope you eat something delicious and someone tells you how loved you are! 🎀
+            </p>
+            <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 12px 30px; margin-top: 15px;" onclick="closeLetterModal()">Close Letter ♡</button>
+        </div>
     </div>
 
-    <audio id="eat-sound" src="https://www.myinstants.com/media/sounds/crunch.mp3"></audio>
+    <!-- WISH INPUT OVERLAY (TRIGGERED BEFORE 3RD CANDLE BLOWS) -->
+    <div id="wish-overlay-input">
+        <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" style="width: 130px; border-radius: 15px;" alt="Wish Cat">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ffffff; margin-top: 12px;">First type your wish 😉</h2>
+        <input type="text" id="wish-text-input" class="wish-field" placeholder="Make a wish..." autocomplete="off">
+        <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 14px 40px;" onclick="processWishSubmission()">Send Wish to Stars ⭐</button>
+    </div>
+
+    <!-- STAGE 7: UNIVERSE ANIMATION -->
+    <div id="stage-universe" class="stage">
+        <div class="stars-container" id="star-field-universe"></div>
+        <div class="actor-gift-box" id="gift-box-actor">🎁</div>
+        <div class="actor-star-descend" id="star-actor">⭐</div>
+        <h2 class="universe-msg" id="universe-text">Your wish is traveling through the universe... ⭐</h2>
+    </div>
+
+    <!-- AUDIO EFFECTS -->
+    <audio id="sound-crunch" src="https://www.myinstants.com/media/sounds/crunch.mp3"></audio>
+    <audio id="sound-magic" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+    <audio id="sound-buzzer" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
     <script>
-        let candlesBlown = 0;
+        let blownCandleCount = 0;
+        const soundMagic = document.getElementById('sound-magic');
+        const soundBuzzer = document.getElementById('sound-buzzer');
+        const soundCrunch = document.getElementById('sound-crunch');
+        const customBgMusic = document.getElementById('custom-bg-music');
 
-        function nextStage(id) {
-            document.querySelectorAll('.stage').forEach(s => s.style.display = 'none');
-            const target = document.getElementById(id);
-            target.style.display = 'flex';
-            if(id === 'stage-loading') startLoading();
-        }
+        function playMagic() { soundMagic.play().catch(() => {}); }
 
-        function showError() {
-            const err = document.getElementById('custom-error');
-            err.style.top = '30px';
-            setTimeout(() => err.style.top = '-100px', 2000);
-        }
-
-        function startLoading() {
-            let w = 0;
-            const interval = setInterval(() => {
-                if(w >= 100) { clearInterval(interval); document.getElementById('excite-box').style.display = 'block'; }
-                else { w++; document.getElementById('bar').style.width = w + '%'; }
-            }, 30);
-        }
-
-        function handleExcite(choice) {
-            const txt = document.getElementById('response-text');
-            txt.innerText = choice === 'yes' ? "Okay waiting is over! 😉" : "I know u r excited don't tell lie 😁";
-            nextStage('stage-response');
-        }
-
-        function blow(n, e) {
-            e.stopPropagation();
-            document.getElementById('c'+n).style.opacity = '0';
-            candlesBlown++;
-            if(candlesBlown === 3) {
-                setTimeout(() => document.getElementById('wish-modal').style.display = 'flex', 600);
+        function initPinkStars(containerId, starCount) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-pixel';
+                const size = (Math.random() * 3 + 1.5) + 'px';
+                star.style.width = size; star.style.height = size;
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 1.5) + 's');
+                container.appendChild(star);
             }
         }
 
-        function submitWish() {
-            const wish = document.getElementById('wish-input').value;
-            if(!wish) return;
+        function switchStage(targetStageId) {
+            document.querySelectorAll('.stage').forEach(stage => stage.classList.remove('active'));
+            const target = document.getElementById(targetStageId);
+            target.classList.add('active');
+        }
 
-            // Silent Email Send
+        function triggerError() {
+            soundBuzzer.play().catch(() => {});
+            const toast = document.getElementById('error-toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1800);
+        }
+
+        function runLoadingStage() {
+            switchStage('stage-loading');
+            let progress = 0;
+            const fill = document.getElementById('progress-bar');
+            const interval = setInterval(() => {
+                progress += 1;
+                fill.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => switchStage('stage-excite'), 400);
+                }
+            }, 35);
+        }
+
+        function handleExciteChoice(choice) {
+            const responseText = document.getElementById('response-msg-text');
+            responseText.innerText = (choice === 'yes') ? "Okay waiting is over! 😉" : "i know u r excited don't tell lie 😁";
+            switchStage('stage-response');
+        }
+
+        function openLetterModal() { document.getElementById('letter-full-modal').style.display = 'flex'; }
+        function closeLetterModal() { document.getElementById('letter-full-modal').style.display = 'none'; }
+
+        function playMusicToggle(btn) {
+            if(btn.innerText === '▶') { 
+                btn.innerText = '⏸'; 
+                customBgMusic.play().catch(() => playMagic()); 
+            } else { 
+                btn.innerText = '▶'; 
+                customBgMusic.pause();
+            }
+        }
+
+        function tapCandle(candleNumber, event) {
+            event.stopPropagation();
+            const candle = document.getElementById('candle-' + candleNumber);
+            if (candle.style.opacity === '0') return;
+
+            // Candles 1 and 2 blow out immediately
+            if (candleNumber < 3) {
+                candle.style.opacity = '0';
+                blownCandleCount++;
+            } 
+            // Candle 3 prompts wish BEFORE blowing out!
+            else if (candleNumber === 3) {
+                document.getElementById('wish-overlay-input').style.display = 'flex';
+            }
+        }
+
+        function processWishSubmission() {
+            const wishValue = document.getElementById('wish-text-input').value.trim();
+            if (!wishValue) return;
+
+            // Formspree Dispatch
             fetch("https://formspree.io/f/xoeaeqjp", {
                 method: "POST",
-                body: JSON.stringify({ wish: wish }),
+                body: JSON.stringify({ wish: wishValue }),
                 headers: { 'Accept': 'application/json' }
-            });
+            }).catch(() => {});
 
-            document.getElementById('wish-modal').style.display = 'none';
-            runUniverse();
+            document.getElementById('wish-overlay-input').style.display = 'none';
+            
+            // Blow the 3rd candle now that wish is typed
+            document.getElementById('candle-3').style.opacity = '0';
+            blownCandleCount = 3;
+
+            triggerUniverseAnimation();
         }
 
-        function runUniverse() {
-            nextStage('stage-universe');
-            // Create background stars
-            const starCont = document.getElementById('stars');
-            for(let i=0; i<100; i++) {
-                const s = document.createElement('div');
-                s.className = 'star';
-                s.style.width = s.style.height = Math.random()*3+'px';
-                s.style.left = Math.random()*100+'vw';
-                s.style.top = Math.random()*100+'vh';
-                starCont.appendChild(s);
-            }
+        function triggerUniverseAnimation() {
+            switchStage('stage-universe');
+            initPinkStars('star-field-universe', 220);
 
-            const man = document.getElementById('man');
-            const gift = document.getElementById('gift');
-            const heroStar = document.getElementById('hero-star');
+            const giftBox = document.getElementById('gift-box-actor');
+            const star = document.getElementById('star-actor');
+            const uniText = document.getElementById('universe-text');
 
-            // 1. Man walks to center
+            giftBox.style.bottom = "25%"; giftBox.style.opacity = "1";
+            star.style.top = "-150px"; star.style.bottom = "auto";
+            uniText.style.opacity = "0";
+
             setTimeout(() => {
-                man.style.left = "45%";
+                star.style.top = "calc(75% - 100px)";
                 setTimeout(() => {
-                    // 2. Gift appears
-                    gift.style.display = "block";
-                    gift.style.left = "50%";
-                    man.innerText = "🏃‍♂️";
+                    uniText.style.opacity = "1";
                     setTimeout(() => {
-                        // 3. Star rises
-                        heroStar.style.bottom = "20%";
-                        document.getElementById('uni-text').style.opacity = "1";
-                        setTimeout(() => {
-                            // 4. Man sits on star and flies away
-                            man.style.bottom = "32%";
-                            gift.style.bottom = "32%";
-                            gift.style.left = "54%";
-                            setTimeout(() => {
-                                heroStar.style.bottom = "120%";
-                                man.style.bottom = "132%";
-                                gift.style.bottom = "132%";
-                                setTimeout(() => {
-                                    nextStage('stage-cake');
-                                    document.getElementById('main-cake').style.cursor = "pointer";
-                                }, 3000);
-                            }, 1000);
-                        }, 2000);
-                    }, 1000);
+                        star.style.transition = "top 3s cubic-bezier(0.4, 0, 0.2, 1)";
+                        giftBox.style.transition = "bottom 3s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s";
+                        star.style.top = "-250px";
+                        giftBox.style.bottom = "120%";
+                        setTimeout(() => switchStage('stage-cake'), 2800);
+                    }, 1200);
                 }, 2000);
-            }, 100);
+            }, 300);
         }
 
-        function eatCake() {
-            if(candlesBlown < 3) return;
-            document.getElementById('eat-sound').play();
-            const cake = document.getElementById('main-cake');
-            cake.style.transform = "scale(0.8) rotate(5deg)";
+        function handleCakeEat() {
+            if (blownCandleCount < 3) return;
+            soundCrunch.play().catch(() => {});
+            const cake = document.getElementById('main-cake-element');
+            cake.style.transform = "scale(0.92)";
             setTimeout(() => {
-                cake.style.opacity = "0.3";
-                alert("Yummm! Best cake ever! Happy Birthday Pagli! 🎂🎀");
-            }, 200);
+                cake.style.transform = "scale(1)";
+                cake.style.opacity = "0.4";
+                alert("Yummm! Happy Birthday Pagli! 🎂🍰✨");
+            }, 150);
         }
     </script>
 </body>
