@@ -8,234 +8,240 @@
     
     <style>
         :root {
-            --purple: #4b0082;
+            --purple: #2d0036;
             --cherry: #d2143a;
             --pink: #ff85a2;
-            --vanilla: #fff9e6;
-            --white: #ffffff;
-            --black: #000000;
+            --soft-pink: #fff0f3;
+            --vanilla: #fdf5e6;
         }
 
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background: #000; }
 
-        .stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; transition: 0.8s ease; }
+        .stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; transition: 0.8s ease; }
 
-        /* --- STAGE 1: BULB --- */
-        #stage-bulb { display: flex; background: var(--black); }
-        .bulb { font-size: 80px; cursor: pointer; animation: floating 3s infinite; filter: drop-shadow(0 0 15px var(--purple)); }
-
-        /* --- STAGE 2: QUIZ --- */
-        #stage-quiz { background: linear-gradient(135deg, #1a001a, var(--cherry)); }
-        .opt-btn { background: rgba(255,255,255,0.15); border: 2px solid white; color: white; padding: 15px; margin: 10px; border-radius: 15px; cursor: pointer; font-weight: 600; width: 140px; transition: 0.3s; animation: floating 4s infinite; }
+        /* --- STAGE 1 & 2: INTRO --- */
+        #stage-bulb { display: flex; background: #000; color: white; }
+        #stage-quiz { background: linear-gradient(135deg, var(--purple), var(--cherry)); color: white; }
+        
+        .bulb { font-size: 80px; cursor: pointer; animation: floating 3s infinite; }
+        .opt-btn { background: rgba(255,255,255,0.1); border: 2px solid white; color: white; padding: 12px 25px; margin: 10px; border-radius: 15px; cursor: pointer; transition: 0.3s; }
         .opt-btn:hover { background: white; color: var(--cherry); }
 
-        /* --- STAGE 3: LOADING --- */
-        #stage-loading { background: #000; }
-        .bar-bg { width: 250px; height: 12px; background: #222; border-radius: 10px; overflow: hidden; margin-top: 20px; }
-        .bar-fill { height: 100%; width: 0%; background: var(--cherry); box-shadow: 0 0 15px var(--cherry); }
-
-        /* --- STAGE 4: RESPONSE SCREEN --- */
-        #stage-response { background: var(--black); }
-        .msg-title { font-family: 'Dancing Script'; font-size: 3rem; color: var(--pink); margin-bottom: 20px; }
-
-        /* --- STAGE 5: THE CAKE --- */
-        #stage-cake { background: var(--vanilla); color: #333; }
-        .cake-container { position: relative; width: 220px; height: 130px; background: #fdf0d5; border-radius: 20px 20px 5px 5px; border-bottom: 15px solid #ead7c3; margin-top: 60px; cursor: pointer; box-shadow: 0 10px 0 #d9bf9e; }
-        .candle { position: absolute; width: 12px; height: 45px; background: var(--pink); top: -45px; border-radius: 5px 5px 0 0; transition: 0.5s; cursor: pointer; }
-        .flame { position: absolute; top: -18px; left: -2px; width: 16px; height: 16px; background: #ffca3a; border-radius: 50% 50% 20% 50%; transform: rotate(-45deg); animation: flicker 0.1s infinite; box-shadow: 0 0 10px orange; }
+        /* --- STAGE 4: THE CAKE (Pink & White) --- */
+        #stage-cake { background: var(--soft-pink); color: #444; }
         
-        .dancing-cat { position: absolute; right: 20px; bottom: 40px; width: 120px; z-index: 5; }
-        .talking-cat { width: 100px; margin-bottom: 10px; }
+        .cake-area { position: relative; width: 300px; height: 300px; display: flex; justify-content: center; align-items: flex-end; }
+        
+        /* The Vanilla Cake */
+        .cake { width: 200px; height: 120px; background: #fff9e6; border-radius: 20px 20px 0 0; position: relative; border-bottom: 10px solid #f3e5ab; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .cake::after { content: ''; position: absolute; top: 30px; left: 0; width: 100%; height: 20px; background: rgba(255, 133, 162, 0.3); }
 
-        /* --- WISH MODAL --- */
-        #wish-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
-        #wish-modal input { padding: 15px; border-radius: 30px; border: 2px solid var(--pink); width: 280px; font-size: 1rem; margin-bottom: 15px; outline: none; text-align: center; }
+        .candle { position: absolute; width: 12px; height: 45px; background: var(--pink); top: -45px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .flame { position: absolute; top: -15px; left: 2px; width: 10px; height: 15px; background: #ffa500; border-radius: 50% 50% 20% 50%; transform: rotate(-45deg); animation: flicker 0.1s infinite; }
 
-        /* --- UNIVERSE ANIMATION --- */
-        #universe { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; display: none; z-index: 2000; }
-        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.6; animation: twinkle 2s infinite; }
-        .walking-man { position: absolute; bottom: 20%; left: -10%; font-size: 50px; transition: 4s cubic-bezier(0.45, 0.05, 0.55, 0.95); z-index: 2002; }
-        .gift-box { position: absolute; bottom: 21%; left: 50%; transform: translateX(-50%); font-size: 40px; display: none; z-index: 2001; transition: 4s; }
+        .dancing-cat { position: absolute; left: -100px; bottom: 0; width: 120px; }
+        .talking-cat { position: absolute; right: -100px; bottom: 0; width: 100px; }
 
-        /* --- UI ELEMENTS --- */
-        #error-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(210, 20, 58, 0.9); padding: 15px 30px; border-radius: 50px; display: none; z-index: 1000; font-weight: bold; box-shadow: 0 0 20px rgba(0,0,0,0.5); border: 2px solid white; }
-        .action-btn { padding: 12px 30px; background: var(--cherry); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .action-btn:hover { transform: scale(1.1); background: var(--pink); }
+        /* --- UNIVERSE --- */
+        #stage-universe { background: #050505; color: white; overflow: hidden; }
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle 2s infinite; }
+        
+        .actor { position: absolute; bottom: 10%; left: -50px; font-size: 50px; transition: all 3s ease; z-index: 10; }
+        .big-star { position: absolute; font-size: 100px; bottom: -150px; left: 50%; transform: translateX(-50%); transition: all 3s ease; filter: drop-shadow(0 0 20px gold); }
+
+        /* --- ERROR POPUP --- */
+        #custom-error { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: white; color: var(--cherry); padding: 15px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.5s; z-index: 2000; border: 2px solid var(--pink); }
 
         @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes flicker { 0% { opacity: 0.9; transform: rotate(-45deg) scale(1); } 50% { opacity: 1; transform: rotate(-45deg) scale(1.2); } }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes flicker { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+        @keyframes twinkle { 0%, 100% { transform: scale(1); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 1; } }
+
+        /* Wish Form Aesthetic */
+        #wish-box { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); width: 80%; max-width: 320px; }
+        #wish-box input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--pink); margin-top: 15px; outline: none; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-    <div id="error-toast">itna bhi nahi pata 😂</div>
+    <div id="custom-error">itna bhi nahi pata 😂 🌸</div>
 
-    <!-- Stage 1 -->
+    <!-- STAGE 1: BULB -->
     <div id="stage-bulb" class="stage">
-        <p style="font-family: 'Dancing Script'; font-size: 2.2rem; color: #a29bfe;">Want to light up?</p>
-        <div class="bulb" onclick="playMagic(); nextStage('stage-quiz')">💡</div>
+        <p style="font-family: 'Dancing Script'; font-size: 2rem;">Want to light up?</p>
+        <div class="bulb" onclick="nextStage('stage-quiz')">💡</div>
     </div>
 
-    <!-- Stage 2 -->
+    <!-- STAGE 2: QUIZ -->
     <div id="stage-quiz" class="stage">
-        <h2 style="font-family: 'Dancing Script'; font-size: 2.8rem; margin-bottom: 30px;">What I call you? 😁</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">What I call you? 😁</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr;">
             <button class="opt-btn" onclick="showError()">Sudhi</button>
             <button class="opt-btn" onclick="showError()">Sudhiksha</button>
-            <button class="opt-btn" style="animation-delay: 0.5s" onclick="playMagic(); nextStage('stage-loading')">Pagli 🎀</button>
+            <button class="opt-btn" onclick="nextStage('stage-loading')">Pagli 🎀</button>
             <button class="opt-btn" onclick="showError()">Devi ji 🙏</button>
         </div>
     </div>
 
-    <!-- Stage 3: Loading -->
-    <div id="stage-loading" class="stage">
-        <h2 style="font-family: 'Dancing Script'; font-size: 2rem;">Wait a minute...</h2>
-        <div class="bar-bg"><div id="bar" class="bar-fill"></div></div>
+    <!-- STAGE 3: LOADING -->
+    <div id="stage-loading" class="stage" style="background: #000; color: white;">
+        <h2 style="font-family: 'Dancing Script';">Wait a minute...</h2>
+        <div style="width: 250px; height: 10px; background: #222; border-radius: 10px; overflow: hidden;">
+            <div id="bar" style="width: 0%; height: 100%; background: var(--pink);"></div>
+        </div>
         <div id="excite-box" style="display: none; margin-top: 30px;">
-            <p style="font-size: 1.5rem;">Are u excited?</p>
-            <button class="opt-btn" style="animation: none;" onclick="handleExcite('yes')">Yes</button>
-            <button class="opt-btn" style="animation: none;" onclick="handleExcite('no')">No</button>
+            <p>Are u excited?</p>
+            <button class="opt-btn" onclick="handleExcite('yes')">Yes</button>
+            <button class="opt-btn" onclick="handleExcite('no')">No</button>
         </div>
     </div>
 
-    <!-- Stage 4: Separate Response -->
-    <div id="stage-response" class="stage">
-        <h1 id="response-text" class="msg-title"></h1>
-        <button class="action-btn" onclick="nextStage('stage-cake')">Let's go! ✨</button>
+    <!-- STAGE 4: RESPONSE -->
+    <div id="stage-response" class="stage" style="background: #000; color: white;">
+        <h1 id="response-text" style="font-family: 'Dancing Script'; font-size: 3rem;"></h1>
+        <button class="opt-btn" onclick="nextStage('stage-cake')">Let's see Page 1! ✨</button>
     </div>
 
-    <!-- Stage 5: THE CAKE -->
+    <!-- STAGE 5: THE CAKE PAGE -->
     <div id="stage-cake" class="stage">
-        <img src="https://media.tenor.com/J8Y8V0p16p0AAAAi/happy-cat-meme-happy-cat.gif" class="dancing-cat">
-        <div style="z-index: 10;">
-            <img src="https://media.tenor.com/7p40W19mZRAAAAAi/cat-meme.gif" class="talking-cat">
-            <p style="font-weight: bold; color: #d81b60; margin: 0;">Blow the candles and cut the cake!</p>
+        <div class="cake-area">
+            <!-- Dancing Cat -->
+            <img src="https://media.tenor.com/J8Y8V0p16p0AAAAi/happy-cat-meme-happy-cat.gif" class="dancing-cat" style="transform: scaleX(-1);">
             
-            <div class="cake-container" id="main-cake" onclick="eatCake()">
-                <div class="candle" id="c1" style="left: 45px;" onclick="blow(1, event)"><div class="flame"></div></div>
-                <div class="candle" id="c2" style="left: 105px;" onclick="blow(2, event)"><div class="flame"></div></div>
-                <div class="candle" id="c3" style="left: 165px;" onclick="blow(3, event)"><div class="flame"></div></div>
+            <div style="z-index: 5; text-align: center;">
+                <p style="font-weight: bold; color: var(--cherry); margin-bottom: 10px;">Blow & Cut the Cake!</p>
+                <div class="cake" id="main-cake" onclick="eatCake()">
+                    <div class="candle" id="c1" style="left: 40px;" onclick="blow(1, event)"><div class="flame"></div></div>
+                    <div class="candle" id="c2" style="left: 95px;" onclick="blow(2, event)"><div class="flame"></div></div>
+                    <div class="candle" id="c3" style="left: 150px;" onclick="blow(3, event)"><div class="flame"></div></div>
+                </div>
+            </div>
+
+            <!-- Talking Cat -->
+            <img src="https://media.tenor.com/7p40W19mZRAAAAAi/cat-meme.gif" class="talking-cat">
+        </div>
+
+        <!-- Wish Form (Inside Page 1) -->
+        <div id="wish-modal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,133,162,0.4); backdrop-filter: blur(5px); z-index: 100; justify-content: center; align-items: center;">
+            <div id="wish-box">
+                <img src="https://media.tenor.com/Zifm0_9p6Y8AAAAi/cat-meme.gif" width="100">
+                <h3 style="margin: 0; color: var(--cherry);">First type your wish 😉</h3>
+                <input type="text" id="wish-input" placeholder="What's your secret wish?">
+                <button class="opt-btn" style="background: var(--pink); border: none; margin-top: 15px; width: 100%;" onclick="submitWish()">Send to the Stars ✨</button>
             </div>
         </div>
     </div>
 
-    <!-- Wish Modal -->
-    <div id="wish-modal">
-        <img src="https://media.tenor.com/Zifm0_9p6Y8AAAAi/cat-meme.gif" width="160">
-        <h2 style="color: white; font-family: 'Dancing Script'; font-size: 2.2rem; margin-top: 15px;">First type your wish 😉</h2>
-        <input type="text" id="wish-input" placeholder="Type your wish here..." required>
-        <button class="action-btn" onclick="submitWish()">Send Wish to Stars ⭐</button>
+    <!-- STAGE 6: UNIVERSE ANIMATION -->
+    <div id="stage-universe" class="stage">
+        <div id="stars"></div>
+        <div id="man" class="actor">🚶‍♂️</div>
+        <div id="gift" class="actor" style="display: none;">🎁</div>
+        <div id="hero-star" class="big-star">⭐</div>
+        <h2 id="uni-text" style="font-family: 'Dancing Script'; font-size: 2.5rem; position: absolute; top: 20%; width: 100%; opacity: 0;">Sending your wish to the universe...</h2>
     </div>
 
-    <!-- Stage 6: Universe -->
-    <div id="universe">
-        <div id="stars-container"></div>
-        <div class="walking-man" id="man">🚶‍♂️</div>
-        <div class="gift-box" id="box">🎁</div>
-        <h2 id="uni-msg" style="position: absolute; top: 40%; width: 100%; text-align: center; font-family: 'Dancing Script'; font-size: 2.5rem; color: #fff; display: none;">Your wish is traveling through the universe... ⭐</h2>
-    </div>
-
-    <!-- Audio Effects -->
     <audio id="eat-sound" src="https://www.myinstants.com/media/sounds/crunch.mp3"></audio>
-    <audio id="magic-sound" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
-    <audio id="buzzer-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
     <script>
         let candlesBlown = 0;
-        const magicSound = document.getElementById('magic-sound');
-        const buzzerSound = document.getElementById('buzzer-sound');
-
-        function playMagic() { magicSound.play().catch(()=>{}); }
 
         function nextStage(id) {
-            document.querySelectorAll('.stage').forEach(s => { s.style.display = 'none'; s.style.opacity = '0'; });
+            document.querySelectorAll('.stage').forEach(s => s.style.display = 'none');
             const target = document.getElementById(id);
             target.style.display = 'flex';
-            setTimeout(() => target.style.opacity = '1', 50);
             if(id === 'stage-loading') startLoading();
         }
 
         function showError() {
-            buzzerSound.play().catch(()=>{});
-            const toast = document.getElementById('error-toast');
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 1800);
+            const err = document.getElementById('custom-error');
+            err.style.top = '30px';
+            setTimeout(() => err.style.top = '-100px', 2000);
         }
 
         function startLoading() {
             let w = 0;
-            const bar = document.getElementById('bar');
-            const intrvl = setInterval(() => {
-                if(w >= 100) { clearInterval(intrvl); document.getElementById('excite-box').style.display = 'block'; }
-                else { w++; bar.style.width = w + '%'; }
-            }, 35);
+            const interval = setInterval(() => {
+                if(w >= 100) { clearInterval(interval); document.getElementById('excite-box').style.display = 'block'; }
+                else { w++; document.getElementById('bar').style.width = w + '%'; }
+            }, 30);
         }
 
         function handleExcite(choice) {
-            const resp = document.getElementById('response-text');
-            resp.innerText = choice === 'yes' ? "Okay waiting is over! 😉" : "I know u r excited don't tell lie 😁";
+            const txt = document.getElementById('response-text');
+            txt.innerText = choice === 'yes' ? "Okay waiting is over! 😉" : "I know u r excited don't tell lie 😁";
             nextStage('stage-response');
         }
 
-        function blow(num, event) {
-            event.stopPropagation();
-            document.getElementById('c' + num).style.opacity = '0';
+        function blow(n, e) {
+            e.stopPropagation();
+            document.getElementById('c'+n).style.opacity = '0';
             candlesBlown++;
             if(candlesBlown === 3) {
-                setTimeout(() => { document.getElementById('wish-modal').style.display = 'flex'; }, 600);
+                setTimeout(() => document.getElementById('wish-modal').style.display = 'flex', 600);
             }
         }
 
         function submitWish() {
-            const wishVal = document.getElementById('wish-input').value;
-            if(!wishVal) return alert("Write something first!");
+            const wish = document.getElementById('wish-input').value;
+            if(!wish) return;
 
-            // Sending to your Formspree in background
+            // Silent Email Send
             fetch("https://formspree.io/f/xoeaeqjp", {
                 method: "POST",
-                body: JSON.stringify({ wish: wishVal }),
+                body: JSON.stringify({ wish: wish }),
                 headers: { 'Accept': 'application/json' }
             });
 
             document.getElementById('wish-modal').style.display = 'none';
-            runUniverseAnimation();
+            runUniverse();
         }
 
-        function runUniverseAnimation() {
-            const uni = document.getElementById('universe');
-            uni.style.display = 'block';
-            
-            // Generate Stars
-            const container = document.getElementById('stars-container');
-            for(let i=0; i<150; i++) {
+        function runUniverse() {
+            nextStage('stage-universe');
+            // Create background stars
+            const starCont = document.getElementById('stars');
+            for(let i=0; i<100; i++) {
                 const s = document.createElement('div');
                 s.className = 'star';
-                const size = Math.random() * 3 + 'px';
-                s.style.width = s.style.height = size;
-                s.style.top = Math.random() * 100 + 'vh';
-                s.style.left = Math.random() * 100 + 'vw';
-                container.appendChild(s);
+                s.style.width = s.style.height = Math.random()*3+'px';
+                s.style.left = Math.random()*100+'vw';
+                s.style.top = Math.random()*100+'vh';
+                starCont.appendChild(s);
             }
 
             const man = document.getElementById('man');
-            const box = document.getElementById('box');
+            const gift = document.getElementById('gift');
+            const heroStar = document.getElementById('hero-star');
 
+            // 1. Man walks to center
             setTimeout(() => {
                 man.style.left = "45%";
                 setTimeout(() => {
-                    box.style.display = "block";
+                    // 2. Gift appears
+                    gift.style.display = "block";
+                    gift.style.left = "50%";
                     man.innerText = "🏃‍♂️";
                     setTimeout(() => {
-                        man.style.bottom = "80%"; man.style.left = "80%"; man.style.opacity = "0";
-                        box.style.bottom = "81%"; box.style.left = "82%"; box.style.opacity = "0";
-                        document.getElementById('uni-msg').style.display = "block";
+                        // 3. Star rises
+                        heroStar.style.bottom = "20%";
+                        document.getElementById('uni-text').style.opacity = "1";
                         setTimeout(() => {
-                            uni.style.opacity = "0";
-                            setTimeout(() => uni.style.display = "none", 1000);
-                        }, 4000);
-                    }, 1500);
-                }, 2500);
+                            // 4. Man sits on star and flies away
+                            man.style.bottom = "32%";
+                            gift.style.bottom = "32%";
+                            gift.style.left = "54%";
+                            setTimeout(() => {
+                                heroStar.style.bottom = "120%";
+                                man.style.bottom = "132%";
+                                gift.style.bottom = "132%";
+                                setTimeout(() => {
+                                    nextStage('stage-cake');
+                                    document.getElementById('main-cake').style.cursor = "pointer";
+                                }, 3000);
+                            }, 1000);
+                        }, 2000);
+                    }, 1000);
+                }, 2000);
             }, 100);
         }
 
@@ -243,12 +249,11 @@
             if(candlesBlown < 3) return;
             document.getElementById('eat-sound').play();
             const cake = document.getElementById('main-cake');
-            cake.style.transform = "scale(0.95)";
+            cake.style.transform = "scale(0.8) rotate(5deg)";
             setTimeout(() => {
-                cake.style.transform = "scale(1)";
-                cake.style.opacity = "0.6";
-                alert("Yummm! Happy Birthday Pagli! 🎂🍰✨");
-            }, 100);
+                cake.style.opacity = "0.3";
+                alert("Yummm! Best cake ever! Happy Birthday Pagli! 🎂🎀");
+            }, 200);
         }
     </script>
 </body>
