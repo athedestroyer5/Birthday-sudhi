@@ -37,7 +37,7 @@
             color: var(--text-dark);
         }
 
-        /* --- STAGE SYSTEM --- */
+        /* --- STAGE SYSTEM WITH GENTLE TRANSITIONS --- */
         .stage {
             position: fixed;
             top: 0;
@@ -50,7 +50,7 @@
             align-items: center;
             text-align: center;
             opacity: 0;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
             padding: 20px;
         }
@@ -88,7 +88,7 @@
             cursor: pointer;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
             animation: floatSlow 3.5s ease-in-out infinite;
-            transition: transform 0.3s ease, filter 0.3s ease;
+            transition: transform 0.4s ease, filter 0.4s ease;
         }
 
         .bulb-icon:hover {
@@ -103,7 +103,7 @@
             margin-bottom: 30px;
         }
 
-        /* --- STAGE 2: PASSWORD SCREEN (PINK & WHITE THEME) --- */
+        /* --- STAGE 2: PASSWORD SCREEN --- */
         #stage-quiz {
             background: linear-gradient(135deg, #FFF0F3 0%, #FFD6E0 50%, #FFC2D1 100%);
             color: var(--text-dark);
@@ -291,9 +291,9 @@
         }
 
         .chibi-avatar-frame img {
-            width: 85%;
-            height: 85%;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .letter-heading {
@@ -326,7 +326,7 @@
             margin: 12px 0;
         }
 
-        /* ENVELOPE BUTTON (FROM SCREENSHOT) */
+        /* ENVELOPE BUTTON */
         .envelope-card-btn {
             width: 100%;
             background: #FFF3F5;
@@ -489,7 +489,32 @@
             margin-top: 10px;
         }
 
-        .meme-box {
+        /* HIGHLIGHTED LEFT MEME PLACEHOLDER BOX */
+        .meme-box-custom {
+            width: 75px;
+            height: 75px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #FFF0F3;
+            border: 2px dashed var(--rose-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--rose-primary);
+            padding: 4px;
+        }
+
+        .meme-box-custom img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .meme-box-right {
             width: 75px;
             height: 75px;
             border-radius: 14px;
@@ -498,7 +523,7 @@
             box-shadow: 0 5px 12px rgba(0,0,0,0.08);
         }
 
-        .meme-box img {
+        .meme-box-right img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -538,6 +563,32 @@
             font-size: 0.9rem;
             line-height: 1.6;
             color: var(--text-dark);
+        }
+
+        /* CUTE CUSTOM POP-UP MODAL (REPLACES SIMPLE ALERTS) */
+        #cute-alert-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 800;
+            padding: 20px;
+        }
+
+        .cute-modal-card {
+            background: #FFF8F6;
+            border: 2px solid var(--rose-primary);
+            border-radius: 28px;
+            padding: 30px 22px;
+            width: 88vw;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: floatSlow 3s ease-in-out infinite;
         }
 
         /* WISH MODAL OVERLAY */
@@ -635,10 +686,20 @@
     <!-- Sleek Error Notification -->
     <div id="error-toast">itna bhi nahi pata 😂</div>
 
+    <!-- CUTE CUSTOM POP-UP MODAL (REPLACES SIMPLE ALERTS) -->
+    <div id="cute-alert-modal">
+        <div class="cute-modal-card">
+            <div class="pill-badge" id="cute-modal-badge">✿ SPECIAL WISH ✿</div>
+            <h3 id="cute-modal-title" style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 10px; font-size: 1.3rem;"></h3>
+            <p id="cute-modal-text" style="font-size: 0.92rem; line-height: 1.6; color: var(--text-dark); margin-bottom: 20px;"></p>
+            <button class="btn-next-step" style="margin-top: 0;" onclick="closeCuteModal()">Close ♡</button>
+        </div>
+    </div>
+
     <!-- STAGE 1: THE BULB -->
     <div id="stage-bulb" class="stage active">
         <p class="prompt-text">Want to light up?</p>
-        <div class="bulb-icon" onclick="playMagic(); switchStage('stage-quiz'); initPinkStars('star-field-quiz', 160);">💡</div>
+        <div class="bulb-icon" onclick="playMagic(); switchStageSlow('stage-quiz', 1200); initPinkStars('star-field-quiz', 160);">💡</div>
     </div>
 
     <!-- STAGE 2: PASSWORD (PINK & WHITE STARRY THEME) -->
@@ -677,7 +738,7 @@
     <!-- STAGE 5: RESPONSE SCREEN -->
     <div id="stage-response" class="stage">
         <h1 id="response-msg-text" style="font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: #ffffff; margin-bottom: 30px; padding: 0 20px;"></h1>
-        <button class="btn-dark-stage" style="padding: 14px 35px; background: var(--rose-primary); border: none;" onclick="switchStage('stage-letter')">Open Letter 🌸</button>
+        <button class="btn-dark-stage" style="padding: 14px 35px; background: var(--rose-primary); border: none;" onclick="switchStageSlow('stage-letter', 1000)">Open Letter 🌸</button>
     </div>
 
     <!-- STAGE 6: LETTER ENVELOPE SCREEN (SCREEN 1 OF P1) -->
@@ -686,7 +747,8 @@
             <div class="pill-badge">🌸 MADE WITH SO MUCH LOVE 🌸</div>
             
             <div class="chibi-avatar-frame">
-                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Chibi Cat">
+                <!-- White Cat Avatar from Screenshot -->
+                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Chibi White Cat">
             </div>
 
             <h1 class="letter-heading">Hello Cutieee</h1>
@@ -700,7 +762,7 @@
                 <p style="font-size: 0.82rem; font-weight: 600; color: var(--rose-primary); letter-spacing: 1px;">READ MY LETTER →</p>
             </div>
 
-            <button class="btn-next-step" onclick="switchStage('stage-cake')">Next: Cut the Cake 🍰 →</button>
+            <button class="btn-next-step" onclick="switchStageSlow('stage-cake', 1000)">Next: Cut the Cake 🍰 →</button>
         </div>
     </div>
 
@@ -726,12 +788,19 @@
 
             <!-- MEME CAT PLACEHOLDERS -->
             <div class="card-memes-row">
-                <div class="meme-box">
-                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif" alt="Dancing Cat">
+                
+                <!-- HIGHLIGHTED LEFT MEME PLACEHOLDER (PASTE YOUR IMAGE HERE) -->
+                <!-- To add your meme: Replace this div content with <img src="YOUR_IMAGE_LINK_HERE"> -->
+                <div class="meme-box-custom">
+                    <!-- PASTE YOUR CUSTOM MEME 1 HERE -->
+                    <span>Paste Meme 1 Here 🌸</span>
                 </div>
-                <div class="meme-box">
-                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif" alt="Talking Cat">
+
+                <!-- RIGHT MEME: WHITE CAT MEME FROM SCREENSHOT -->
+                <div class="meme-box-right">
+                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="White Cat Meme">
                 </div>
+
             </div>
 
             <!-- Music Player Widget -->
@@ -743,7 +812,7 @@
                 <div class="play-btn-circle" onclick="playMusicToggle(this)">▶</div>
             </div>
 
-            <button class="btn-next-step" onclick="switchStage('stage-bouquet')">Next: Bouquet of Wishes 🌸 →</button>
+            <button class="btn-next-step" onclick="switchStageSlow('stage-bouquet', 1000)">Next: Bouquet of Wishes 🌸 →</button>
         </div>
     </div>
 
@@ -753,12 +822,12 @@
             <div class="pill-badge">✿ A TINY BOUQUET OF WISHES ✿</div>
             <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px;">pick each flower — there's a little wish inside ♡</p>
 
-            <div class="wish-flower-card" onclick="alert('Wishing you endless smiles and late-night jokes! 🌸')">
+            <div class="wish-flower-card" onclick="openCuteModal('✿ THE WAY YOU LAUGH ✿', 'Wishing you endless smiles, warm moments, and late-night jokes that make your belly hurt! 🌸')">
                 <p class="wish-card-title">✿ THE WAY YOU LAUGH ✿</p>
                 <p class="wish-card-text">"Your laugh is one of those sounds that just makes a room feel warmer. Wishing you a year full of moments that bring it out again and again."</p>
             </div>
 
-            <div class="wish-flower-card" onclick="alert('Thank you for being the most supportive friend! ✨')">
+            <div class="wish-flower-card" onclick="openCuteModal('✿ THE WAY YOU SHOW UP ✿', 'Thank you for always being the most supportive friend! Wishing you the same softness back this year. ✨')">
                 <p class="wish-card-title">✿ THE WAY YOU SHOW UP ✿</p>
                 <p class="wish-card-text">"You remember the small things — the random text on a hard day, the quiet patience. Wishing you the same softness back this year."</p>
             </div>
@@ -827,10 +896,20 @@
             }
         }
 
-        function switchStage(targetStageId) {
-            document.querySelectorAll('.stage').forEach(stage => stage.classList.remove('active'));
-            const target = document.getElementById(targetStageId);
-            target.classList.add('active');
+        // GENTLE DELAYED STAGE TRANSITIONS
+        function switchStageSlow(targetStageId, delayMs) {
+            const activeStage = document.querySelector('.stage.active');
+            if (activeStage) {
+                activeStage.style.opacity = '0';
+            }
+            setTimeout(() => {
+                document.querySelectorAll('.stage').forEach(stage => stage.classList.remove('active'));
+                const target = document.getElementById(targetStageId);
+                target.classList.add('active');
+                setTimeout(() => {
+                    target.style.opacity = '1';
+                }, 50);
+            }, delayMs || 600);
         }
 
         function triggerError() {
@@ -841,7 +920,7 @@
         }
 
         function runLoadingStage() {
-            switchStage('stage-loading');
+            switchStageSlow('stage-loading', 800);
             let progress = 0;
             const fill = document.getElementById('progress-bar');
             const interval = setInterval(() => {
@@ -849,7 +928,7 @@
                 fill.style.width = progress + '%';
                 if (progress >= 100) {
                     clearInterval(interval);
-                    setTimeout(() => switchStage('stage-excite'), 400);
+                    setTimeout(() => switchStageSlow('stage-excite', 800), 500);
                 }
             }, 35);
         }
@@ -857,11 +936,22 @@
         function handleExciteChoice(choice) {
             const responseText = document.getElementById('response-msg-text');
             responseText.innerText = (choice === 'yes') ? "Okay waiting is over! 😉" : "i know u r excited don't tell lie 😁";
-            switchStage('stage-response');
+            switchStageSlow('stage-response', 800);
         }
 
         function openLetterModal() { document.getElementById('letter-full-modal').style.display = 'flex'; }
         function closeLetterModal() { document.getElementById('letter-full-modal').style.display = 'none'; }
+
+        // CUTE CUSTOM MODAL FUNCTIONS (REPLACES SIMPLE ALERTS)
+        function openCuteModal(title, text) {
+            document.getElementById('cute-modal-title').innerText = title;
+            document.getElementById('cute-modal-text').innerText = text;
+            document.getElementById('cute-alert-modal').style.display = 'flex';
+        }
+
+        function closeCuteModal() {
+            document.getElementById('cute-alert-modal').style.display = 'none';
+        }
 
         function playMusicToggle(btn) {
             if(btn.innerText === '▶') { 
@@ -910,7 +1000,7 @@
         }
 
         function triggerUniverseAnimation() {
-            switchStage('stage-universe');
+            switchStageSlow('stage-universe', 800);
             initPinkStars('star-field-universe', 220);
 
             const giftBox = document.getElementById('gift-box-actor');
@@ -930,7 +1020,7 @@
                         giftBox.style.transition = "bottom 3s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s";
                         star.style.top = "-250px";
                         giftBox.style.bottom = "120%";
-                        setTimeout(() => switchStage('stage-cake'), 2800);
+                        setTimeout(() => switchStageSlow('stage-cake', 1000), 2800);
                     }, 1200);
                 }, 2000);
             }, 300);
@@ -944,7 +1034,7 @@
             setTimeout(() => {
                 cake.style.transform = "scale(1)";
                 cake.style.opacity = "0.4";
-                alert("Yummm! Happy Birthday Pagli! 🎂🍰✨");
+                openCuteModal('🎂 HAPPY BIRTHDAY PAGLI! 🍰', 'Yummm! You cut the cake! Wishing you the sweetest and most amazing year ahead! ✨🌸');
             }, 150);
         }
     </script>
