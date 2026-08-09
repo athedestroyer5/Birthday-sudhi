@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ✨</title>
+    <title>For My Friend ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --purple: #4b0082;
             --cherry: #d2143a;
-            --light-purple: #9370db;
             --white: #ffffff;
-            --dark-bg: #1a001a;
+            --black: #000000;
         }
 
         body, html {
@@ -22,61 +21,52 @@
             width: 100%;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
-            background-color: #000;
+            background-color: var(--black);
         }
 
-        /* --- STAGE 1: DARK ROOM (Purple/Cherry Vibes) --- */
-        #dark-room {
+        /* --- Animations --- */
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* --- STAGE 1: BLACK ROOM --- */
+        .stage {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 0.8s ease;
         }
 
+        #stage-bulb { z-index: 100; }
+        
         .msg-pop {
-            color: var(--light-purple);
+            color: #9370db;
             font-size: 1.8rem;
             margin-bottom: 30px;
-            text-align: center;
             font-family: 'Dancing Script', cursive;
-            text-shadow: 0 0 10px var(--cherry);
             animation: pulse 2s infinite;
         }
 
         .bulb {
             font-size: 80px;
             cursor: pointer;
-            filter: drop-shadow(0 0 5px var(--purple));
-            transition: all 0.4s ease;
-            user-select: none;
+            animation: floating 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px var(--purple));
         }
 
-        .bulb:hover {
-            transform: scale(1.2) rotate(10deg);
-            filter: drop-shadow(0 0 30px var(--cherry));
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1); }
-        }
-
-        /* --- STAGE 2: MAIN CONTENT (Purple & Cherry Red Theme) --- */
-        #main-content {
+        /* --- STAGE 2: QUIZ (Purple/Cherry) --- */
+        #stage-quiz {
             display: none;
-            height: 100vh;
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #4b0082 50%, var(--cherry) 100%);
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, #1a001a 0%, var(--purple) 50%, var(--cherry) 100%);
             opacity: 0;
-            transition: opacity 1s ease;
         }
 
         .card {
@@ -84,163 +74,169 @@
             backdrop-filter: blur(15px);
             padding: 40px;
             border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
             border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        h2 {
-            color: var(--white);
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            text-align: center;
+            color: white;
+            width: 85%;
+            max-width: 400px;
         }
 
         .opt-btn {
             background: rgba(210, 20, 58, 0.2);
             border: 2px solid var(--cherry);
             color: white;
-            padding: 15px 10px;
-            border-radius: 15px;
+            padding: 12px;
+            margin: 8px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 1rem;
+            transition: 0.3s;
+            animation: floating 4s ease-in-out infinite;
         }
 
-        .opt-btn:hover {
+        /* --- STAGE 3: LOADING (Black) --- */
+        #stage-loading {
+            display: none;
+            background: var(--black);
+            opacity: 0;
+        }
+
+        .loader-container {
+            width: 250px;
+            text-align: center;
+        }
+
+        .bar-bg {
+            width: 100%;
+            height: 12px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0%;
             background: var(--cherry);
-            box-shadow: 0 0 20px var(--cherry);
-            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--cherry);
         }
 
-        /* --- ERROR POPUP (Now Centered) --- */
+        /* --- ERROR MESSAGE --- */
         #error-msg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
+            position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             background: var(--cherry);
-            color: white;
-            padding: 20px 40px;
-            border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            white-space: nowrap;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
-
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+            color: white; padding: 20px 40px;
+            border-radius: 50px; font-weight: bold;
+            display: none; z-index: 1000;
         }
     </style>
 </head>
 <body>
 
-    <!-- Middle Error Message -->
     <div id="error-msg">itna bhi nahi pata 😂</div>
 
-    <!-- Part 1: The Dark Room -->
-    <div id="dark-room">
+    <!-- Stage 1: The Bulb -->
+    <div id="stage-bulb" class="stage">
         <div class="msg-pop">Want to light up?</div>
-        <div class="bulb" id="bulb-btn" onclick="lightUp()">💡</div>
+        <div class="bulb" onclick="toQuiz()">💡</div>
     </div>
 
-    <!-- Part 2: The Question Page -->
-    <div id="main-content">
-        <div class="card" id="question-card">
-            <h2>What I call you? 😁</h2>
-            <div class="options-grid">
-                <button class="opt-btn" onclick="wrongAnswer(this)">Sudhi</button>
-                <button class="opt-btn" onclick="wrongAnswer(this)">Sudhiksha</button>
-                <button class="opt-btn" onclick="correctAnswer()">Pagli 🎀</button>
-                <button class="opt-btn" onclick="wrongAnswer(this)">Devi ji 🙏</button>
+    <!-- Stage 2: The Question -->
+    <div id="stage-quiz" class="stage">
+        <div class="card">
+            <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">What I call you? 😁</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                <button class="opt-btn" onclick="wrong()">Sudhi</button>
+                <button class="opt-btn" onclick="wrong()">Sudhiksha</button>
+                <button class="opt-btn" style="animation-delay: 0.5s;" onclick="toLoading()">Pagli 🎀</button>
+                <button class="opt-btn" style="animation-delay: 1s;" onclick="wrong()">Devi ji 🙏</button>
             </div>
         </div>
     </div>
 
-    <!-- Sound Effects -->
-    <!-- Using a more stable URL for buzzer -->
-    <audio id="error-audio" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+    <!-- Stage 3: Loading Screen -->
+    <div id="stage-loading" class="stage">
+        <div class="loader-container" id="loading-box">
+            <h2 style="color: white; font-family: 'Dancing Script';">Wait a minute...</h2>
+            <div class="bar-bg">
+                <div class="bar-fill" id="bar"></div>
+            </div>
+        </div>
+
+        <div id="excite-question" style="display: none; text-align: center; color: white;">
+            <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">Are u exited?</h2>
+            <button class="opt-btn" style="width: 100px;" onclick="exciteResponse('yes')">Yes</button>
+            <button class="opt-btn" style="width: 100px;" onclick="exciteResponse('no')">No</button>
+            <p id="excite-msg" style="margin-top: 20px; font-weight: bold; color: #ff85a2;"></p>
+        </div>
+    </div>
+
+    <!-- Sounds -->
+    <audio id="magic-sound" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+    <audio id="buzzer-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
     <script>
-        // Web Audio Context for a fallback "Buzzer" if the link fails
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        function playBuzzer() {
-            const errorSound = document.getElementById('error-audio');
-            
-            // Try playing the audio file first
-            errorSound.play().catch(() => {
-                // If blocked or link fails, generate a synthetic beep
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.type = 'sawtooth';
-                osc.frequency.value = 150;
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.3);
-            });
+        function playMagic() {
+            document.getElementById('magic-sound').play();
         }
 
-        function lightUp() {
-            // Transition effect
-            document.getElementById('dark-room').style.opacity = '0';
+        function toQuiz() {
+            playMagic();
+            document.getElementById('stage-bulb').style.opacity = '0';
             setTimeout(() => {
-                document.getElementById('dark-room').style.display = 'none';
-                const main = document.getElementById('main-content');
-                main.style.display = 'flex';
-                setTimeout(() => {
-                    main.style.opacity = '1';
-                }, 50);
-            }, 1000);
+                document.getElementById('stage-bulb').style.display = 'none';
+                const quiz = document.getElementById('stage-quiz');
+                quiz.style.display = 'flex';
+                setTimeout(() => quiz.style.opacity = '1', 50);
+            }, 800);
         }
 
-        function wrongAnswer(btn) {
-            playBuzzer();
-            
-            // Shake the card
-            const card = document.getElementById('question-card');
-            card.classList.add('shake');
-            setTimeout(() => card.classList.remove('shake'), 500);
+        function wrong() {
+            document.getElementById('buzzer-sound').play();
+            const err = document.getElementById('error-msg');
+            err.style.display = 'block';
+            setTimeout(() => err.style.display = 'none', 1500);
+        }
 
-            // Show centered error message
-            const popup = document.getElementById('error-msg');
-            popup.style.display = 'block';
+        function toLoading() {
+            playMagic();
+            document.getElementById('stage-quiz').style.opacity = '0';
             setTimeout(() => {
-                popup.style.display = 'none';
-            }, 1500);
+                document.getElementById('stage-quiz').style.display = 'none';
+                const load = document.getElementById('stage-loading');
+                load.style.display = 'flex';
+                setTimeout(() => load.style.opacity = '1', 50);
+                
+                // Start Loading Bar
+                let width = 0;
+                const bar = document.getElementById('bar');
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        showExcite();
+                    } else {
+                        width++;
+                        bar.style.width = width + '%';
+                    }
+                }, 50); // Speed of loading
+            }, 800);
         }
 
-        function correctAnswer() {
-            // We can add a success sound here!
-            alert("Perfect! Now move to the next level...");
-            // Next stage logic goes here
+        function showExcite() {
+            document.getElementById('loading-box').style.display = 'none';
+            document.getElementById('excite-question').style.display = 'block';
+        }
+
+        function exciteResponse(choice) {
+            const msg = document.getElementById('excite-msg');
+            if(choice === 'yes') {
+                msg.innerText = "okay waiting is over! ✨";
+                // Transition to Page 1 could go here next
+            } else {
+                msg.innerText = "i know u r exited don't tell lie 😁";
+            }
         }
     </script>
 </body>
