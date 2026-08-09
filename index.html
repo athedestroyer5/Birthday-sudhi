@@ -8,10 +8,11 @@
     
     <style>
         :root {
-            --pink: #ff85a2;
-            --dark-pink: #d81b60;
+            --purple: #4b0082;
+            --cherry: #d2143a;
+            --light-purple: #9370db;
             --white: #ffffff;
-            --soft-pink: #fff5f7;
+            --dark-bg: #1a001a;
         }
 
         body, html {
@@ -21,9 +22,10 @@
             width: 100%;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
+            background-color: #000;
         }
 
-        /* --- STAGE 1: BLACK ROOM --- */
+        /* --- STAGE 1: DARK ROOM (Purple/Cherry Vibes) --- */
         #dark-room {
             position: fixed;
             top: 0;
@@ -36,42 +38,41 @@
             justify-content: center;
             align-items: center;
             z-index: 100;
-            transition: opacity 1s ease;
         }
 
         .msg-pop {
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+            color: var(--light-purple);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
             text-align: center;
-            letter-spacing: 2px;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 0 0 10px var(--cherry);
             animation: pulse 2s infinite;
         }
 
         .bulb {
             font-size: 80px;
             cursor: pointer;
-            filter: drop-shadow(0 0 10px #fff);
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 5px var(--purple));
+            transition: all 0.4s ease;
+            user-select: none;
         }
 
         .bulb:hover {
-            transform: scale(1.2);
-            filter: drop-shadow(0 0 30px #ffd700);
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 0 30px var(--cherry));
         }
 
         @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            0%, 100% { opacity: 0.4; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1); }
         }
 
-        /* --- STAGE 2: PINK THEME --- */
+        /* --- STAGE 2: MAIN CONTENT (Purple & Cherry Red Theme) --- */
         #main-content {
-            display: none; /* Hidden until bulb is clicked */
+            display: none;
             height: 100vh;
-            background: linear-gradient(135deg, var(--white) 0%, var(--soft-pink) 100%);
-            display: flex;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #4b0082 50%, var(--cherry) 100%);
             justify-content: center;
             align-items: center;
             opacity: 0;
@@ -79,21 +80,23 @@
         }
 
         .card {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
             padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(255, 133, 162, 0.2);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             text-align: center;
             max-width: 400px;
             width: 90%;
-            border: 2px solid var(--soft-pink);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         h2 {
-            color: var(--dark-pink);
+            color: var(--white);
             font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .options-grid {
@@ -103,9 +106,9 @@
         }
 
         .opt-btn {
-            background: white;
-            border: 2px solid var(--pink);
-            color: var(--dark-pink);
+            background: rgba(210, 20, 58, 0.2);
+            border: 2px solid var(--cherry);
+            color: white;
             padding: 15px 10px;
             border-radius: 15px;
             cursor: pointer;
@@ -115,45 +118,55 @@
         }
 
         .opt-btn:hover {
-            background: var(--pink);
-            color: white;
-            transform: translateY(-3px);
+            background: var(--cherry);
+            box-shadow: 0 0 20px var(--cherry);
+            transform: translateY(-5px);
         }
 
-        /* Error Shake Animation */
+        /* --- ERROR POPUP (Now Centered) --- */
+        #error-msg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--cherry);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            white-space: nowrap;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
         .shake {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            animation: shake 0.5s ease-in-out;
         }
 
         @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-
-        .error-popup {
-            position: fixed;
-            top: 20px;
-            background: #ff4d4d;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            display: none;
-            z-index: 200;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Error Message -->
-    <div id="error-msg" class="error-popup">itna nahi pata 😂</div>
+    <!-- Middle Error Message -->
+    <div id="error-msg">itna bhi nahi pata 😂</div>
 
     <!-- Part 1: The Dark Room -->
     <div id="dark-room">
         <div class="msg-pop">Want to light up?</div>
-        <div class="bulb" onclick="lightUp()">💡</div>
+        <div class="bulb" id="bulb-btn" onclick="lightUp()">💡</div>
     </div>
 
     <!-- Part 2: The Question Page -->
@@ -170,14 +183,32 @@
     </div>
 
     <!-- Sound Effects -->
-    <audio id="error-sound" src="https://www.myinstants.com/media/sounds/wrong-answer-126515.mp3"></audio>
-    <audio id="switch-sound" src="https://www.myinstants.com/media/sounds/light-switch-sound-effect.mp3"></audio>
+    <!-- Using a more stable URL for buzzer -->
+    <audio id="error-audio" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
     <script>
-        function lightUp() {
-            // Play switch sound
-            document.getElementById('switch-sound').play();
+        // Web Audio Context for a fallback "Buzzer" if the link fails
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playBuzzer() {
+            const errorSound = document.getElementById('error-audio');
             
+            // Try playing the audio file first
+            errorSound.play().catch(() => {
+                // If blocked or link fails, generate a synthetic beep
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = 'sawtooth';
+                osc.frequency.value = 150;
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            });
+        }
+
+        function lightUp() {
             // Transition effect
             document.getElementById('dark-room').style.opacity = '0';
             setTimeout(() => {
@@ -191,25 +222,25 @@
         }
 
         function wrongAnswer(btn) {
-            // Play error sound
-            document.getElementById('error-sound').play();
+            playBuzzer();
             
             // Shake the card
             const card = document.getElementById('question-card');
             card.classList.add('shake');
             setTimeout(() => card.classList.remove('shake'), 500);
 
-            // Show error popup
+            // Show centered error message
             const popup = document.getElementById('error-msg');
             popup.style.display = 'block';
             setTimeout(() => {
                 popup.style.display = 'none';
-            }, 2000);
+            }, 1500);
         }
 
         function correctAnswer() {
-            alert("Correct! Setting up the next surprise...");
-            // We will add the next page logic here after your feedback!
+            // We can add a success sound here!
+            alert("Perfect! Now move to the next level...");
+            // Next stage logic goes here
         }
     </script>
 </body>
