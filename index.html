@@ -528,15 +528,15 @@
             display: block;
         }
 
-        /* --- PHOTO ALBUM GALLERY STAGE --- */
+        /* --- FIXED PHOTO ALBUM GALLERY STAGE (IMPROVED IMAGE SIZING) --- */
         .photo-frame-wrapper {
             width: 100%;
             background: #FFF0F3;
             border: 2px solid #FFE3E8;
             border-radius: 24px;
-            padding: 15px;
+            padding: 14px;
             position: relative;
-            margin: 10px 0;
+            margin: 8px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -544,28 +544,34 @@
 
         .floral-corner-icon {
             position: absolute;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--rose-primary);
+            z-index: 5;
         }
 
+        /* SMART IMAGE DISPLAY AREA (PRESERVES COMPLETE PHOTO WITHOUT CROPPING) */
         .photo-display-area {
             width: 100%;
-            height: 180px;
+            height: 240px;
             background: #ffffff;
             border-radius: 16px;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
             align-items: center;
             border: 1px solid #FFE3E8;
+            padding: 6px;
         }
 
         .photo-display-area img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
         }
 
         .photo-caption-box {
@@ -573,13 +579,17 @@
             margin-top: 12px;
             background: #ffffff;
             border-radius: 14px;
-            padding: 12px;
+            padding: 12px 15px;
             font-size: 0.85rem;
             color: var(--text-dark);
             line-height: 1.5;
-            min-height: 60px;
+            min-height: 65px;
             border: 1px solid #FFEBF0;
             font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
         .gallery-nav-row {
@@ -893,7 +903,7 @@
         </div>
     </div>
 
-    <!-- STAGE 8: PHOTO ALBUM GALLERY STAGE (NEW!) -->
+    <!-- STAGE 8: PHOTO ALBUM GALLERY STAGE (FIXED PHOTO DISPLAY) -->
     <div id="stage-gallery" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
             <div class="pill-badge">✿ OUR MEMORIES ALBUM ✿</div>
@@ -904,13 +914,12 @@
                 <span class="floral-corner-icon" style="top: 8px; right: 10px;">🌸</span>
 
                 <div class="photo-display-area">
-                    <!-- PASTE PHOTO URLS IN THE JS ARRAY AT THE BOTTOM -->
-                    <img id="gallery-photo-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Memory Photo">
+                    <img id="gallery-photo-img" src="1.jpg" alt="Memory Photo">
                 </div>
 
                 <!-- CAPTION AREA FOR YOUR THOUGHTS -->
                 <div class="photo-caption-box" id="gallery-caption-text">
-                    "Write what you think about Photo 1 here..."
+                    Loading caption...
                 </div>
 
                 <!-- NAVIGATION ARROWS -->
@@ -988,7 +997,7 @@
         const soundCrunch = document.getElementById('sound-crunch');
         const customBgMusic = document.getElementById('custom-bg-music');
 
-        // --- PHOTO ALBUM DATA (EDIT YOUR 4 PHOTOS & CAPTIONS HERE!) ---
+        // --- PHOTO ALBUM DATA WITH YOUR EXACT HINDI/HINGLISH CAPTIONS ---
         const galleryData = [
             {
                 url: "1.jpg",
@@ -1139,7 +1148,7 @@
             triggerUniverseAnimation();
         }
 
-        // UNIVERSE ANIMATION (REBUILT & FIXED)
+        // UNIVERSE ANIMATION
         function triggerUniverseAnimation() {
             switchStageSlow('stage-universe', 800);
             initPinkStars('star-field-universe', 220);
