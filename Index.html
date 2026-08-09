@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pink: #ff85a2;
+            --dark-pink: #d81b60;
+            --white: #ffffff;
+            --soft-pink: #fff5f7;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        /* --- STAGE 1: BLACK ROOM --- */
+        #dark-room {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease;
+        }
+
+        .msg-pop {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        .bulb {
+            font-size: 80px;
+            cursor: pointer;
+            filter: drop-shadow(0 0 10px #fff);
+            transition: transform 0.3s ease;
+        }
+
+        .bulb:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 30px #ffd700);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* --- STAGE 2: PINK THEME --- */
+        #main-content {
+            display: none; /* Hidden until bulb is clicked */
+            height: 100vh;
+            background: linear-gradient(135deg, var(--white) 0%, var(--soft-pink) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 133, 162, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            border: 2px solid var(--soft-pink);
+        }
+
+        h2 {
+            color: var(--dark-pink);
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .opt-btn {
+            background: white;
+            border: 2px solid var(--pink);
+            color: var(--dark-pink);
+            padding: 15px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .opt-btn:hover {
+            background: var(--pink);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Error Shake Animation */
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        .error-popup {
+            position: fixed;
+            top: 20px;
+            background: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 200;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Error Message -->
+    <div id="error-msg" class="error-popup">itna nahi pata 😂</div>
+
+    <!-- Part 1: The Dark Room -->
+    <div id="dark-room">
+        <div class="msg-pop">Want to light up?</div>
+        <div class="bulb" onclick="lightUp()">💡</div>
+    </div>
+
+    <!-- Part 2: The Question Page -->
+    <div id="main-content">
+        <div class="card" id="question-card">
+            <h2>What I call you? 😁</h2>
+            <div class="options-grid">
+                <button class="opt-btn" onclick="wrongAnswer(this)">Sudhi</button>
+                <button class="opt-btn" onclick="wrongAnswer(this)">Sudhiksha</button>
+                <button class="opt-btn" onclick="correctAnswer()">Pagli 🎀</button>
+                <button class="opt-btn" onclick="wrongAnswer(this)">Devi ji 🙏</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sound Effects -->
+    <audio id="error-sound" src="https://www.myinstants.com/media/sounds/wrong-answer-126515.mp3"></audio>
+    <audio id="switch-sound" src="https://www.myinstants.com/media/sounds/light-switch-sound-effect.mp3"></audio>
+
+    <script>
+        function lightUp() {
+            // Play switch sound
+            document.getElementById('switch-sound').play();
+            
+            // Transition effect
+            document.getElementById('dark-room').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('dark-room').style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'flex';
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                }, 50);
+            }, 1000);
+        }
+
+        function wrongAnswer(btn) {
+            // Play error sound
+            document.getElementById('error-sound').play();
+            
+            // Shake the card
+            const card = document.getElementById('question-card');
+            card.classList.add('shake');
+            setTimeout(() => card.classList.remove('shake'), 500);
+
+            // Show error popup
+            const popup = document.getElementById('error-msg');
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 2000);
+        }
+
+        function correctAnswer() {
+            alert("Correct! Setting up the next surprise...");
+            // We will add the next page logic here after your feedback!
+        }
+    </script>
+</body>
+</html>
