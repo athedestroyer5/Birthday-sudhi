@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Letter For My Pagli 🎀</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts for Ultra-Premium Aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -13,11 +13,12 @@
             --card-cream: #FFFFFF;
             --rose-primary: #E88295;
             --rose-soft: #FFEBF0;
+            --rose-glow: rgba(232, 130, 149, 0.4);
             --text-dark: #5A434B;
             --text-muted: #8A6E77;
             --gold-accent: #E0A96D;
             --cherry: #D2143A;
-            --glass-border: rgba(232, 130, 149, 0.25);
+            --glass-border: rgba(232, 130, 149, 0.3);
         }
 
         * {
@@ -37,7 +38,7 @@
             color: var(--text-dark);
         }
 
-        /* --- STAGE SYSTEM --- */
+        /* --- STAGE SYSTEM WITH SMOOTH FADES --- */
         .stage {
             position: fixed;
             top: 0;
@@ -60,62 +61,62 @@
             opacity: 1;
         }
 
-        /* --- ANIMATIONS --- */
+        /* --- KEYFRAME ANIMATIONS --- */
         @keyframes floatSlow {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(232, 130, 149, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(232, 130, 149, 0.7); }
         }
 
         @keyframes twinklePink {
             0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+            50% { opacity: 1; transform: scale(1.3); }
         }
 
         @keyframes flickerFlame {
             0% { transform: rotate(-45deg) scale(1); opacity: 0.9; }
-            50% { transform: rotate(-45deg) scale(1.15); opacity: 1; }
-            100% { transform: rotate(-45deg) scale(0.95); opacity: 0.85; }
+            50% { transform: rotate(-45deg) scale(1.18); opacity: 1; }
+            100% { transform: rotate(-45deg) scale(0.92); opacity: 0.85; }
         }
 
         @keyframes boxPop {
-            0% { transform: scale(0.5) translateY(50px); opacity: 0; }
+            0% { transform: scale(0.4) translateY(60px); opacity: 0; }
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(232, 130, 149, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(232, 130, 149, 0.7); }
-        }
-
-        /* --- STAGE 1: DARK ROOM --- */
+        /* --- STAGE 1: DARK ROOM & BULB --- */
         #stage-bulb {
-            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+            background: radial-gradient(circle at center, #1b1b3a 0%, #000000 100%);
             color: #ffffff;
         }
 
         .bulb-icon {
-            font-size: 90px;
+            font-size: 95px;
             cursor: pointer;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.25));
             animation: floatSlow 3.5s ease-in-out infinite;
-            transition: transform 0.3s ease, filter 0.3s ease;
+            transition: transform 0.4s ease, filter 0.4s ease;
         }
 
         .bulb-icon:hover {
-            transform: scale(1.15) rotate(5deg);
-            filter: drop-shadow(0 0 40px var(--rose-primary));
+            transform: scale(1.18) rotate(6deg);
+            filter: drop-shadow(0 0 50px var(--rose-primary));
         }
 
         .prompt-text {
             font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             color: #e2d4f7;
             margin-bottom: 30px;
         }
 
-        /* --- STAGE 2: PASSWORD SCREEN --- */
+        /* --- STAGE 2: ULTRA-PREMIUM PASSWORD SCREEN --- */
         #stage-quiz {
-            background: linear-gradient(135deg, #FFF0F3 0%, #FFD6E0 50%, #FFC2D1 100%);
+            background: radial-gradient(circle at center, #FFF0F3 0%, #FFC2D1 70%, #FFA8BA 100%);
             color: var(--text-dark);
         }
 
@@ -133,55 +134,57 @@
             position: absolute;
             background-color: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
             animation: twinklePink var(--duration) infinite ease-in-out;
         }
 
-        .glass-card-pink {
+        .glass-card-premium {
             position: relative;
             z-index: 5;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 2px solid #ffffff;
-            padding: 40px 30px;
-            border-radius: 32px;
-            box-shadow: 0 20px 45px rgba(232, 130, 149, 0.2);
+            padding: 45px 32px;
+            border-radius: 36px;
+            box-shadow: 0 25px 50px rgba(232, 130, 149, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.5);
             width: 90%;
             max-width: 420px;
+            animation: pulseGlow 4s infinite ease-in-out;
         }
 
         .quiz-title {
             font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
+            font-size: 3.2rem;
             margin-bottom: 25px;
             color: var(--text-dark);
+            text-shadow: 0 2px 10px rgba(232, 130, 149, 0.2);
         }
 
         .grid-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .btn-pink-option {
+        .btn-premium-option {
             background: #ffffff;
             border: 1.5px solid var(--glass-border);
             color: var(--text-dark);
-            padding: 15px 10px;
-            border-radius: 18px;
+            padding: 16px 12px;
+            border-radius: 20px;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(232, 130, 149, 0.08);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 16px rgba(232, 130, 149, 0.1);
         }
 
-        .btn-pink-option:hover {
+        .btn-premium-option:hover {
             background: var(--rose-primary);
             color: #ffffff;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.3);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(232, 130, 149, 0.35);
         }
 
         /* --- CENTERED ERROR NOTIFICATION --- */
@@ -192,11 +195,11 @@
             transform: translate(-50%, -50%) scale(0.7);
             background: rgba(255, 255, 255, 0.95);
             color: var(--cherry);
-            padding: 16px 32px;
+            padding: 18px 36px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.15rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
             border: 2px solid var(--rose-primary);
             opacity: 0;
             pointer-events: none;
@@ -217,7 +220,7 @@
         }
 
         .loader-box {
-            width: 260px;
+            width: 270px;
             text-align: center;
         }
 
@@ -242,7 +245,7 @@
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: #ffffff;
-            padding: 14px 30px;
+            padding: 14px 32px;
             border-radius: 20px;
             font-size: 0.95rem;
             font-weight: 600;
@@ -255,13 +258,13 @@
             border-color: var(--rose-primary);
         }
 
-        /* --- AESTHETIC CARDS --- */
+        /* --- INSTAGRAM AESTHETIC CARDS --- */
         .aesthetic-card {
             width: 90vw;
             max-width: 420px;
             background: var(--card-cream);
-            border-radius: 32px;
-            padding: 30px 22px;
+            border-radius: 34px;
+            padding: 32px 24px;
             box-shadow: 0 20px 40px rgba(232, 130, 149, 0.15);
             border: 2px solid #ffffff;
             display: flex;
@@ -286,8 +289,8 @@
         }
 
         .chibi-avatar-frame {
-            width: 80px;
-            height: 80px;
+            width: 82px;
+            height: 82px;
             border-radius: 50%;
             background: #FFF0F3;
             border: 3px solid #FFE3E8;
@@ -307,14 +310,14 @@
 
         .letter-heading {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 1.85rem;
             color: var(--text-dark);
             margin-bottom: 4px;
         }
 
         .letter-sub {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.6rem;
+            font-size: 1.65rem;
             color: var(--rose-primary);
             margin-bottom: 10px;
         }
@@ -372,7 +375,7 @@
             background: var(--rose-primary);
             color: #ffffff;
             border: none;
-            padding: 12px 30px;
+            padding: 12px 32px;
             border-radius: 50px;
             font-size: 0.9rem;
             font-weight: 600;
@@ -398,20 +401,9 @@
             margin-top: 15px;
         }
 
-        .music-info {
-            text-align: left;
-        }
-
-        .music-title {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .music-sub {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-        }
+        .music-info { text-align: left; }
+        .music-title { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); }
+        .music-sub { font-size: 0.72rem; color: var(--text-muted); }
 
         .play-btn-circle {
             width: 40px;
@@ -512,13 +504,6 @@
             font-weight: 600;
             color: var(--rose-primary);
             padding: 4px;
-        }
-
-        .meme-box-custom img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
         }
 
         .meme-box-right {
@@ -624,9 +609,7 @@
             transition: transform 0.2s;
         }
 
-        .nav-arrow-btn:active {
-            transform: scale(0.9);
-        }
+        .nav-arrow-btn:active { transform: scale(0.9); }
 
         .photo-counter-tag {
             font-size: 0.78rem;
@@ -635,7 +618,7 @@
             letter-spacing: 1px;
         }
 
-        /* SURPRISE MENU HUB CARDS */
+        /* HIGH-END SURPRISE MENU HUB CARDS */
         .options-menu-grid {
             display: flex;
             flex-direction: column;
@@ -654,37 +637,22 @@
             align-items: center;
             gap: 15px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .option-hub-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
             border-color: var(--rose-primary);
-            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.15);
+            box-shadow: 0 10px 25px rgba(232, 130, 149, 0.2);
+            background: #FFFFFF;
         }
 
-        .option-hub-icon {
-            font-size: 1.8rem;
-        }
+        .option-hub-icon { font-size: 1.8rem; }
+        .option-hub-text { text-align: left; }
+        .option-hub-title { font-size: 0.88rem; font-weight: 700; color: var(--rose-primary); letter-spacing: 1px; text-transform: uppercase; }
+        .option-hub-sub { font-size: 0.75rem; color: var(--text-muted); }
 
-        .option-hub-text {
-            text-align: left;
-        }
-
-        .option-hub-title {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--rose-primary);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .option-hub-sub {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        /* COOLER SECRET GIFT BOXES AREA */
+        /* ULTRA COOL SECRET GIFT BOXES AREA */
         .gift-boxes-row {
             display: flex;
             justify-content: space-around;
@@ -693,129 +661,16 @@
         }
 
         .gift-box-item-cool {
-            font-size: 55px;
+            font-size: 58px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             filter: drop-shadow(0 6px 12px rgba(232, 130, 149, 0.3));
             animation: floatSlow 3s infinite ease-in-out;
         }
 
         .gift-box-item-cool:hover {
-            transform: scale(1.25) rotate(10deg);
+            transform: scale(1.28) rotate(12deg);
             filter: drop-shadow(0 0 25px var(--rose-primary));
-        }
-
-        /* STAR MINI GAME STAGE */
-        #stage-star-game {
-            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
-            color: #ffffff;
-            touch-action: none;
-        }
-
-        .game-canvas-area {
-            width: 100%;
-            max-width: 380px;
-            height: 380px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            position: relative;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-
-        .game-moon-finish {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 45px;
-            filter: drop-shadow(0 0 15px var(--gold-accent));
-        }
-
-        .player-star {
-            position: absolute;
-            bottom: 20px;
-            left: calc(50% - 25px);
-            font-size: 40px;
-            cursor: grab;
-            z-index: 20;
-            filter: drop-shadow(0 0 12px var(--gold-accent));
-        }
-
-        .meteor-obstacle {
-            position: absolute;
-            font-size: 28px;
-            z-index: 10;
-        }
-
-        /* CAT MOON PARTY STAGE */
-        #stage-moon-party {
-            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
-            color: white;
-            overflow-y: auto;
-            padding: 30px 15px;
-        }
-
-        .crescent-moon {
-            font-size: 90px;
-            filter: drop-shadow(0 0 25px var(--gold-accent));
-            animation: floatSlow 4s infinite ease-in-out;
-            margin-bottom: 10px;
-        }
-
-        .cat-memes-party-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 380px;
-            margin: 15px 0;
-        }
-
-        .party-cat-box {
-            width: 100%;
-            height: 100px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .party-cat-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* WISH WIDGET / BOUQUET CARDS */
-        .wish-flower-card {
-            width: 100%;
-            background: #FFF8F9;
-            border: 1px solid #FFE3E8;
-            border-radius: 20px;
-            padding: 16px;
-            margin-top: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .wish-card-title {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            color: var(--rose-primary);
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .wish-card-text {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 0.88rem;
-            line-height: 1.5;
-            color: var(--text-dark);
         }
 
         /* CUTE CUSTOM POP-UP MODAL */
@@ -950,9 +805,7 @@
 </head>
 <body>
 
-    <!-- CUSTOM AUDIO PLAYER PLACEHOLDER FOR CAT PARTY SONG -->
-    <!-- REPLACE 'YOUR_CAT_PARTY_SONG_URL' WITH YOUR SONG LINK -->
-    <audio id="cat-party-song" src="YOUR_CAT_PARTY_SONG_URL" loop></audio>
+    <!-- CUSTOM AUDIO PLAYER PLACEHOLDER -->
     <audio id="custom-bg-music" src="YOUR_SONG_URL_HERE" loop></audio>
 
     <!-- Sleek Error Notification -->
@@ -968,13 +821,13 @@
         </div>
     </div>
 
-    <!-- GIFT BOX 1: ANIMATED MEME POP-OUT MODAL -->
+    <!-- GIFT BOX 1: ANIMATED MEME POP-OUT MODAL (UNIQUE GIFT CAT MEME) -->
     <div id="gift-meme-modal">
         <div class="gift-meme-container">
             <div class="pill-badge" style="background: var(--rose-primary); color: white;">✿ SURPRISE MEME ✿</div>
             <div style="width: 220px; height: 220px; background: white; border-radius: 20px; overflow: hidden; margin: 15px 0; border: 3px solid var(--rose-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                <!-- PASTE YOUR GIFT BOX MEME HERE -->
-                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" style="width:100%; height:100%; object-fit:cover;" alt="Pop Out Cat Meme">
+                <!-- UNIQUE GIFT CAT MEME -->
+                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif" style="width:100%; height:100%; object-fit:cover;" alt="Pop Out Vibing Cat Meme">
             </div>
             <button class="btn-next-step" onclick="closeGiftMemeModal()">Close Gift 🎁</button>
         </div>
@@ -986,16 +839,16 @@
         <div class="bulb-icon" onclick="playMagic(); switchStageSlow('stage-quiz', 1200); initPinkStars('star-field-quiz', 160);">💡</div>
     </div>
 
-    <!-- STAGE 2: PASSWORD (PINK & WHITE STARRY THEME) -->
+    <!-- STAGE 2: PASSWORD (ULTRA-PREMIUM PINK GLOW THEME) -->
     <div id="stage-quiz" class="stage">
         <div class="stars-container" id="star-field-quiz"></div>
-        <div class="glass-card-pink">
+        <div class="glass-card-premium">
             <h2 class="quiz-title">What I call you? 😁</h2>
             <div class="grid-options">
-                <button class="btn-pink-option" onclick="triggerError()">Sudhi</button>
-                <button class="btn-pink-option" onclick="triggerError()">Sudhiksha</button>
-                <button class="btn-pink-option" onclick="playMagic(); runLoadingStage();">Pagli 🎀</button>
-                <button class="btn-pink-option" onclick="triggerError()">Devi ji 🙏</button>
+                <button class="btn-premium-option" onclick="triggerError()">Sudhi</button>
+                <button class="btn-premium-option" onclick="triggerError()">Sudhiksha</button>
+                <button class="btn-premium-option" onclick="playMagic(); runLoadingStage();">Pagli 🎀</button>
+                <button class="btn-premium-option" onclick="triggerError()">Devi ji 🙏</button>
             </div>
         </div>
     </div>
@@ -1031,6 +884,7 @@
             <div class="pill-badge">🌸 MADE WITH SO MUCH LOVE 🌸</div>
             
             <div class="chibi-avatar-frame">
+                <!-- UNIQUE CHIBI CAT 1 -->
                 <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Chibi White Cat">
             </div>
 
@@ -1076,8 +930,9 @@
                     <span>Paste Meme 1 Here 🌸</span>
                 </div>
 
+                <!-- RIGHT MEME: UNIQUE SHOCKED CAT -->
                 <div class="meme-box-right">
-                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="White Cat Meme">
+                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif" alt="Shocked White Cat Meme">
                 </div>
             </div>
 
@@ -1122,13 +977,13 @@
         </div>
     </div>
 
-    <!-- STAGE 9: INTERACTIVE SURPRISE HUB MENU -->
+    <!-- STAGE 9: HIGH-END INTERACTIVE SURPRISE HUB MENU -->
     <div id="stage-hub" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
             <div class="pill-badge">✿ SPECIAL SURPRISES FOR YOU ✿</div>
 
             <div class="options-menu-grid">
-                <!-- Option 1: OUR MEMORY LANE (SEPARATE DEDICATED STAGE) -->
+                <!-- Option 1: OUR MEMORY LANE -->
                 <div class="option-hub-card" onclick="switchStageSlow('stage-memory-lane', 800)">
                     <span class="option-hub-icon">🌸</span>
                     <div class="option-hub-text">
@@ -1137,12 +992,12 @@
                     </div>
                 </div>
 
-                <!-- Option 2: FOLLOW THE STARS (STAR MINI GAME) -->
-                <div class="option-hub-card" onclick="startStarGame()">
-                    <span class="option-hub-icon">⭐</span>
+                <!-- Option 2: OPEN THIS IN 2032 (NEW!) -->
+                <div class="option-hub-card" onclick="open2032CapsuleModal()">
+                    <span class="option-hub-icon">⏳</span>
                     <div class="option-hub-text">
-                        <div class="option-hub-title">✿ FOLLOW THE STARS ✿</div>
-                        <div class="option-hub-sub">Guide the star to the Moon Cat Party!</div>
+                        <div class="option-hub-title">✿ OPEN THIS IN 2032 ✿</div>
+                        <div class="option-hub-sub">A secret time-capsule message & bucket list</div>
                     </div>
                 </div>
 
@@ -1165,8 +1020,6 @@
                     <div class="gift-box-item-cool" style="animation-delay: 1s;" onclick="openGiftBox(3)">🎁</div>
                 </div>
             </div>
-
-            <button class="btn-next-step" style="margin-top: 15px;" onclick="switchStageSlow('stage-bouquet', 800)">Next: Bouquet of Wishes 🌸 →</button>
         </div>
     </div>
 
@@ -1183,67 +1036,23 @@
         </div>
     </div>
 
-    <!-- STAGE: FOLLOW THE STARS MINI-GAME STAGE -->
-    <div id="stage-star-game" class="stage">
-        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--gold-accent);">Follow The Stars ⭐</h2>
-        <p style="font-size: 0.82rem; color: #ffffff; opacity: 0.8;">Drag the star holding the gift (`⭐🎁`) to the Moon 🌙 while dodging meteors (`☄️`)!</p>
-
-        <div class="game-canvas-area" id="gameArea">
-            <div class="game-moon-finish" id="moonFinish">🌙</div>
-            <div class="player-star" id="playerStar">⭐🎁</div>
+    <!-- NEW 2032 TIME CAPSULE MODAL -->
+    <div id="modal-2032" style="position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(12px); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 750; padding: 20px; color: white;">
+        <div style="background: #FFF8F6; color: var(--text-dark); border-radius: 28px; padding: 28px 22px; width: 88vw; max-width: 380px; text-align: center; border: 2px solid var(--rose-primary);">
+            <div class="pill-badge">⏳ 2032 TIME CAPSULE ⏳</div>
             
-            <!-- Obstacles -->
-            <div class="meteor-obstacle" id="m1" style="top: 100px; left: 30px;">☄️</div>
-            <div class="meteor-obstacle" id="m2" style="top: 180px; left: 200px;">☄️</div>
-            <div class="meteor-obstacle" id="m3" style="top: 260px; left: 100px;">☄️</div>
-        </div>
-
-        <button class="btn-dark-stage" id="start-game-btn" onclick="initStarMiniGame()">Tap to Start Game 🚀</button>
-    </div>
-
-    <!-- STAGE: CAT MOON PARTY STAGE -->
-    <div id="stage-moon-party" class="stage">
-        <div class="stars-container" id="star-field-moon"></div>
-        <div class="crescent-moon">🌙</div>
-        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: var(--gold-accent); margin-bottom: 5px;">Cat Moon Party! 🎉</h2>
-        <p style="font-size: 0.85rem; color: #ffffff; opacity: 0.8; margin-bottom: 15px;">The star brought your gift to the party!</p>
-
-        <!-- 3 CAT MEMES GRID ON THE MOON -->
-        <div class="cat-memes-party-grid">
-            <!-- CAT MEME 1 -->
-            <div class="party-cat-box">
-                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif" alt="Cat Meme 1">
+            <!-- THINKING / TIME CAT MEME -->
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" style="width: 100px; border-radius: 12px; margin-bottom: 10px;" alt="Time Cat">
+            
+            <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--cherry); margin-bottom: 5px;">Abhi aane to de 2032! 😂😜</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Type things you want to do until 2032:</p>
+            
+            <input type="text" id="capsule-2032-input" class="wish-field" style="color: var(--text-dark); border-bottom-color: var(--rose-primary); font-size: 1.5rem; margin: 10px 0;" placeholder="Type your 2032 bucket list..." autocomplete="off">
+            
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px;">
+                <button class="btn-next-step" style="margin-top:0;" onclick="submit2032Capsule()">Send to Email 📧</button>
+                <button class="btn-dark-stage" style="padding: 10px 20px; background: var(--text-muted); border: none;" onclick="close2032CapsuleModal()">Close</button>
             </div>
-            <!-- CAT MEME 2 -->
-            <div class="party-cat-box">
-                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif" alt="Cat Meme 2">
-            </div>
-            <!-- CAT MEME 3 -->
-            <div class="party-cat-box">
-                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Cat Meme 3">
-            </div>
-        </div>
-
-        <button class="btn-dark-stage" style="margin-top: 15px; background: var(--rose-primary); border: none;" onclick="switchStageSlow('stage-hub', 800)">Back to Menu 🌸</button>
-    </div>
-
-    <!-- STAGE: BOUQUET OF WISHES SCREEN -->
-    <div id="stage-bouquet" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
-        <div class="aesthetic-card">
-            <div class="pill-badge">✿ A TINY BOUQUET OF WISHES ✿</div>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px;">pick each flower — there's a little wish inside ♡</p>
-
-            <div class="wish-flower-card" onclick="openCuteModal('✿ THE WAY YOU LAUGH ✿', 'Wishing you endless smiles, warm moments, and late-night jokes that make your belly hurt! 🌸')">
-                <p class="wish-card-title">✿ THE WAY YOU LAUGH ✿</p>
-                <p class="wish-card-text">"Your laugh is one of those sounds that just makes a room feel warmer. Wishing you a year full of moments that bring it out again and again."</p>
-            </div>
-
-            <div class="wish-flower-card" onclick="openCuteModal('✿ THE WAY YOU SHOW UP ✿', 'Thank you for always being the most supportive friend! Wishing you the same softness back this year. ✨')">
-                <p class="wish-card-title">✿ THE WAY YOU SHOW UP ✿</p>
-                <p class="wish-card-text">"You remember the small things — the random text on a hard day, the quiet patience. Wishing you the same softness back this year."</p>
-            </div>
-
-            <button class="btn-next-step" onclick="switchStageSlow('stage-hub', 800)">Back to Menu 🌸</button>
         </div>
     </div>
 
@@ -1266,13 +1075,14 @@
 
     <!-- WISH INPUT OVERLAY -->
     <div id="wish-overlay-input">
+        <!-- UNIQUE BEGGING WISH CAT MEME -->
         <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" style="width: 130px; border-radius: 15px;" alt="Wish Cat">
         <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ffffff; margin-top: 12px;">First type your wish 😉</h2>
         <input type="text" id="wish-text-input" class="wish-field" placeholder="Make a wish..." autocomplete="off">
         <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 14px 40px;" onclick="processWishSubmission()">Send Wish to Stars ⭐</button>
     </div>
 
-    <!-- STAGE: UNIVERSE ANIMATION (REBUILT & FIXED) -->
+    <!-- STAGE: UNIVERSE ANIMATION -->
     <div id="stage-universe" class="stage">
         <div class="stars-container" id="star-field-universe"></div>
         <div class="actor-gift-box" id="gift-box-actor">🎁</div>
@@ -1293,9 +1103,8 @@
         const soundBuzzer = document.getElementById('sound-buzzer');
         const soundCrunch = document.getElementById('sound-crunch');
         const customBgMusic = document.getElementById('custom-bg-music');
-        const catPartySong = document.getElementById('cat-party-song');
 
-        // --- PHOTO ALBUM DATA ---
+        // --- PHOTO ALBUM DATA WITH YOUR EXACT HINDI/HINGLISH CAPTIONS ---
         const galleryData = [
             {
                 url: "1.jpg",
@@ -1446,7 +1255,7 @@
             triggerUniverseAnimation();
         }
 
-        // UNIVERSE ANIMATION (REBUILT & FIXED)
+        // UNIVERSE ANIMATION
         function triggerUniverseAnimation() {
             switchStageSlow('stage-universe', 800);
             initPinkStars('star-field-universe', 220);
@@ -1455,21 +1264,18 @@
             const star = document.getElementById('star-actor');
             const uniText = document.getElementById('universe-text');
 
-            // Reset Initial Animation Transforms
             giftBox.style.transform = "translate(-50%, 0)";
             giftBox.style.opacity = "1";
             star.style.transform = "translate(-50%, 0)";
             uniText.style.opacity = "0";
 
             setTimeout(() => {
-                // 1. Star descends down to gift box position
                 star.style.transform = "translate(-50%, 550px)";
 
                 setTimeout(() => {
                     uniText.style.opacity = "1";
 
                     setTimeout(() => {
-                        // 2. Star and Gift Box shoot up together to space
                         star.style.transform = "translate(-50%, -400px)";
                         giftBox.style.transform = "translate(-50%, -650px)";
                         giftBox.style.opacity = "0";
@@ -1498,7 +1304,6 @@
         // STRICT CAKE GUARD NAVIGATION
         function attemptGoToGallery() {
             if (!isCakeCut) {
-                triggerError();
                 openCuteModal('🎂 CAKE PEHLE KAATO! 😋', 'Madam Ji, pehle saari candles bujha ke cake toh kaato! Phir aage badhenge 😉🌸');
             } else {
                 switchStageSlow('stage-gallery', 1000);
@@ -1526,57 +1331,29 @@
             document.getElementById('gift-meme-modal').style.display = 'none';
         }
 
-        // STAR MINI-GAME LOGIC
-        let isGameStarted = false;
-        function startStarGame() {
-            switchStageSlow('stage-star-game', 800);
+        // 2032 TIME CAPSULE FUNCTIONS
+        function open2032CapsuleModal() {
+            document.getElementById('modal-2032').style.display = 'flex';
             playMagic();
         }
 
-        function initStarMiniGame() {
-            isGameStarted = true;
-            document.getElementById('start-game-btn').style.display = 'none';
-            const player = document.getElementById('playerStar');
-            const gameArea = document.getElementById('gameArea');
-
-            // Touch / Mouse Drag Logic
-            let isDragging = false;
-
-            const moveHandler = (e) => {
-                if (!isDragging) return;
-                const rect = gameArea.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-                let x = clientX - rect.left - 25;
-                let y = clientY - rect.top - 25;
-
-                x = Math.max(0, Math.min(rect.width - 50, x));
-                y = Math.max(0, Math.min(rect.height - 50, y));
-
-                player.style.left = x + 'px';
-                player.style.top = y + 'px';
-
-                // Check Win Condition (Reached Moon Finish Line)
-                if (y < 40) {
-                    isDragging = false;
-                    winStarGame();
-                }
-            };
-
-            player.addEventListener('mousedown', () => isDragging = true);
-            player.addEventListener('touchstart', () => isDragging = true);
-            window.addEventListener('mouseup', () => isDragging = false);
-            window.addEventListener('touchend', () => isDragging = false);
-            window.addEventListener('mousemove', moveHandler);
-            window.addEventListener('touchmove', moveHandler);
+        function close2032CapsuleModal() {
+            document.getElementById('modal-2032').style.display = 'none';
         }
 
-        function winStarGame() {
-            playMagic();
-            catPartySong.play().catch(() => {});
-            switchStageSlow('stage-moon-party', 800);
-            initPinkStars('star-field-moon', 150);
+        function submit2032Capsule() {
+            const listVal = document.getElementById('capsule-2032-input').value.trim();
+            if(!listVal) return;
+
+            // Formspree Dispatch for 2032 Bucket List
+            fetch("https://formspree.io/f/xoeaeqjp", {
+                method: "POST",
+                body: JSON.stringify({ bucket_list_2032: listVal }),
+                headers: { 'Accept': 'application/json' }
+            }).catch(() => {});
+
+            close2032CapsuleModal();
+            openCuteModal('⏳ 2032 TIME CAPSULE SENT! 📧', 'Your 2032 bucket list has been sent to the stars! See you in 2032 Pagli! 😜✨');
         }
 
         // Initialize First Photo Display
