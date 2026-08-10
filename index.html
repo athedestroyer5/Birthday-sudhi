@@ -4,389 +4,1526 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Letter For My Pagli 🎀</title>
+    <!-- Google Fonts for Instagram Reel Aesthetic -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-pink: #FFF5F7;
+            --bg-pink-soft: #FFF5F7;
+            --card-cream: #FFFFFF;
             --rose-primary: #E88295;
-            --rose-glow: rgba(232, 130, 149, 0.5);
+            --rose-soft: #FFEBF0;
             --text-dark: #5A434B;
-            --glass: rgba(255, 255, 255, 0.85);
+            --text-muted: #8A6E77;
+            --gold-accent: #E0A96D;
+            --cherry: #D2143A;
+            --glass-border: rgba(232, 130, 149, 0.25);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
-        body, html { height: 100%; width: 100%; font-family: 'Poppins', sans-serif; overflow: hidden; background-color: #000; color: var(--text-dark); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        /* --- STAGE SYSTEM (SNAPPY) --- */
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background-color: #000000;
+            color: var(--text-dark);
+        }
+
+        /* --- STAGE SYSTEM --- */
         .stage {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; opacity: 0; transition: opacity 0.4s ease; z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            padding: 20px;
         }
-        .stage.active { display: flex; opacity: 1; }
 
-        /* --- PREMIUM PASSWORD SCREEN --- */
+        .stage.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes twinklePink {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes flickerFlame {
+            0% { transform: rotate(-45deg) scale(1); opacity: 0.9; }
+            50% { transform: rotate(-45deg) scale(1.15); opacity: 1; }
+            100% { transform: rotate(-45deg) scale(0.95); opacity: 0.85; }
+        }
+
+        @keyframes pulseAudio {
+            0%, 100% { box-shadow: 0 0 10px rgba(232, 130, 149, 0.3); transform: scale(1); }
+            50% { box-shadow: 0 0 25px rgba(232, 130, 149, 0.7); transform: scale(1.06); }
+        }
+
+        @keyframes boxPop {
+            0% { transform: scale(0.5) translateY(50px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        /* --- STAGE 1: DARK ROOM --- */
+        #stage-bulb {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+            color: #ffffff;
+        }
+
+        .bulb-icon {
+            font-size: 90px;
+            cursor: pointer;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+            animation: floatSlow 3.5s ease-in-out infinite;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .bulb-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 0 40px var(--rose-primary));
+        }
+
+        .prompt-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #e2d4f7;
+            margin-bottom: 30px;
+        }
+
+        /* --- STAGE 2: PASSWORD SCREEN (PINK & WHITE STARRY THEME) --- */
         #stage-quiz {
-            background: linear-gradient(45deg, #FFDEE9 0%, #B5FFFC 100%);
+            background: linear-gradient(135deg, #FFF0F3 0%, #FFD6E0 50%, #FFC2D1 100%);
+            color: var(--text-dark);
+        }
+
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star-pixel {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+            animation: twinklePink var(--duration) infinite ease-in-out;
+        }
+
+        .glass-card-pink {
+            position: relative;
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid #ffffff;
+            padding: 40px 30px;
+            border-radius: 32px;
+            box-shadow: 0 20px 45px rgba(232, 130, 149, 0.2);
+            width: 90%;
+            max-width: 420px;
+        }
+
+        .quiz-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+        }
+
+        .grid-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn-pink-option {
+            background: #ffffff;
+            border: 1.5px solid var(--glass-border);
+            color: var(--text-dark);
+            padding: 15px 10px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(232, 130, 149, 0.08);
+        }
+
+        .btn-pink-option:hover {
+            background: var(--rose-primary);
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.3);
+        }
+
+        /* --- CENTERED ERROR NOTIFICATION --- */
+        #error-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--cherry);
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--rose-primary);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        #error-toast.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* --- STAGE 3, 4 & 5: LOADING, EXCITE, RESPONSE --- */
+        #stage-loading, #stage-excite, #stage-response {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .loader-box {
+            width: 260px;
+            text-align: center;
+        }
+
+        .loader-track {
+            width: 100%;
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .loader-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--rose-primary);
+            box-shadow: 0 0 15px var(--rose-primary);
+            transition: width 0.05s linear;
+        }
+
+        .btn-dark-stage {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 14px 30px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-dark-stage:hover {
+            background: var(--rose-primary);
+            border-color: var(--rose-primary);
+        }
+
+        /* --- AESTHETIC CARDS --- */
+        .aesthetic-card {
+            width: 90vw;
+            max-width: 420px;
+            background: var(--card-cream);
+            border-radius: 32px;
+            padding: 30px 22px;
+            box-shadow: 0 20px 40px rgba(232, 130, 149, 0.15);
+            border: 2px solid #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .pill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--rose-soft);
+            color: var(--rose-primary);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .chibi-avatar-frame {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #FFF0F3;
+            border: 3px solid #FFE3E8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.15);
             overflow: hidden;
         }
-        /* Floating Glowing Blobs */
-        .blob {
-            position: absolute; width: 300px; height: 300px; 
-            background: var(--rose-glow); filter: blur(80px); border-radius: 50%; z-index: 1;
-            animation: move 10s infinite alternate;
+
+        .chibi-avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        @keyframes move { from { transform: translate(-50%, -50%); } to { transform: translate(50%, 50%); } }
 
-        .premium-card {
-            position: relative; z-index: 10; background: var(--glass);
-            backdrop-filter: blur(20px); border-radius: 40px; padding: 50px 30px;
-            border: 2px solid #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            width: 90%; max-width: 420px;
+        .letter-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
         }
-        .premium-title { font-family: 'Dancing Script'; font-size: 3.5rem; margin-bottom: 30px; color: var(--rose-primary); }
-        .grid-options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn-opt {
-            background: #fff; border: 1.5px solid #FFE3E8; padding: 18px;
-            border-radius: 20px; font-weight: 700; color: var(--text-dark);
-            cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+
+        .letter-sub {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: var(--rose-primary);
+            margin-bottom: 10px;
         }
-        .btn-opt:hover { background: var(--rose-primary); color: #fff; transform: scale(1.05); }
 
-        /* --- LOADING & EXCITE (BLACK) --- */
-        #stage-loading, #stage-excite, #stage-response { background: #000; color: #fff; }
-        .bar-track { width: 250px; height: 8px; background: #222; border-radius: 10px; margin-top: 20px; overflow: hidden; }
-        .bar-fill { height: 100%; width: 0%; background: var(--rose-primary); box-shadow: 0 0 15px var(--rose-primary); }
-
-        /* --- AESTHETIC CARDS (P1 STYLE) --- */
-        .aesthetic-card {
-            width: 90vw; max-width: 400px; background: #fff; border-radius: 35px;
-            padding: 30px; box-shadow: 0 15px 40px rgba(232, 130, 149, 0.15);
-            border: 2px solid #fff; display: flex; flex-direction: column; align-items: center;
+        .divider-dots {
+            color: var(--rose-primary);
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            margin: 8px 0;
+            opacity: 0.6;
         }
-        .pill { background: var(--rose-soft); color: var(--rose-primary); padding: 8px 20px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 20px; }
 
-        /* --- PHOTO ALBUM (QUICK) --- */
-        .photo-frame { width: 100%; height: 220px; background: #fff; border-radius: 20px; padding: 8px; border: 1px solid #FFE3E8; display: flex; justify-content: center; align-items: center; }
-        .photo-frame img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 12px; }
-        .caption { margin-top: 15px; font-style: italic; font-size: 0.85rem; min-height: 60px; text-align: center; }
+        .letter-body-text {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            text-align: center;
+            margin: 12px 0;
+        }
 
-        /* --- SURPRISE HUB --- */
-        .hub-btn { width: 100%; background: #FFF8F9; border: 1.5px solid #FFE3E8; border-radius: 20px; padding: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; }
-        .hub-btn:hover { transform: translateY(-3px); background: #fff; border-color: var(--rose-primary); }
+        /* ENVELOPE BUTTON */
+        .envelope-card-btn {
+            width: 100%;
+            background: #FFF3F5;
+            border: 2px dashed #FFD4DD;
+            border-radius: 22px;
+            padding: 20px 15px;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* --- GIFTS --- */
-        .gift-box { font-size: 55px; cursor: pointer; transition: 0.3s; animation: floatSlow 3s infinite; }
-        .gift-box:hover { transform: scale(1.2); }
+        .envelope-card-btn:hover {
+            transform: scale(1.02);
+        }
 
-        /* --- MODALS --- */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-        .modal-content { background: #fff; border-radius: 30px; padding: 30px; width: 100%; max-width: 380px; text-align: center; border: 2px solid var(--rose-primary); }
+        .wax-seal-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--rose-primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(232, 130, 149, 0.4);
+            margin-bottom: 6px;
+        }
 
-        input { background: transparent; border: none; border-bottom: 2px solid var(--rose-primary); width: 80%; padding: 10px; font-family: 'Dancing Script'; font-size: 1.8rem; text-align: center; outline: none; margin: 20px 0; }
+        .btn-next-step {
+            background: var(--rose-primary);
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 18px;
+            box-shadow: 0 6px 18px rgba(232, 130, 149, 0.3);
+            transition: transform 0.3s ease;
+        }
 
-        /* --- UNIVERSE --- */
-        #stage-universe { background: #000; overflow: hidden; }
-        .star-box { position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%); font-size: 50px; transition: 3s; }
-        .star-main { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); font-size: 80px; transition: 3s; filter: drop-shadow(0 0 20px gold); }
+        .btn-next-step:hover {
+            transform: translateY(-2px);
+        }
 
-        @keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        /* MUSIC WIDGET */
+        .music-widget {
+            width: 100%;
+            background: #FFF0F3;
+            border-radius: 20px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .music-info {
+            text-align: left;
+        }
+
+        .music-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .music-sub {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .play-btn-circle {
+            width: 40px;
+            height: 40px;
+            background: var(--rose-primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(232, 130, 149, 0.3);
+        }
+
+        /* DEDICATED VOICE NOTE PLAYER STAGE */
+        .voice-card-box {
+            width: 100%;
+            background: #FFF0F3;
+            border: 2px solid #FFE3E8;
+            border-radius: 24px;
+            padding: 22px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .voice-mic-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 4px 10px rgba(232, 130, 149, 0.3));
+        }
+
+        .voice-play-button {
+            width: 65px;
+            height: 65px;
+            background: var(--rose-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 15px 0;
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .voice-play-button.playing {
+            animation: pulseAudio 1.5s infinite ease-in-out;
+            background: var(--cherry);
+        }
+
+        .voice-progress-container {
+            width: 100%;
+            height: 6px;
+            background: #FFE3E8;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .voice-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--rose-primary);
+            transition: width 0.1s linear;
+        }
+
+        .voice-time-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* CAKE & CANDLES SECTION */
+        .cake-wrapper {
+            position: relative;
+            width: 190px;
+            height: 120px;
+            margin: 15px 0 10px 0;
+            cursor: pointer;
+        }
+
+        .cake-layer-bottom {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 85px;
+            background: #FFF9E6;
+            border-radius: 16px 16px 6px 6px;
+            box-shadow: 0 10px 20px rgba(232, 130, 149, 0.12), inset 0 -6px 0 rgba(0,0,0,0.04);
+            border-bottom: 5px solid #F3E1B9;
+        }
+
+        .cake-frosting-top {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 28px;
+            background: var(--rose-primary);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .drip-item {
+            position: absolute;
+            top: 20px;
+            background: var(--rose-primary);
+            width: 14px;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .candle-item {
+            position: absolute;
+            width: 8px;
+            height: 40px;
+            background: #FF6B8B;
+            top: -40px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.4s ease;
+        }
+
+        .candle-flame {
+            position: absolute;
+            top: -16px;
+            left: -3px;
+            width: 14px;
+            height: 18px;
+            background: radial-gradient(circle, #FFEA00, #FF6A00);
+            border-radius: 50% 50% 20% 50%;
+            transform: rotate(-45deg);
+            animation: flickerFlame 0.12s infinite;
+            box-shadow: 0 0 10px #FF9E00;
+        }
+
+        /* MEME CAT ROW IN CAKE CARD */
+        .card-memes-row {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .meme-box-custom {
+            width: 75px;
+            height: 75px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #FFF0F3;
+            border: 2px dashed var(--rose-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 0.62rem;
+            font-weight: 600;
+            color: var(--rose-primary);
+            padding: 4px;
+        }
+
+        .meme-box-custom img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .meme-box-right {
+            width: 75px;
+            height: 75px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+            border: 1px solid #FFE3E8;
+        }
+
+        .meme-box-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- PHOTO ALBUM GALLERY STAGE --- */
+        .photo-frame-wrapper {
+            width: 100%;
+            background: #FFF0F3;
+            border: 2px solid #FFE3E8;
+            border-radius: 24px;
+            padding: 14px;
+            position: relative;
+            margin: 8px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .floral-corner-icon {
+            position: absolute;
+            font-size: 1.1rem;
+            color: var(--rose-primary);
+            z-index: 5;
+        }
+
+        .photo-display-area {
+            width: 100%;
+            height: 240px;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #FFE3E8;
+            padding: 6px;
+        }
+
+        .photo-display-area img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .photo-caption-box {
+            width: 100%;
+            margin-top: 12px;
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 12px 15px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+            min-height: 65px;
+            border: 1px solid #FFEBF0;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .gallery-nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .nav-arrow-btn {
+            width: 38px;
+            height: 38px;
+            background: var(--rose-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(232, 130, 149, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .nav-arrow-btn:active {
+            transform: scale(0.9);
+        }
+
+        .photo-counter-tag {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--rose-primary);
+            letter-spacing: 1px;
+        }
+
+        /* SURPRISE MENU HUB CARDS */
+        .options-menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .option-hub-card {
+            width: 100%;
+            background: #FFF8F9;
+            border: 1.5px solid #FFE3E8;
+            border-radius: 20px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-hub-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--rose-primary);
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.15);
+        }
+
+        .option-hub-icon {
+            font-size: 1.8rem;
+        }
+
+        .option-hub-text {
+            text-align: left;
+        }
+
+        .option-hub-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--rose-primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .option-hub-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* SECRET GIFT BOXES AREA */
+        .gift-boxes-row {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 20px 0 10px 0;
+        }
+
+        .gift-box-item-cool {
+            font-size: 55px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 6px 12px rgba(232, 130, 149, 0.3));
+            animation: floatSlow 3s infinite ease-in-out;
+        }
+
+        .gift-box-item-cool:hover {
+            transform: scale(1.25) rotate(10deg);
+            filter: drop-shadow(0 0 25px var(--rose-primary));
+        }
+
+        /* CUTE CUSTOM POP-UP MODAL */
+        #cute-alert-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 800;
+            padding: 20px;
+        }
+
+        .cute-modal-card {
+            background: #FFF8F6;
+            border: 2px solid var(--rose-primary);
+            border-radius: 28px;
+            padding: 28px 20px;
+            width: 88vw;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* WISH MODAL OVERLAY */
+        #wish-overlay-input {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 700;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .wish-field {
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid var(--rose-primary);
+            color: #ffffff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            text-align: center;
+            width: 85%;
+            max-width: 360px;
+            padding: 10px;
+            outline: none;
+            margin: 20px 0;
+        }
+
+        /* FULL LETTER MODAL */
+        #letter-full-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 600;
+            padding: 20px;
+        }
+
+        /* ANIMATED GIFT POP-OUT MEME MODAL */
+        #gift-meme-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 850;
+            padding: 20px;
+        }
+
+        .gift-meme-container {
+            animation: boxPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        /* --- STAGE: UNIVERSE ANIMATION --- */
+        #stage-universe {
+            background-color: #000000;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .actor-gift-box {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            font-size: 55px;
+            z-index: 10;
+            transition: transform 3.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
+        }
+
+        .actor-star-descend {
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            font-size: 90px;
+            filter: drop-shadow(0 0 30px var(--gold-accent));
+            z-index: 11;
+            transition: transform 3.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
+        }
+
+        .universe-msg {
+            position: absolute;
+            top: 20%;
+            width: 90%;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.6rem;
+            color: #ffffff;
+            opacity: 0;
+            transition: opacity 1s ease;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
     </style>
 </head>
 <body>
 
-    <audio id="custom-bg-music" src="YOUR_SONG_HERE.mp3" loop></audio>
+    <!-- CUSTOM AUDIO PLAYER PLACEHOLDERS -->
+    <audio id="custom-bg-music" src="YOUR_SONG_URL_HERE" loop></audio>
+    
+    <!-- YOUR VOICE NOTE FILE PLACEHOLDER (NAME YOUR FILE 'voice_note.mp3' OR EDIT SRC HERE) -->
+    <audio id="voice-note-audio" src="voice_note.mp3"></audio>
 
-    <div id="error-toast" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; color:var(--cherry); padding:15px 30px; border-radius:50px; z-index:2000; display:none; border:2px solid var(--rose-primary); font-weight:bold;">itna bhi nahi pata 😂</div>
+    <!-- Sleek Error Notification -->
+    <div id="error-toast">itna bhi nahi pata 😂</div>
 
-    <!-- STAGE 1: BULB -->
+    <!-- CUTE CUSTOM POP-UP MODAL -->
+    <div id="cute-alert-modal">
+        <div class="cute-modal-card">
+            <div class="pill-badge" id="cute-modal-badge">✿ SPECIAL WISH ✿</div>
+            <h3 id="cute-modal-title" style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 8px; font-size: 1.2rem;"></h3>
+            <p id="cute-modal-text" style="font-size: 0.88rem; line-height: 1.6; color: var(--text-dark); margin-bottom: 18px;"></p>
+            <button class="btn-next-step" style="margin-top: 0; padding: 10px 28px;" onclick="closeCuteModal()">Close ♡</button>
+        </div>
+    </div>
+
+    <!-- GIFT BOX 1: ANIMATED MEME POP-OUT MODAL -->
+    <div id="gift-meme-modal">
+        <div class="gift-meme-container">
+            <div class="pill-badge" style="background: var(--rose-primary); color: white;">✿ SURPRISE MEME ✿</div>
+            <div style="width: 220px; height: 220px; background: white; border-radius: 20px; overflow: hidden; margin: 15px 0; border: 3px solid var(--rose-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <!-- PASTE YOUR GIFT BOX MEME HERE -->
+                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif" style="width:100%; height:100%; object-fit:cover;" alt="Pop Out Cat Meme">
+            </div>
+            <button class="btn-next-step" onclick="closeGiftMemeModal()">Close Gift 🎁</button>
+        </div>
+    </div>
+
+    <!-- STAGE 1: THE BULB -->
     <div id="stage-bulb" class="stage active">
-        <p class="prompt-text" style="color: #fff">Want to light up?</p>
-        <div class="bulb-icon" onclick="playMagic(); switchStage('stage-quiz');">💡</div>
+        <p class="prompt-text">Want to light up?</p>
+        <div class="bulb-icon" onclick="playMagic(); switchStageSlow('stage-quiz', 1200); initPinkStars('star-field-quiz', 160);">💡</div>
     </div>
 
-    <!-- STAGE 2: PREMIUM PASSWORD -->
+    <!-- STAGE 2: PASSWORD (PINK & WHITE STARRY THEME) -->
     <div id="stage-quiz" class="stage">
-        <div class="blob"></div>
-        <div class="premium-card">
-            <h2 class="premium-title">What I call you? 😁</h2>
+        <div class="stars-container" id="star-field-quiz"></div>
+        <div class="glass-card-pink">
+            <h2 class="quiz-title">What I call you? 😁</h2>
             <div class="grid-options">
-                <button class="btn-opt" onclick="triggerError()">Sudhi</button>
-                <button class="btn-opt" onclick="triggerError()">Sudhiksha</button>
-                <button class="btn-opt" onclick="playMagic(); runLoading();">Pagli 🎀</button>
-                <button class="btn-opt" onclick="triggerError()">Devi ji 🙏</button>
+                <button class="btn-pink-option" onclick="triggerError()">Sudhi</button>
+                <button class="btn-pink-option" onclick="triggerError()">Sudhiksha</button>
+                <button class="btn-pink-option" onclick="playMagic(); runLoadingStage();">Pagli 🎀</button>
+                <button class="btn-pink-option" onclick="triggerError()">Devi ji 🙏</button>
             </div>
         </div>
     </div>
 
-    <!-- STAGE 3: LOADING -->
+    <!-- STAGE 3: LOADING BAR -->
     <div id="stage-loading" class="stage">
-        <h2 style="font-family:'Dancing Script'; font-size: 2rem;">Wait a minute...</h2>
-        <div class="bar-track"><div class="bar-fill" id="bar"></div></div>
-    </div>
-
-    <!-- STAGE 4: EXCITE -->
-    <div id="stage-excite" class="stage">
-        <h1 style="font-family:'Dancing Script'; font-size: 3.5rem; color: var(--rose-primary);">Are u excited?</h1>
-        <div style="display:flex; gap:20px; margin-top:20px;">
-            <button class="btn-dark-stage" onclick="excite('yes')">Yes</button>
-            <button class="btn-dark-stage" onclick="excite('no')">No</button>
+        <div class="loader-box">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ffffff;">Wait a minute...</h2>
+            <div class="loader-track">
+                <div class="loader-fill" id="progress-bar"></div>
+            </div>
         </div>
     </div>
 
-    <!-- STAGE 5: RESPONSE -->
-    <div id="stage-response" class="stage">
-        <h1 id="resp-txt" style="font-family:'Dancing Script'; font-size: 3rem; margin-bottom:20px;"></h1>
-        <button class="btn-dark-stage" onclick="switchStage('stage-letter')">Open Letter 🌸</button>
+    <!-- STAGE 4: ARE YOU EXCITED? -->
+    <div id="stage-excite" class="stage">
+        <h1 style="font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--rose-primary); margin-bottom: 25px;">Are u excited?</h1>
+        <div style="display: flex; gap: 20px;">
+            <button class="btn-dark-stage" style="width: 120px;" onclick="handleExciteChoice('yes')">Yes</button>
+            <button class="btn-dark-stage" style="width: 120px;" onclick="handleExciteChoice('no')">No</button>
+        </div>
     </div>
 
-    <!-- STAGE 6: LETTER -->
-    <div id="stage-letter" class="stage" style="background: var(--bg-pink)">
+    <!-- STAGE 5: RESPONSE SCREEN -->
+    <div id="stage-response" class="stage">
+        <h1 id="response-msg-text" style="font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: #ffffff; margin-bottom: 30px; padding: 0 20px;"></h1>
+        <button class="btn-dark-stage" style="padding: 14px 35px; background: var(--rose-primary); border: none;" onclick="switchStageSlow('stage-letter', 1000)">Open Letter 🌸</button>
+    </div>
+
+    <!-- STAGE 6: LETTER ENVELOPE SCREEN -->
+    <div id="stage-letter" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
-            <div class="pill">🌸 MADE WITH SO MUCH LOVE 🌸</div>
+            <div class="pill-badge">🌸 MADE WITH SO MUCH LOVE 🌸</div>
+            
             <div class="chibi-avatar-frame">
-                <!-- CAT 1: WAVING -->
-                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif">
+                <!-- White Cat Avatar -->
+                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Chibi White Cat">
             </div>
+
             <h1 class="letter-heading">Hello Cutieee</h1>
             <h2 class="letter-sub">happy birthday ♡</h2>
-            <div class="envelope-card-btn" onclick="openModal('letter-modal')">
+
+            <div class="divider-dots">✿ ------------ ✿</div>
+
+            <!-- Envelope Wax Seal Button -->
+            <div class="envelope-card-btn" onclick="openLetterModal()">
                 <div class="wax-seal-btn">✉️</div>
-                <p style="font-weight:600; color:var(--rose-primary)">READ MY LETTER →</p>
+                <p style="font-size: 0.82rem; font-weight: 600; color: var(--rose-primary); letter-spacing: 1px;">READ MY LETTER →</p>
             </div>
-            <button class="btn-next-step" onclick="switchStage('stage-cake')">Next: Cut Cake 🍰</button>
+
+            <button class="btn-next-step" onclick="switchStageSlow('stage-cake', 1000)">Next: Cut the Cake 🍰 →</button>
         </div>
     </div>
 
-    <!-- STAGE 7: CAKE -->
-    <div id="stage-cake" class="stage" style="background: var(--bg-pink)">
+    <!-- STAGE 7: CAKE & CANDLES SCREEN (WITH STRICT CAKE GUARD) -->
+    <div id="stage-cake" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
-            <div class="pill">✿ MAKE A WISH & CUT THE CAKE ✿</div>
+            <div class="pill-badge">✿ MAKE A WISH & CUT THE CAKE ✿</div>
+
             <div class="cake-wrapper">
-                <div class="cake-layer-bottom" id="cake-el" onclick="eatCake()">
+                <div class="cake-layer-bottom" id="main-cake-element" onclick="handleCakeEat()">
                     <div class="cake-frosting-top"></div>
-                    <div class="drip-item" style="left:15px; height:30px"></div>
-                    <div class="drip-item" style="left:80px; height:45px"></div>
-                    <div class="candle-item" id="candle-1" style="left:35px" onclick="tapCandle(1,event)"><div class="candle-flame"></div></div>
-                    <div class="candle-item" id="candle-2" style="left:95px" onclick="tapCandle(2,event)"><div class="candle-flame"></div></div>
-                    <div class="candle-item" id="candle-3" style="left:155px" onclick="tapCandle(3,event)"><div class="candle-flame"></div></div>
+                    <div class="drip-item" style="left: 12px; height: 28px;"></div>
+                    <div class="drip-item" style="left: 50px; height: 38px;"></div>
+                    <div class="drip-item" style="left: 100px; height: 22px;"></div>
+                    <div class="drip-item" style="left: 148px; height: 34px;"></div>
+                    
+                    <!-- 3 Candles -->
+                    <div class="candle-item" id="candle-1" style="left: 32px;" onclick="tapCandle(1, event)"><div class="candle-flame"></div></div>
+                    <div class="candle-item" id="candle-2" style="left: 90px;" onclick="tapCandle(2, event)"><div class="candle-flame"></div></div>
+                    <div class="candle-item" id="candle-3" style="left: 148px;" onclick="tapCandle(3, event)"><div class="candle-flame"></div></div>
                 </div>
             </div>
+
+            <!-- MEME CAT PLACEHOLDERS -->
             <div class="card-memes-row">
-                <div class="meme-box-custom" id="custom-meme-left">Paste Meme 1 Here</div>
+                <div class="meme-box-custom">
+                    <!-- PASTE YOUR CUSTOM MEME 1 HERE -->
+                    <span>Paste Meme 1 Here 🌸</span>
+                </div>
+
                 <div class="meme-box-right">
-                    <!-- CAT 2: SURPRISED -->
-                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif">
+                    <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif" alt="White Cat Meme">
                 </div>
             </div>
+
+            <!-- Music Player Widget -->
             <div class="music-widget">
-                <div class="music-info"><p class="music-title">Special Song</p></div>
-                <div class="play-btn-circle" onclick="toggleMusic(this)">▶</div>
+                <div class="music-info">
+                    <p class="music-title">Special Song For You</p>
+                    <p class="music-sub">WITH LOVE ♡</p>
+                </div>
+                <div class="play-btn-circle" onclick="playMusicToggle(this)">▶</div>
             </div>
-            <button class="btn-next-step" onclick="checkCakeGuard()">Next: Album 📸</button>
+
+            <button class="btn-next-step" onclick="attemptGoToGallery()">Next: Photo Album 📸 →</button>
         </div>
     </div>
 
-    <!-- STAGE 8: GALLERY -->
-    <div id="stage-gallery" class="stage" style="background: var(--bg-pink)">
+    <!-- STAGE 8: PHOTO ALBUM GALLERY STAGE -->
+    <div id="stage-gallery" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
-            <div class="pill">✿ OUR MEMORIES ALBUM ✿</div>
-            <div class="photo-frame"><img id="gal-img" src="1.jpg"></div>
-            <div class="caption" id="gal-cap"></div>
-            <div style="display:flex; justify-content:space-between; width:100%; margin-top:10px;">
-                <button class="btn-pink-option" onclick="prevPic()">❮</button>
-                <span id="gal-count" style="font-weight:bold; color:var(--rose-primary)"></span>
-                <button class="btn-pink-option" onclick="nextPic()">❯</button>
+            <div class="pill-badge">✿ OUR MEMORIES ALBUM ✿</div>
+
+            <div class="photo-frame-wrapper">
+                <span class="floral-corner-icon" style="top: 8px; left: 10px;">🌸</span>
+                <span class="floral-corner-icon" style="top: 8px; right: 10px;">🌸</span>
+
+                <div class="photo-display-area">
+                    <img id="gallery-photo-img" src="1.jpg" alt="Memory Photo">
+                </div>
+
+                <div class="photo-caption-box" id="gallery-caption-text">
+                    Loading caption...
+                </div>
+
+                <div class="gallery-nav-row">
+                    <div class="nav-arrow-btn" onclick="prevPhoto()">❮</div>
+                    <span class="photo-counter-tag" id="photo-counter">PHOTO 1 OF 4</span>
+                    <div class="nav-arrow-btn" onclick="nextPhoto()">❯</div>
+                </div>
             </div>
-            <button class="btn-next-step" onclick="switchStage('stage-hub')">Next: Surprise ✨</button>
+
+            <button class="btn-next-step" onclick="switchStageSlow('stage-voice-note', 1000)">Next: Voice Note 🎙️ →</button>
         </div>
     </div>
 
-    <!-- STAGE 9: HUB -->
-    <div id="stage-hub" class="stage" style="background: var(--bg-pink)">
+    <!-- STAGE 9: DEDICATED VOICE NOTE STAGE (NEW!) -->
+    <div id="stage-voice-note" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
-            <div class="pill">✿ SPECIAL SURPRISES ✿</div>
-            <div class="hub-btn" onclick="switchStage('stage-memory')">🌸 <span>OUR MEMORY LANE</span></div>
-            <div class="hub-btn" onclick="openModal('modal-2032')">⏳ <span>OPEN IN 2032</span></div>
-            <div class="hub-btn" onclick="showGifts()">🎁 <span>THREE SECRET GIFTS</span></div>
-            <div id="gift-area" style="display:none; display:flex; gap:20px; margin-top:10px;">
-                <div class="gift-box" onclick="gift(1)">🎁</div>
-                <div class="gift-box" onclick="gift(2)">🎁</div>
-                <div class="gift-box" onclick="gift(3)">🎁</div>
+            <div class="pill-badge">🌸 A SPECIAL VOICE MESSAGE 🌸</div>
+            
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 5px;">Listen To My Message ♡</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">A special voice note recorded just for you!</p>
+
+            <div class="voice-card-box">
+                <div class="voice-mic-icon">🎙️</div>
+                <div class="voice-play-button" id="voicePlayBtn" onclick="toggleVoiceNote()">▶</div>
+                
+                <div class="voice-progress-container">
+                    <div class="voice-progress-fill" id="voiceProgress"></div>
+                </div>
+                <div class="voice-time-text" id="voiceTimeText">Press play to listen ♡</div>
+            </div>
+
+            <button class="btn-next-step" onclick="switchStageSlow('stage-hub', 1000)">Next: Surprise Menu ✨ →</button>
+        </div>
+    </div>
+
+    <!-- STAGE 10: HIGH-END SURPRISE MENU HUB CARDS -->
+    <div id="stage-hub" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+        <div class="aesthetic-card">
+            <div class="pill-badge">✿ SPECIAL SURPRISES FOR YOU ✿</div>
+
+            <div class="options-menu-grid">
+                <!-- Option 1: OUR MEMORY LANE -->
+                <div class="option-hub-card" onclick="switchStageSlow('stage-memory-lane', 800)">
+                    <span class="option-hub-icon">🌸</span>
+                    <div class="option-hub-text">
+                        <div class="option-hub-title">✿ OUR MEMORY LANE ✿</div>
+                        <div class="option-hub-sub">A special dedicated journey page</div>
+                    </div>
+                </div>
+
+                <!-- Option 2: VOICE NOTE PAGE -->
+                <div class="option-hub-card" onclick="switchStageSlow('stage-voice-note', 800)">
+                    <span class="option-hub-icon">🎙️</span>
+                    <div class="option-hub-text">
+                        <div class="option-hub-title">✿ VOICE NOTE FOR YOU ✿</div>
+                        <div class="option-hub-sub">Listen to my audio message again</div>
+                    </div>
+                </div>
+
+                <!-- Option 3: OPEN THIS IN 2032 -->
+                <div class="option-hub-card" onclick="open2032CapsuleModal()">
+                    <span class="option-hub-icon">⏳</span>
+                    <div class="option-hub-text">
+                        <div class="option-hub-title">✿ OPEN THIS IN 2032 ✿</div>
+                        <div class="option-hub-sub">A secret time-capsule & bucket list</div>
+                    </div>
+                </div>
+
+                <!-- Option 4: THREE SECRET GIFTS -->
+                <div class="option-hub-card" onclick="openThreeGiftsSection()">
+                    <span class="option-hub-icon">🎁</span>
+                    <div class="option-hub-text">
+                        <div class="option-hub-title">✿ THREE SECRET GIFTS ✿</div>
+                        <div class="option-hub-sub">Tap to unwrap secret surprises!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THREE GIFTS DISPLAY AREA -->
+            <div id="gifts-display-area" style="display: none; width: 100%; margin-top: 15px;">
+                <p style="font-size: 0.78rem; color: var(--rose-primary); font-weight: 600;">Tap any box to open!</p>
+                <div class="gift-boxes-row">
+                    <div class="gift-box-item-cool" onclick="openGiftBox(1)">🎁</div>
+                    <div class="gift-box-item-cool" style="animation-delay: 0.5s;" onclick="openGiftBox(2)">🎁</div>
+                    <div class="gift-box-item-cool" style="animation-delay: 1s;" onclick="openGiftBox(3)">🎁</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- STAGE 10: MEMORY LANE -->
-    <div id="stage-memory" class="stage" style="background: var(--bg-pink)">
+    <!-- STAGE: DEDICATED OUR MEMORY LANE STAGE -->
+    <div id="stage-memory-lane" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
-            <div class="pill">✿ MEMORY LANE ✿</div>
-            <p>Our journey is just beginning. Every laugh we share is a new page in our book! 🌸✨</p>
-            <button class="btn-next-step" onclick="switchStage('stage-hub')">Back</button>
+            <div class="pill-badge">✿ OUR MEMORY LANE ✿</div>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 10px;">Our Journey Together ♡</h2>
+            <div class="divider-dots">✿ ------------ ✿</div>
+            <p class="letter-body-text">
+                Every laugh, every inside joke, and every quiet conversation has made our bond so special. Here's to making countless more memories together! 🌸✨
+            </p>
+            <button class="btn-next-step" onclick="switchStageSlow('stage-hub', 800)">Back to Menu 🌸</button>
         </div>
     </div>
 
-    <!-- MODAL: LETTER -->
-    <div id="letter-modal" class="modal">
-        <div class="modal-content">
-            <h2 style="font-family:'Playfair Display'">My Madam Jii,</h2>
-            <p class="letter-body-text">Thank you for being you. For the silly jokes and the quiet patience. I hope today you feel loved! 🎀</p>
-            <button class="btn-next-step" onclick="closeModal('letter-modal')">Close</button>
+    <!-- 2032 TIME CAPSULE MODAL -->
+    <div id="modal-2032" style="position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(12px); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 750; padding: 20px; color: white;">
+        <div style="background: #FFF8F6; color: var(--text-dark); border-radius: 28px; padding: 28px 22px; width: 88vw; max-width: 380px; text-align: center; border: 2px solid var(--rose-primary);">
+            <div class="pill-badge">⏳ 2032 TIME CAPSULE ⏳</div>
+            
+            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" style="width: 100px; border-radius: 12px; margin-bottom: 10px;" alt="Time Cat">
+            
+            <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--cherry); margin-bottom: 5px;">Abhi aane to de 2032! 😂😜</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Type things you want to do until 2032:</p>
+            
+            <input type="text" id="capsule-2032-input" class="wish-field" style="color: var(--text-dark); border-bottom-color: var(--rose-primary); font-size: 1.5rem; margin: 10px 0;" placeholder="Type your 2032 bucket list..." autocomplete="off">
+            
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px;">
+                <button class="btn-next-step" style="margin-top:0;" onclick="submit2032Capsule()">Lock in Time Capsule ⏳</button>
+                <button class="btn-dark-stage" style="padding: 10px 20px; background: var(--text-muted); border: none;" onclick="close2032CapsuleModal()">Close</button>
+            </div>
         </div>
     </div>
 
-    <!-- MODAL: 2032 -->
-    <div id="modal-2032" class="modal">
-        <div class="modal-content">
-            <div class="pill">⏳ TIME CAPSULE</div>
-            <!-- CAT 3: THINKING -->
-            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" width="100">
-            <h3 style="color:var(--cherry)">Abhi aane to de 2032! 😂</h3>
-            <input type="text" id="input-2032" placeholder="Bucket list until 2032...">
-            <button class="btn-next-step" onclick="submit2032()">Lock in Time Capsule ⏳</button>
+    <!-- FULL LETTER MODAL -->
+    <div id="letter-full-modal">
+        <div class="aesthetic-card" style="max-height: 85vh; overflow-y: auto; background: #FFF8F6; border: 2px solid var(--rose-primary);">
+            <div class="pill-badge">✿ A LETTER, JUST FOR YOU ✿</div>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 10px;">My Madam Jii,</h2>
+            <div class="divider-dots">✿ ------------ ✿</div>
+            <p class="letter-body-text">
+                There's no card big enough for everything I'd like to say, so I made you this little digital garden.
+                <br><br>
+                Thank you for the small and unseen things — the way you check in, the jokes only we get, and the quiet patience when I'm being too much. I noticed. I still notice.
+                <br><br>
+                I hope today you feel celebrated. I hope you eat something delicious and someone tells you how loved you are! 🎀
+            </p>
+            <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 12px 30px; margin-top: 15px;" onclick="closeLetterModal()">Close Letter ♡</button>
         </div>
     </div>
 
-    <!-- MODAL: GIFT MEME -->
-    <div id="modal-gift" class="modal">
-        <div class="modal-content">
-            <!-- CAT 4: VIBING -->
-            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif" width="200">
-            <button class="btn-next-step" onclick="closeModal('modal-gift')">Close</button>
-        </div>
+    <!-- WISH INPUT OVERLAY -->
+    <div id="wish-overlay-input">
+        <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" style="width: 130px; border-radius: 15px;" alt="Wish Cat">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ffffff; margin-top: 12px;">First type your wish 😉</h2>
+        <input type="text" id="wish-text-input" class="wish-field" placeholder="Make a wish..." autocomplete="off">
+        <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 14px 40px;" onclick="processWishSubmission()">Send Wish to Stars ⭐</button>
     </div>
 
-    <!-- MODAL: WISH -->
-    <div id="modal-wish" class="modal">
-        <div class="modal-content">
-            <!-- CAT 5: PRAYING/BEGGING -->
-            <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" width="120">
-            <h2 style="font-family:'Dancing Script'">Type your wish 😉</h2>
-            <input type="text" id="wish-in" placeholder="My secret wish...">
-            <button class="btn-next-step" onclick="submitWish()">Lock it in ⭐</button>
-        </div>
-    </div>
-
-    <!-- STAGE: UNIVERSE -->
+    <!-- STAGE: UNIVERSE ANIMATION -->
     <div id="stage-universe" class="stage">
-        <div class="star-main" id="uni-star">⭐</div>
-        <div class="star-box" id="uni-box">🎁</div>
-        <h2 id="uni-txt" style="color:#fff; font-family:'Dancing Script'; margin-top:200px; opacity:0">Traveling through space...</h2>
+        <div class="stars-container" id="star-field-universe"></div>
+        <div class="actor-gift-box" id="gift-box-actor">🎁</div>
+        <div class="actor-star-descend" id="star-actor">⭐</div>
+        <h2 class="universe-msg" id="universe-text">Your wish is traveling through the universe... ⭐</h2>
     </div>
+
+    <!-- AUDIO EFFECTS -->
+    <audio id="sound-crunch" src="https://www.myinstants.com/media/sounds/crunch.mp3"></audio>
+    <audio id="sound-magic" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+    <audio id="sound-buzzer" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
 
     <script>
-        let blown = 0, cut = false, current = 0;
-        const photos = [
-            {url:"1.jpg", cap:"Ye pahli photo jo share kari thi yaar sorry 😅 but isme tu kuch khas nahi lag rahi..."},
-            {url:"2.jpg", cap:"ye koi function ki photo hai na. half sari wali..."},
-            {url:"3.jpg", cap:"Ye best hai! tata ko bhi pasand aai thi..."},
-            {url:"4.jpg", cap:"Yaar is photo me kuch to alag hai 🤔... mistry hai 🧐"}
-        ];
+        let blownCandleCount = 0;
+        let isCakeCut = false;
 
-        function playMagic() { new Audio('https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3').play().catch(()=>{}); }
-        
-        function switchStage(id) {
-            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+        const soundMagic = document.getElementById('sound-magic');
+        const soundBuzzer = document.getElementById('sound-buzzer');
+        const soundCrunch = document.getElementById('sound-crunch');
+        const customBgMusic = document.getElementById('custom-bg-music');
+        const voiceNoteAudio = document.getElementById('voice-note-audio');
+
+        // --- PHOTO ALBUM DATA WITH YOUR EXACT HINDI/HINGLISH CAPTIONS ---
+        const galleryData = [
+            {
+                url: "1.jpg",
+                caption: "Ye pahli photo jo share kari thi yaar sorry 😅 but isme tu kuch khas nahi lag rahi, shayad tuze bhi pasand nahi ye photo"
+            },
+            {
+                url: "2.jpg",
+                caption: "ye koi function ki photo hai na.half sari wali jo tumne batai thi ye achhi hai isme smile to hai jo aksar karne ko kahta hun 😁😄"
+            },
+            {
+                url: "3.jpg",
+                caption: "Ye best hai! tata ko bhi pasand aai thi ye photo usne baddie kaha tha tume 😙 but devi suit nahi karega?"
+            },
+            {
+                url: "4.jpg",
+                caption: "Yaar is photo me kuch to alag hai 🤔,pata nahi kyu mujhe sabse yahi achhi lagti hai isme tu kuch ajeeb hi lagti hai waise ajib nahi achha wala,pata nahi kya mestry hai 🧐"
+            }
+        ];
+        let currentPhotoIndex = 0;
+
+        function updateGalleryDisplay() {
+            document.getElementById('gallery-photo-img').src = galleryData[currentPhotoIndex].url;
+            document.getElementById('gallery-caption-text').innerText = galleryData[currentPhotoIndex].caption;
+            document.getElementById('photo-counter').innerText = `PHOTO ${currentPhotoIndex + 1} OF ${galleryData.length}`;
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % galleryData.length;
+            updateGalleryDisplay();
+        }
+
+        function prevPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + galleryData.length) % galleryData.length;
+            updateGalleryDisplay();
+        }
+
+        function playMagic() { soundMagic.play().catch(() => {}); }
+
+        function initPinkStars(containerId, starCount) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-pixel';
+                const size = (Math.random() * 3 + 1.5) + 'px';
+                star.style.width = size; star.style.height = size;
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 1.5) + 's');
+                container.appendChild(star);
+            }
+        }
+
+        function switchStageSlow(targetStageId, delayMs) {
+            const activeStage = document.querySelector('.stage.active');
+            if (activeStage) {
+                activeStage.style.opacity = '0';
+            }
+            setTimeout(() => {
+                document.querySelectorAll('.stage').forEach(stage => stage.classList.remove('active'));
+                const target = document.getElementById(targetStageId);
+                target.classList.add('active');
+                setTimeout(() => {
+                    target.style.opacity = '1';
+                }, 50);
+            }, delayMs || 600);
         }
 
         function triggerError() {
-            const t = document.getElementById('error-toast');
-            t.style.display = 'block';
-            setTimeout(()=>t.style.display='none', 1500);
+            soundBuzzer.play().catch(() => {});
+            const toast = document.getElementById('error-toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1800);
         }
 
-        function runLoading() {
-            switchStage('stage-loading');
-            let w = 0;
-            const i = setInterval(() => {
-                w++; document.getElementById('bar').style.width = w+'%';
-                if(w >= 100) { clearInterval(i); switchStage('stage-excite'); }
-            }, 30);
+        function runLoadingStage() {
+            switchStageSlow('stage-loading', 800);
+            let progress = 0;
+            const fill = document.getElementById('progress-bar');
+            const interval = setInterval(() => {
+                progress += 1;
+                fill.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => switchStageSlow('stage-excite', 800), 500);
+                }
+            }, 35);
         }
 
-        function excite(c) {
-            document.getElementById('resp-txt').innerText = (c === 'yes') ? "Okay waiting is over! 😉" : "I know u r excited don't tell lie 😁";
-            switchStage('stage-response');
+        function handleExciteChoice(choice) {
+            const responseText = document.getElementById('response-msg-text');
+            responseText.innerText = (choice === 'yes') ? "Okay waiting is over! 😉" : "i know u r excited don't tell lie 😁";
+            switchStageSlow('stage-response', 800);
         }
 
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function openLetterModal() { document.getElementById('letter-full-modal').style.display = 'flex'; }
+        function closeLetterModal() { document.getElementById('letter-full-modal').style.display = 'none'; }
 
-        function tapCandle(n, e) {
-            e.stopPropagation();
-            if(document.getElementById('candle-'+n).style.opacity === '0') return;
-            if(n < 3) { document.getElementById('candle-'+n).style.opacity = '0'; blown++; }
-            else { openModal('modal-wish'); }
+        function openCuteModal(title, text) {
+            document.getElementById('cute-modal-title').innerText = title;
+            document.getElementById('cute-modal-text').innerText = text;
+            document.getElementById('cute-alert-modal').style.display = 'flex';
         }
 
-        function submitWish() {
-            const v = document.getElementById('wish-in').value;
-            if(!v) return;
-            fetch("https://formspree.io/f/xoeaeqjp", { method: "POST", body: JSON.stringify({wish: v}), headers: {'Accept': 'application/json'} });
-            closeModal('modal-wish');
+        function closeCuteModal() {
+            document.getElementById('cute-alert-modal').style.display = 'none';
+        }
+
+        function playMusicToggle(btn) {
+            if(btn.innerText === '▶') { 
+                btn.innerText = '⏸'; 
+                customBgMusic.play().catch(() => playMagic()); 
+            } else { 
+                btn.innerText = '▶'; 
+                customBgMusic.pause();
+            }
+        }
+
+        // VOICE NOTE TOGGLE & PROGRESS
+        function toggleVoiceNote() {
+            const playBtn = document.getElementById('voicePlayBtn');
+            const progressFill = document.getElementById('voiceProgress');
+            const timeText = document.getElementById('voiceTimeText');
+
+            if (voiceNoteAudio.paused) {
+                // Pause background music if playing
+                customBgMusic.pause();
+                
+                voiceNoteAudio.play().then(() => {
+                    playBtn.innerText = '⏸';
+                    playBtn.classList.add('playing');
+                    timeText.innerText = 'Playing voice message... 🎙️';
+                }).catch(() => {
+                    alert("Please place your voice note file named 'voice_note.mp3' in the same folder!");
+                });
+            } else {
+                voiceNoteAudio.pause();
+                playBtn.innerText = '▶';
+                playBtn.classList.remove('playing');
+                timeText.innerText = 'Paused';
+            }
+        }
+
+        voiceNoteAudio.ontimeupdate = function() {
+            if (voiceNoteAudio.duration) {
+                const pct = (voiceNoteAudio.currentTime / voiceNoteAudio.duration) * 100;
+                document.getElementById('voiceProgress').style.width = pct + '%';
+            }
+        };
+
+        voiceNoteAudio.onended = function() {
+            const playBtn = document.getElementById('voicePlayBtn');
+            playBtn.innerText = '▶';
+            playBtn.classList.remove('playing');
+            document.getElementById('voiceProgress').style.width = '0%';
+            document.getElementById('voiceTimeText').innerText = 'Replay Voice Message 🎙️';
+        };
+
+        function tapCandle(candleNumber, event) {
+            event.stopPropagation();
+            const candle = document.getElementById('candle-' + candleNumber);
+            if (candle.style.opacity === '0') return;
+
+            if (candleNumber < 3) {
+                candle.style.opacity = '0';
+                blownCandleCount++;
+            } 
+            else if (candleNumber === 3) {
+                document.getElementById('wish-overlay-input').style.display = 'flex';
+            }
+        }
+
+        function processWishSubmission() {
+            const wishValue = document.getElementById('wish-text-input').value.trim();
+            if (!wishValue) return;
+
+            fetch("https://formspree.io/f/xoeaeqjp", {
+                method: "POST",
+                body: JSON.stringify({ wish: wishValue }),
+                headers: { 'Accept': 'application/json' }
+            }).catch(() => {});
+
+            document.getElementById('wish-overlay-input').style.display = 'none';
             document.getElementById('candle-3').style.opacity = '0';
-            blown = 3;
-            runUniverse();
+            blownCandleCount = 3;
+
+            triggerUniverseAnimation();
         }
 
-        function runUniverse() {
-            switchStage('stage-universe');
-            const s = document.getElementById('uni-star'), b = document.getElementById('uni-box'), t = document.getElementById('uni-txt');
+        // UNIVERSE ANIMATION
+        function triggerUniverseAnimation() {
+            switchStageSlow('stage-universe', 800);
+            initPinkStars('star-field-universe', 220);
+
+            const giftBox = document.getElementById('gift-box-actor');
+            const star = document.getElementById('star-actor');
+            const uniText = document.getElementById('universe-text');
+
+            giftBox.style.transform = "translate(-50%, 0)";
+            giftBox.style.opacity = "1";
+            star.style.transform = "translate(-50%, 0)";
+            uniText.style.opacity = "0";
+
             setTimeout(() => {
-                s.style.top = '60%';
+                star.style.transform = "translate(-50%, 550px)";
+
                 setTimeout(() => {
-                    t.style.opacity = '1';
-                    s.style.top = '-300px'; b.style.bottom = '120%';
-                    setTimeout(() => switchStage('stage-cake'), 3000);
+                    uniText.style.opacity = "1";
+
+                    setTimeout(() => {
+                        star.style.transform = "translate(-50%, -400px)";
+                        giftBox.style.transform = "translate(-50%, -650px)";
+                        giftBox.style.opacity = "0";
+
+                        setTimeout(() => {
+                            switchStageSlow('stage-cake', 1000);
+                        }, 2800);
+                    }, 1200);
                 }, 2000);
-            }, 500);
+            }, 300);
         }
 
-        function eatCake() {
-            if(blown < 3) return;
-            new Audio('https://www.myinstants.com/media/sounds/crunch.mp3').play();
-            cut = true;
-            document.getElementById('cake-el').style.transform = "scale(0.9)";
-            document.getElementById('cake-el').style.opacity = "0.5";
+        function handleCakeEat() {
+            if (blownCandleCount < 3) return;
+            soundCrunch.play().catch(() => {});
+            isCakeCut = true;
+            const cake = document.getElementById('main-cake-element');
+            cake.style.transform = "scale(0.92)";
+            setTimeout(() => {
+                cake.style.transform = "scale(1)";
+                cake.style.opacity = "0.4";
+                openCuteModal('🎂 HAPPY BIRTHDAY PAGLI! 🍰', 'Yummm! You cut the cake! Wishing you the sweetest and most amazing year ahead! ✨🌸');
+            }, 150);
         }
 
-        function checkCakeGuard() {
-            if(!cut) triggerError();
-            else { updateGallery(); switchStage('stage-gallery'); }
+        // STRICT CAKE GUARD NAVIGATION
+        function attemptGoToGallery() {
+            if (!isCakeCut) {
+                openCuteModal('🎂 CAKE PEHLE KAATO! 😋', 'Madam Ji, pehle saari candles bujha ke cake toh kaato! Phir aage badhenge 😉🌸');
+            } else {
+                switchStageSlow('stage-gallery', 1000);
+            }
         }
 
-        function updateGallery() {
-            document.getElementById('gal-img').src = photos[current].url;
-            document.getElementById('gal-cap').innerText = photos[current].cap;
-            document.getElementById('gal-count').innerText = `PHOTO ${current+1} OF 4`;
-        }
-        function nextPic() { current = (current+1)%4; updateGallery(); }
-        function prevPic() { current = (current-1+4)%4; updateGallery(); }
-
-        function showGifts() { document.getElementById('gift-area').style.display = 'flex'; }
-        function gift(n) {
-            if(n === 1) openModal('modal-gift');
-            else if(n === 2) alert("Suno Madam Ji, tu poori pagal hai, par special bhi hai! 😜");
-            else alert("Chudel kahi ki 😜👻");
+        // OPTIONS HUB FUNCTIONS
+        function openThreeGiftsSection() {
+            document.getElementById('gifts-display-area').style.display = 'block';
+            playMagic();
         }
 
-        function submit2032() {
-            const v = document.getElementById('input-2032').value;
-            if(!v) return;
-            // CHANGE THIS ID TO YOUR SECOND FORMSPREE ID
-            fetch("https://formspree.io/f/PASTE_NEW_BUCKET_LIST_ID_HERE", { method: "POST", body: JSON.stringify({bucket_list: v}), headers: {'Accept': 'application/json'} });
-            closeModal('modal-2032');
-            alert("Locked! See you in 2032! ⏳");
+        function openGiftBox(boxNumber) {
+            playMagic();
+            if (boxNumber === 1) {
+                document.getElementById('gift-meme-modal').style.display = 'flex';
+            } else if (boxNumber === 2) {
+                openCuteModal('✿ SECRET GIFT 2 ✿', 'Suno Madam Ji, waise to tu poori pagal hai, par mere liye thodi special aur pyaari bhi hai! Stay happy always! 😜🌸');
+            } else if (boxNumber === 3) {
+                openCuteModal('✿ SECRET GIFT 3 ✿', 'Chudel kahi ki 😜👻✨');
+            }
         }
 
-        function toggleMusic(btn) {
-            const m = document.getElementById('custom-bg-music');
-            if(m.paused) { m.play(); btn.innerText = '⏸'; }
-            else { m.pause(); btn.innerText = '▶'; }
+        function closeGiftMemeModal() {
+            document.getElementById('gift-meme-modal').style.display = 'none';
         }
+
+        // 2032 TIME CAPSULE FUNCTIONS
+        function open2032CapsuleModal() {
+            document.getElementById('modal-2032').style.display = 'flex';
+            playMagic();
+        }
+
+        function close2032CapsuleModal() {
+            document.getElementById('modal-2032').style.display = 'none';
+        }
+
+        function submit2032Capsule() {
+            const listVal = document.getElementById('capsule-2032-input').value.trim();
+            if(!listVal) return;
+
+            fetch("https://formspree.io/f/xoeaeqjp", {
+                method: "POST",
+                body: JSON.stringify({ bucket_list_2032: listVal }),
+                headers: { 'Accept': 'application/json' }
+            }).catch(() => {});
+
+            close2032CapsuleModal();
+            openCuteModal('⏳ 2032 TIME CAPSULE LOCKED! 🔒', 'Your 2032 bucket list has been locked in time! See you in 2032 Pagli! 😜✨');
+        }
+
+        // Initialize First Photo Display
+        updateGalleryDisplay();
     </script>
 </body>
 </html>
