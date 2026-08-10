@@ -77,6 +77,11 @@
             100% { transform: rotate(-45deg) scale(0.95); opacity: 0.85; }
         }
 
+        @keyframes boxPop {
+            0% { transform: scale(0.5) translateY(50px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
         /* --- STAGE 1: DARK ROOM --- */
         #stage-bulb {
             background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
@@ -528,7 +533,7 @@
             display: block;
         }
 
-        /* --- FIXED PHOTO ALBUM GALLERY STAGE (IMPROVED IMAGE SIZING) --- */
+        /* --- PHOTO ALBUM GALLERY STAGE --- */
         .photo-frame-wrapper {
             width: 100%;
             background: #FFF0F3;
@@ -549,7 +554,6 @@
             z-index: 5;
         }
 
-        /* SMART IMAGE DISPLAY AREA (PRESERVES COMPLETE PHOTO WITHOUT CROPPING) */
         .photo-display-area {
             width: 100%;
             height: 240px;
@@ -624,6 +628,88 @@
             font-weight: 600;
             color: var(--rose-primary);
             letter-spacing: 1px;
+        }
+
+        /* NEW OPTIONS / DASHBOARD HUB STAGE */
+        .options-menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .option-hub-card {
+            width: 100%;
+            background: #FFF8F9;
+            border: 1.5px solid #FFE3E8;
+            border-radius: 20px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-hub-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--rose-primary);
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.15);
+        }
+
+        .option-hub-icon {
+            font-size: 1.8rem;
+        }
+
+        .option-hub-text {
+            text-align: left;
+        }
+
+        .option-hub-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--rose-primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .option-hub-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* THREE GIFT BOXES DISPLAY */
+        .gift-boxes-row {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 20px 0 10px 0;
+        }
+
+        .gift-box-item {
+            font-size: 55px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 6px 12px rgba(232, 130, 149, 0.2));
+            animation: floatSlow 3s infinite ease-in-out;
+        }
+
+        .gift-box-item:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* CAT MOON PARTY STAGE */
+        #stage-moon-party {
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: white;
+        }
+
+        .crescent-moon {
+            font-size: 100px;
+            filter: drop-shadow(0 0 25px var(--gold-accent));
+            animation: floatSlow 4s infinite ease-in-out;
+            margin-bottom: 20px;
         }
 
         /* WISH WIDGET / BOUQUET CARDS */
@@ -726,6 +812,25 @@
             padding: 20px;
         }
 
+        /* ANIMATED GIFT POP-OUT MEME MODAL */
+        #gift-meme-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 850;
+            padding: 20px;
+        }
+
+        .gift-meme-container {
+            animation: boxPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
         /* --- STAGE: UNIVERSE ANIMATION --- */
         #stage-universe {
             background-color: #000000;
@@ -786,6 +891,18 @@
         </div>
     </div>
 
+    <!-- GIFT BOX 1: ANIMATED MEME POP-OUT MODAL -->
+    <div id="gift-meme-modal">
+        <div class="gift-meme-container">
+            <div class="pill-badge" style="background: var(--rose-primary); color: white;">✿ SURPRISE MEME ✿</div>
+            <div style="width: 220px; height: 220px; background: white; border-radius: 20px; overflow: hidden; margin: 15px 0; border: 3px solid var(--rose-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <!-- PASTE YOUR GIFT BOX MEME HERE -->
+                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" style="width:100%; height:100%; object-fit:cover;" alt="Pop Out Cat Meme">
+            </div>
+            <button class="btn-next-step" onclick="closeGiftMemeModal()">Close Gift 🎁</button>
+        </div>
+    </div>
+
     <!-- STAGE 1: THE BULB -->
     <div id="stage-bulb" class="stage active">
         <p class="prompt-text">Want to light up?</p>
@@ -837,7 +954,6 @@
             <div class="pill-badge">🌸 MADE WITH SO MUCH LOVE 🌸</div>
             
             <div class="chibi-avatar-frame">
-                <!-- White Cat Avatar from Screenshot -->
                 <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Chibi White Cat">
             </div>
 
@@ -878,13 +994,11 @@
 
             <!-- MEME CAT PLACEHOLDERS -->
             <div class="card-memes-row">
-                <!-- HIGHLIGHTED LEFT MEME PLACEHOLDER -->
                 <div class="meme-box-custom">
                     <!-- PASTE YOUR CUSTOM MEME 1 HERE -->
                     <span>Paste Meme 1 Here 🌸</span>
                 </div>
 
-                <!-- RIGHT MEME: WHITE CAT MEME -->
                 <div class="meme-box-right">
                     <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="White Cat Meme">
                 </div>
@@ -903,12 +1017,11 @@
         </div>
     </div>
 
-    <!-- STAGE 8: PHOTO ALBUM GALLERY STAGE (FIXED PHOTO DISPLAY) -->
+    <!-- STAGE 8: PHOTO ALBUM GALLERY STAGE -->
     <div id="stage-gallery" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
             <div class="pill-badge">✿ OUR MEMORIES ALBUM ✿</div>
 
-            <!-- WHITE FLORAL PHOTO FRAME -->
             <div class="photo-frame-wrapper">
                 <span class="floral-corner-icon" style="top: 8px; left: 10px;">🌸</span>
                 <span class="floral-corner-icon" style="top: 8px; right: 10px;">🌸</span>
@@ -917,12 +1030,10 @@
                     <img id="gallery-photo-img" src="1.jpg" alt="Memory Photo">
                 </div>
 
-                <!-- CAPTION AREA FOR YOUR THOUGHTS -->
                 <div class="photo-caption-box" id="gallery-caption-text">
                     Loading caption...
                 </div>
 
-                <!-- NAVIGATION ARROWS -->
                 <div class="gallery-nav-row">
                     <div class="nav-arrow-btn" onclick="prevPhoto()">❮</div>
                     <span class="photo-counter-tag" id="photo-counter">PHOTO 1 OF 4</span>
@@ -930,11 +1041,67 @@
                 </div>
             </div>
 
-            <button class="btn-next-step" onclick="switchStageSlow('stage-bouquet', 1000)">Next: Bouquet of Wishes 🌸 →</button>
+            <button class="btn-next-step" onclick="switchStageSlow('stage-hub', 1000)">Next: Surprise Menu ✨ →</button>
         </div>
     </div>
 
-    <!-- STAGE 9: BOUQUET OF WISHES SCREEN -->
+    <!-- STAGE 9: INTERACTIVE SURPRISE HUB MENU (NEW!) -->
+    <div id="stage-hub" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+        <div class="aesthetic-card">
+            <div class="pill-badge">✿ SPECIAL SURPRISES FOR YOU ✿</div>
+
+            <div class="options-menu-grid">
+                <!-- Option 1: OUR MEMORY LANE -->
+                <div class="option-hub-card" onclick="switchStageSlow('stage-bouquet', 800)">
+                    <span class="option-hub-icon">🌸</span>
+                    <div class="option-hub-text">
+                        <div class="option-hub-title">✿ OUR MEMORY LANE ✿</div>
+                        <div class="option-hub-sub">A bouquet of special wishes</div>
+                    </div>
+                </div>
+
+                <!-- Option 2: FOLLOW THE STARS (MOON CAT PARTY) -->
+                <div class="option-hub-card" onclick="openMoonPartyStage()">
+                    <span class="option-hub-icon">🌙</span>
+                    <div class="option-hub-text">
+                        <div class="option-hub-title">✿ FOLLOW THE STARS ✿</div>
+                        <div class="option-hub-sub">Stars lead to the moon cat party!</div>
+                    </div>
+                </div>
+
+                <!-- Option 3: THREE SECRET GIFTS -->
+                <div class="option-hub-card" onclick="openThreeGiftsSection()">
+                    <span class="option-hub-icon">🎁</span>
+                    <div class="option-hub-text">
+                        <div class="option-hub-title">✿ THREE SECRET GIFTS ✿</div>
+                        <div class="option-hub-sub">Tap to unwrap secret surprises!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THREE GIFTS DISPLAY AREA (HIDDEN UNTIL CLICKED) -->
+            <div id="gifts-display-area" style="display: none; width: 100%; margin-top: 15px;">
+                <p style="font-size: 0.78rem; color: var(--rose-primary); font-weight: 600;">Tap any box to open!</p>
+                <div class="gift-boxes-row">
+                    <div class="gift-box-item" onclick="openGiftBox(1)">🎁</div>
+                    <div class="gift-box-item" style="animation-delay: 0.5s;" onclick="openGiftBox(2)">🎁</div>
+                    <div class="gift-box-item" style="animation-delay: 1s;" onclick="openGiftBox(3)">🎁</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAGE 10: CAT MOON PARTY STAGE -->
+    <div id="stage-moon-party" class="stage">
+        <div class="stars-container" id="star-field-moon"></div>
+        <div class="crescent-moon">🌙</div>
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: var(--gold-accent); margin-bottom: 10px;">The Moon Cat Party! 🎉</h2>
+        <p style="font-size: 0.9rem; color: #ffffff; opacity: 0.8; margin-bottom: 20px;">The stars brought you to the secret cat celebration!</p>
+        <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif" style="width: 150px; border-radius: 20px; box-shadow: 0 0 25px rgba(255,215,0,0.4);" alt="Party Cat">
+        <button class="btn-dark-stage" style="margin-top: 25px; background: var(--rose-primary); border: none;" onclick="switchStageSlow('stage-hub', 800)">Back to Menu 🌸</button>
+    </div>
+
+    <!-- STAGE 11: BOUQUET OF WISHES SCREEN -->
     <div id="stage-bouquet" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
         <div class="aesthetic-card">
             <div class="pill-badge">✿ A TINY BOUQUET OF WISHES ✿</div>
@@ -949,6 +1116,8 @@
                 <p class="wish-card-title">✿ THE WAY YOU SHOW UP ✿</p>
                 <p class="wish-card-text">"You remember the small things — the random text on a hard day, the quiet patience. Wishing you the same softness back this year."</p>
             </div>
+
+            <button class="btn-next-step" onclick="switchStageSlow('stage-hub', 800)">Back to Menu 🌸</button>
         </div>
     </div>
 
@@ -997,7 +1166,7 @@
         const soundCrunch = document.getElementById('sound-crunch');
         const customBgMusic = document.getElementById('custom-bg-music');
 
-        // --- PHOTO ALBUM DATA WITH YOUR EXACT HINDI/HINGLISH CAPTIONS ---
+        // --- PHOTO ALBUM DATA ---
         const galleryData = [
             {
                 url: "1.jpg",
@@ -1157,21 +1326,18 @@
             const star = document.getElementById('star-actor');
             const uniText = document.getElementById('universe-text');
 
-            // Reset Initial Animation Transforms
             giftBox.style.transform = "translate(-50%, 0)";
             giftBox.style.opacity = "1";
             star.style.transform = "translate(-50%, 0)";
             uniText.style.opacity = "0";
 
             setTimeout(() => {
-                // 1. Star descends down to gift box position
                 star.style.transform = "translate(-50%, 550px)";
 
                 setTimeout(() => {
                     uniText.style.opacity = "1";
 
                     setTimeout(() => {
-                        // 2. Star and Gift Box shoot up together to space
                         star.style.transform = "translate(-50%, -400px)";
                         giftBox.style.transform = "translate(-50%, -650px)";
                         giftBox.style.opacity = "0";
@@ -1194,6 +1360,36 @@
                 cake.style.opacity = "0.4";
                 openCuteModal('🎂 HAPPY BIRTHDAY PAGLI! 🍰', 'Yummm! You cut the cake! Wishing you the sweetest and most amazing year ahead! ✨🌸');
             }, 150);
+        }
+
+        // --- NEW OPTIONS HUB FUNCTIONS ---
+        function openThreeGiftsSection() {
+            document.getElementById('gifts-display-area').style.display = 'block';
+            playMagic();
+        }
+
+        function openGiftBox(boxNumber) {
+            playMagic();
+            if (boxNumber === 1) {
+                // Box 1: Animated Pop-Out Cat Meme
+                document.getElementById('gift-meme-modal').style.display = 'flex';
+            } else if (boxNumber === 2) {
+                // Box 2: Teasing Hinglish Message
+                openCuteModal('✿ SECRET GIFT 2 ✿', 'Suno Madam Ji, waise to tu poori pagal hai, par mere liye thodi special aur pyaari bhi hai! Stay happy always! 😜🌸');
+            } else if (boxNumber === 3) {
+                // Box 3: "Chudel kahi ki 😜"
+                openCuteModal('✿ SECRET GIFT 3 ✿', 'Chudel kahi ki 😜👻✨');
+            }
+        }
+
+        function closeGiftMemeModal() {
+            document.getElementById('gift-meme-modal').style.display = 'none';
+        }
+
+        function openMoonPartyStage() {
+            switchStageSlow('stage-moon-party', 800);
+            initPinkStars('star-field-moon', 150);
+            playMagic();
         }
 
         // Initialize First Photo Display
