@@ -6,7 +6,7 @@
     <title>A Letter For My Pagli 🎀</title>
     <!-- Google Fonts for Ultra-Premium Aesthetic -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti CDN for Desktop Level Wow Factor -->
+    <!-- Canvas Confetti CDN -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     
     <style>
@@ -51,7 +51,7 @@
             z-index: 2;
         }
 
-        /* --- STAGE SYSTEM --- */
+        /* --- STAGE SYSTEM WITH FLUID ULTRA-SMOOTH TRANSITIONS --- */
         .stage {
             position: fixed;
             top: 0;
@@ -64,7 +64,8 @@
             align-items: center;
             text-align: center;
             opacity: 0;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.96) translateY(10px);
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 10;
             padding: 20px;
         }
@@ -72,9 +73,10 @@
         .stage.active {
             display: flex;
             opacity: 1;
+            transform: scale(1) translateY(0px);
         }
 
-        /* --- ANIMATIONS --- */
+        /* --- KEYFRAME ANIMATIONS --- */
         @keyframes floatSlow {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-10px) rotate(1.5deg); }
@@ -327,6 +329,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .letter-heading {
@@ -579,15 +582,8 @@
             border-radius: 14px;
             overflow: hidden;
             background: #FFF0F3;
-            border: 2px dashed var(--rose-primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 0.62rem;
-            font-weight: 600;
-            color: var(--rose-primary);
-            padding: 4px;
+            border: 1px solid #FFE3E8;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
         }
 
         .meme-box-custom img {
@@ -709,7 +705,7 @@
             letter-spacing: 1px;
         }
 
-        /* HIGH-END SURPRISE MENU HUB CARDS */
+        /* SURPRISE MENU HUB CARDS */
         .options-menu-grid {
             display: flex;
             flex-direction: column;
@@ -899,8 +895,13 @@
     <!-- BACKGROUND PARALLAX STARDUST CANVAS -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- CUSTOM AUDIO PLAYERS -->
+    <!-- ========================================================= -->
+    <!-- 🎵 BACKGROUND MUSIC & VOICE NOTE AUDIO PLACEHOLDERS 🎵 -->
+    <!-- ========================================================= -->
+    <!-- REPLACE 'YOUR_SONG_URL_HERE' WITH YOUR MAIN MUSIC FILE NAME (e.g., song.mp3) -->
     <audio id="custom-bg-music" src="YOUR_SONG_URL_HERE" loop></audio>
+
+    <!-- REPLACE 'voice_note.mp3' WITH YOUR VOICE NOTE FILE NAME IF DIFFERENT -->
     <audio id="voice-note-audio" src="voice_note.mp3"></audio>
 
     <!-- Sleek Error Notification -->
@@ -916,13 +917,13 @@
         </div>
     </div>
 
-    <!-- GIFT BOX 1: ANIMATED MEME POP-OUT MODAL (MEME 2: VIBING DANCING CAT) -->
+    <!-- GIFT BOX 1: ANIMATED MEME POP-OUT MODAL (MEME: VIBING DANCING CAT) -->
     <div id="gift-meme-modal">
         <div class="gift-meme-container">
             <div class="pill-badge" style="background: var(--rose-primary); color: white;">✿ SURPRISE MEME ✿</div>
             <div style="width: 220px; height: 220px; background: white; border-radius: 20px; overflow: hidden; margin: 15px 0; border: 3px solid var(--rose-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                <!-- UNIQUE MEME 2: VIBING DANCING CAT -->
-                <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif" style="width:100%; height:100%; object-fit:cover;" alt="Pop Out Vibing Cat Meme">
+                <!-- DANCING CAT MEME INSIDE GIFT 1 -->
+                <img src="https://media.tenor.com/4fXhKkX6M3AAAAAC/cats-cat.gif" style="width:100%; height:100%; object-fit:cover;" alt="Dancing Cats Meme">
             </div>
             <button class="btn-next-step" onclick="closeGiftMemeModal()">Close Gift 🎁</button>
         </div>
@@ -979,7 +980,7 @@
             <div class="pill-badge">🌸 MADE WITH SO MUCH LOVE 🌸</div>
             
             <div class="chibi-avatar-frame">
-                <!-- UNIQUE MEME 1: CHIBI WHITE CAT -->
+                <!-- CHIBI WHITE CAT -->
                 <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Chibi White Cat">
             </div>
 
@@ -1025,7 +1026,7 @@
                     <img src="https://media.tenor.com/O6Lq91KUnp8AAAAC/scuba-scuba-cat.gif" style="width:100%; height:100%; object-fit:cover; border-radius:12px;" alt="Scuba Cat Stank Dance">
                 </div>
 
-                <!-- UNIQUE MEME 3: SHOCKED WHITE CAT ON RIGHT -->
+                <!-- SHOCKED WHITE CAT ON RIGHT -->
                 <div class="meme-box-right">
                     <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif" alt="Shocked White Cat Meme">
                 </div>
@@ -1163,8 +1164,8 @@
         <div style="background: #FFF8F6; color: var(--text-dark); border-radius: 28px; padding: 28px 22px; width: 88vw; max-width: 380px; text-align: center; border: 2px solid var(--rose-primary);">
             <div class="pill-badge">⏳ 2032 TIME CAPSULE ⏳</div>
             
-            <!-- UNIQUE MEME 4: CAT BRAIN LOADING GIF -->
-            <img src="https://media.tenor.com/I_K9_w58EwAAAAAC/cat-cat-loading.gif" style="width: 110px; border-radius: 14px; margin-bottom: 10px; object-fit: cover;" alt="Loading Time Cat">
+            <!-- HAPAPA / YAPAPA CAT MEME -->
+            <img src="https://media.tenor.com/u3pMShu9kDAAAAAC/yapapa-cat-hapapa.gif" style="width: 110px; height:110px; border-radius: 14px; margin-bottom: 10px; object-fit: cover;" alt="Yapapa Cat">
             
             <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--cherry); margin-bottom: 5px;">Abhi aane to de 2032! 😂😜</h3>
             <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Type things you want to do until 2032:</p>
@@ -1197,8 +1198,8 @@
 
     <!-- WISH INPUT OVERLAY -->
     <div id="wish-overlay-input">
-        <!-- UNIQUE MEME 5: BEGGING CAT -->
-        <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif" style="width: 130px; border-radius: 15px;" alt="Wish Cat">
+        <!-- YAPAPA CAT MEME FOR WISH SECTION -->
+        <img src="https://media.tenor.com/u3pMShu9kDAAAAAC/yapapa-cat-hapapa.gif" style="width: 130px; height: 130px; object-fit: cover; border-radius: 15px;" alt="Wish Cat">
         <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ffffff; margin-top: 12px;">First type your wish 😉</h2>
         <input type="text" id="wish-text-input" class="wish-field" placeholder="Make a wish..." autocomplete="off">
         <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 14px 40px;" onclick="processWishSubmission()">Send Wish to Stars ⭐</button>
