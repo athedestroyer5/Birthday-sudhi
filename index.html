@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A Letter For My Pagli 🎀</title>
-    <!-- Google Fonts for Ultra-Premium Instagram Reel Aesthetic -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Canvas Confetti CDN -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     
@@ -51,7 +53,7 @@
             z-index: 2;
         }
 
-        /* --- STAGE SYSTEM WITH FLUID TRANSITIONS --- */
+        /* --- STAGE SYSTEM --- */
         .stage {
             position: fixed;
             top: 0;
@@ -65,9 +67,10 @@
             text-align: center;
             opacity: 0;
             transform: scale(0.96) translateY(10px);
-            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 10;
-            padding: 20px;
+            padding: 16px;
+            overflow-y: auto;
         }
 
         .stage.active {
@@ -79,27 +82,27 @@
         /* --- KEYFRAME ANIMATIONS --- */
         @keyframes floatSlow {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(1.5deg); }
+            50% { transform: translateY(-8px) rotate(1.5deg); }
         }
 
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(232, 130, 149, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(232, 130, 149, 0.7); }
+            0%, 100% { box-shadow: 0 0 15px rgba(232, 130, 149, 0.3); }
+            50% { box-shadow: 0 0 35px rgba(232, 130, 149, 0.6); }
         }
 
         @keyframes twinklePink {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.3); }
+            0%, 100% { opacity: 0.2; transform: scale(0.7); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         @keyframes flickerFlame {
             0% { transform: rotate(-45deg) scale(1); opacity: 0.9; }
-            50% { transform: rotate(-45deg) scale(1.18); opacity: 1; }
+            50% { transform: rotate(-45deg) scale(1.15); opacity: 1; }
             100% { transform: rotate(-45deg) scale(0.92); opacity: 0.85; }
         }
 
         @keyframes boxPop {
-            0% { transform: scale(0.4) translateY(60px); opacity: 0; }
+            0% { transform: scale(0.5) translateY(40px); opacity: 0; }
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
 
@@ -108,33 +111,33 @@
             50% { height: 18px; }
         }
 
-        /* --- STAGE 1: DARK ROOM & BULB --- */
+        /* --- STAGE 1: BULB --- */
         #stage-bulb {
             background: radial-gradient(circle at center, #1b1b3a 0%, #000000 100%);
             color: #ffffff;
         }
 
         .bulb-icon {
-            font-size: 95px;
+            font-size: 90px;
             cursor: pointer;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.25));
             animation: floatSlow 3.5s ease-in-out infinite;
-            transition: transform 0.4s ease, filter 0.4s ease;
+            transition: transform 0.3s ease, filter 0.3s ease;
         }
 
         .bulb-icon:hover {
-            transform: scale(1.18) rotate(6deg);
-            filter: drop-shadow(0 0 50px var(--rose-primary));
+            transform: scale(1.15) rotate(6deg);
+            filter: drop-shadow(0 0 45px var(--rose-primary));
         }
 
         .prompt-text {
             font-family: 'Dancing Script', cursive;
-            font-size: 2.4rem;
+            font-size: 2.3rem;
             color: #e2d4f7;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
-        /* --- STAGE 2: ULTRA-PREMIUM PASSWORD SCREEN --- */
+        /* --- STAGE 2: PASSWORD SCREEN --- */
         #stage-quiz {
             background: radial-gradient(circle at center, #FFF0F3 0%, #FFC2D1 70%, #FFA8BA 100%);
             color: var(--text-dark);
@@ -154,76 +157,75 @@
             position: absolute;
             background-color: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
             animation: twinklePink var(--duration) infinite ease-in-out;
         }
 
         .glass-card-premium {
             position: relative;
             z-index: 5;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 2px solid #ffffff;
-            padding: 45px 32px;
-            border-radius: 36px;
-            box-shadow: 0 25px 50px rgba(232, 130, 149, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.5);
-            width: 90%;
-            max-width: 420px;
+            padding: 38px 24px;
+            border-radius: 32px;
+            box-shadow: 0 20px 45px rgba(232, 130, 149, 0.25);
+            width: 92%;
+            max-width: 400px;
             animation: pulseGlow 4s infinite ease-in-out;
-            transform-style: preserve-3d;
         }
 
         .quiz-title {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.2rem;
-            margin-bottom: 25px;
+            font-size: 3rem;
+            margin-bottom: 22px;
             color: var(--text-dark);
         }
 
         .grid-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 12px;
         }
 
         .btn-premium-option {
             background: #ffffff;
             border: 1.5px solid var(--glass-border);
             color: var(--text-dark);
-            padding: 16px 12px;
-            border-radius: 20px;
+            padding: 14px 10px;
+            border-radius: 18px;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 6px 16px rgba(232, 130, 149, 0.1);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(232, 130, 149, 0.1);
         }
 
-        .btn-premium-option:hover {
+        .btn-premium-option:hover, .btn-premium-option:active {
             background: var(--rose-primary);
             color: #ffffff;
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 12px 25px rgba(232, 130, 149, 0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.35);
         }
 
-        /* --- CENTERED ERROR NOTIFICATION --- */
+        /* --- NOTIFICATION TOAST --- */
         #error-toast {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.7);
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             color: var(--cherry);
-            padding: 16px 32px;
+            padding: 14px 28px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            font-size: 1.1rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
             border: 2px solid var(--rose-primary);
             opacity: 0;
             pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 1000;
             white-space: nowrap;
         }
@@ -233,14 +235,14 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        /* --- STAGE 3, 4 & 5: LOADING, EXCITE, RESPONSE --- */
+        /* --- STAGES 3, 4, 5 --- */
         #stage-loading, #stage-excite, #stage-response {
             background-color: #000000;
             color: #ffffff;
         }
 
         .loader-box {
-            width: 270px;
+            width: 260px;
             text-align: center;
         }
 
@@ -250,14 +252,14 @@
             background: #1a1a1a;
             border-radius: 10px;
             overflow: hidden;
-            margin-top: 20px;
+            margin-top: 18px;
         }
 
         .loader-fill {
             height: 100%;
             width: 0%;
             background: var(--rose-primary);
-            box-shadow: 0 0 15px var(--rose-primary);
+            box-shadow: 0 0 12px var(--rose-primary);
             transition: width 0.05s linear;
         }
 
@@ -265,34 +267,44 @@
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: #ffffff;
-            padding: 14px 32px;
+            padding: 12px 28px;
             border-radius: 20px;
             font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
-        .btn-dark-stage:hover {
+        .btn-dark-stage:hover, .btn-dark-stage:active {
             background: var(--rose-primary);
             border-color: var(--rose-primary);
         }
 
-        /* --- AESTHETIC CARDS WITH 3D TILT --- */
+        /* --- AESTHETIC CARDS --- */
         .aesthetic-card {
-            width: 90vw;
-            max-width: 420px;
+            width: 92vw;
+            max-width: 410px;
+            max-height: 88vh;
+            overflow-y: auto;
             background: var(--card-cream);
-            border-radius: 34px;
-            padding: 32px 24px;
-            box-shadow: 0 20px 40px rgba(232, 130, 149, 0.15);
+            border-radius: 30px;
+            padding: 28px 20px;
+            box-shadow: 0 18px 36px rgba(232, 130, 149, 0.16);
             border: 2px solid #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.2s ease;
+            scrollbar-width: thin;
+            scrollbar-color: var(--rose-soft) transparent;
+        }
+
+        .aesthetic-card::-webkit-scrollbar {
+            width: 4px;
+        }
+        .aesthetic-card::-webkit-scrollbar-thumb {
+            background: #FFE3E8;
+            border-radius: 4px;
         }
 
         .pill-badge {
@@ -301,26 +313,25 @@
             gap: 6px;
             background: var(--rose-soft);
             color: var(--rose-primary);
-            padding: 6px 18px;
+            padding: 5px 16px;
             border-radius: 50px;
             font-size: 0.72rem;
             font-weight: 600;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .chibi-avatar-frame {
-            width: 82px;
-            height: 82px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: #FFF0F3;
             border: 3px solid #FFE3E8;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 12px;
-            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.15);
+            margin-bottom: 10px;
             overflow: hidden;
         }
 
@@ -328,105 +339,105 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
         .letter-heading {
             font-family: 'Playfair Display', serif;
-            font-size: 1.85rem;
+            font-size: 1.8rem;
             color: var(--text-dark);
             margin-bottom: 4px;
         }
 
         .letter-sub {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.65rem;
+            font-size: 1.6rem;
             color: var(--rose-primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .divider-dots {
             color: var(--rose-primary);
             font-size: 0.8rem;
             letter-spacing: 4px;
-            margin: 8px 0;
+            margin: 6px 0;
             opacity: 0.6;
         }
 
         .letter-body-text {
-            font-size: 0.92rem;
-            line-height: 1.7;
+            font-size: 0.9rem;
+            line-height: 1.65;
             color: var(--text-dark);
             text-align: center;
-            margin: 12px 0;
+            margin: 10px 0;
         }
 
-        /* ENVELOPE BUTTON */
         .envelope-card-btn {
             width: 100%;
             background: #FFF3F5;
             border: 2px dashed #FFD4DD;
-            border-radius: 22px;
-            padding: 20px 15px;
-            margin-top: 12px;
+            border-radius: 20px;
+            padding: 16px 12px;
+            margin-top: 10px;
             cursor: pointer;
-            transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: transform 0.25s ease;
         }
 
-        .envelope-card-btn:hover {
-            transform: scale(1.02);
-        }
+        .envelope-card-btn:hover { transform: scale(1.02); }
 
         .wax-seal-btn {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             background: var(--rose-primary);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1.2rem;
-            box-shadow: 0 5px 15px rgba(232, 130, 149, 0.4);
-            margin-bottom: 6px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(232, 130, 149, 0.35);
+            margin-bottom: 5px;
         }
 
         .btn-next-step {
             background: var(--rose-primary);
             color: #ffffff;
             border: none;
-            padding: 12px 32px;
+            padding: 12px 28px;
             border-radius: 50px;
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 18px;
-            box-shadow: 0 6px 18px rgba(232, 130, 149, 0.3);
-            transition: transform 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(232, 130, 149, 0.3);
+            transition: transform 0.2s ease, background-color 0.2s ease;
         }
 
-        .btn-next-step:hover {
-            transform: translateY(-2px);
+        .btn-next-step:hover { transform: translateY(-2px); }
+        .btn-next-step:disabled {
+            background-color: #d1b4bc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
-        /* MUSIC WIDGET WITH EQUALIZER BARS */
+        /* --- MUSIC PLAYER --- */
         .music-widget {
             width: 100%;
             background: #FFF0F3;
-            border-radius: 20px;
-            padding: 14px 18px;
+            border-radius: 18px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 15px;
+            margin-top: 14px;
         }
 
         .music-info { text-align: left; }
-        .music-title { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); }
-        .music-sub { font-size: 0.72rem; color: var(--text-muted); }
+        .music-title { font-size: 0.82rem; font-weight: 600; color: var(--text-dark); }
+        .music-sub { font-size: 0.7rem; color: var(--text-muted); }
 
         .eq-bars-row {
             display: flex;
@@ -447,89 +458,82 @@
         .playing .eq-bar:nth-child(3) { animation: eqBar 0.8s infinite ease-in-out 0.1s; }
 
         .play-btn-circle {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             background: var(--rose-primary);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(232, 130, 149, 0.3);
         }
 
-        /* DEDICATED VOICE NOTE STAGE */
-        .voice-card-box {
-            width: 100%;
-            background: #FFF0F3;
-            border: 2px solid #FFE3E8;
-            border-radius: 24px;
-            padding: 22px 18px;
+        /* --- CAKE & CANDLE SECTION --- */
+        .cake-outer-container {
+            position: relative;
+            width: 190px;
+            height: 140px;
+            margin: 10px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 15px 0;
+            justify-content: flex-end;
         }
 
-        .voice-play-button {
-            width: 65px;
-            height: 65px;
-            background: var(--rose-primary);
-            color: white;
-            border-radius: 50%;
+        .candles-row {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            margin: 15px 0;
-            box-shadow: 0 8px 20px rgba(232, 130, 149, 0.4);
-            transition: all 0.3s ease;
+            justify-content: space-around;
+            width: 140px;
+            margin-bottom: -5px;
+            z-index: 15;
         }
 
-        .voice-progress-container {
-            width: 100%;
-            height: 6px;
-            background: #FFE3E8;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-
-        .voice-progress-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--rose-primary);
-            transition: width 0.1s linear;
-        }
-
-        /* CAKE & CANDLES SECTION */
-        .cake-wrapper {
+        .candle-item {
             position: relative;
-            width: 190px;
-            height: 120px;
-            margin: 15px 0 10px 0;
+            width: 10px;
+            height: 38px;
+            background: #FF6B8B;
+            border-radius: 4px;
             cursor: pointer;
+            transition: opacity 0.35s ease, transform 0.2s ease;
+        }
+
+        .candle-item:hover { transform: scale(1.1); }
+
+        .candle-flame {
+            position: absolute;
+            top: -14px;
+            left: -2px;
+            width: 14px;
+            height: 16px;
+            background: radial-gradient(circle, #FFEA00, #FF6A00);
+            border-radius: 50% 50% 20% 50%;
+            transform: rotate(-45deg);
+            animation: flickerFlame 0.12s infinite;
+            box-shadow: 0 0 8px #FF9E00;
         }
 
         .cake-layer-bottom {
-            position: absolute;
-            bottom: 0;
+            position: relative;
             width: 100%;
             height: 85px;
             background: #FFF9E6;
             border-radius: 16px 16px 6px 6px;
-            box-shadow: 0 10px 20px rgba(232, 130, 149, 0.12), inset 0 -6px 0 rgba(0,0,0,0.04);
+            box-shadow: 0 8px 18px rgba(232, 130, 149, 0.14);
             border-bottom: 5px solid #F3E1B9;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            z-index: 5;
         }
 
         .cake-frosting-top {
             position: absolute;
             top: 0;
+            left: 0;
             width: 100%;
-            height: 28px;
+            height: 26px;
             background: var(--rose-primary);
             border-radius: 16px 16px 0 0;
         }
@@ -542,31 +546,6 @@
             border-radius: 0 0 8px 8px;
         }
 
-        .candle-item {
-            position: absolute;
-            width: 8px;
-            height: 40px;
-            background: #FF6B8B;
-            top: -40px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: opacity 0.4s ease;
-        }
-
-        .candle-flame {
-            position: absolute;
-            top: -16px;
-            left: -3px;
-            width: 14px;
-            height: 18px;
-            background: radial-gradient(circle, #FFEA00, #FF6A00);
-            border-radius: 50% 50% 20% 50%;
-            transform: rotate(-45deg);
-            animation: flickerFlame 0.12s infinite;
-            box-shadow: 0 0 10px #FF9E00;
-        }
-
-        /* MEME CAT ROW IN CAKE CARD */
         .card-memes-row {
             width: 100%;
             display: flex;
@@ -575,95 +554,65 @@
             margin-top: 10px;
         }
 
-        .meme-box-custom {
-            width: 75px;
-            height: 75px;
+        .meme-box-custom, .meme-box-right {
+            width: 72px;
+            height: 72px;
             border-radius: 14px;
             overflow: hidden;
             background: #FFF0F3;
             border: 1px solid #FFE3E8;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
         }
 
-        .meme-box-custom img {
+        .meme-box-custom img, .meme-box-right img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        .meme-box-right {
-            width: 75px;
-            height: 75px;
-            border-radius: 14px;
-            overflow: hidden;
-            background: #ffffff;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
-            border: 1px solid #FFE3E8;
-        }
-
-        .meme-box-right img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* --- PHOTO ALBUM GALLERY STAGE --- */
+        /* --- PHOTO ALBUM --- */
         .photo-frame-wrapper {
             width: 100%;
             background: #FFF0F3;
             border: 2px solid #FFE3E8;
-            border-radius: 24px;
-            padding: 14px;
+            border-radius: 22px;
+            padding: 12px;
             position: relative;
-            margin: 8px 0;
+            margin: 6px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .floral-corner-icon {
-            position: absolute;
-            font-size: 1.1rem;
-            color: var(--rose-primary);
-            z-index: 5;
-        }
-
         .photo-display-area {
             width: 100%;
-            height: 240px;
+            height: 220px;
             background: #ffffff;
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            position: relative;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
             align-items: center;
             border: 1px solid #FFE3E8;
-            padding: 6px;
+            padding: 4px;
         }
 
         .photo-display-area img {
             max-width: 100%;
             max-height: 100%;
-            width: auto;
-            height: auto;
             object-fit: contain;
             border-radius: 10px;
         }
 
         .photo-caption-box {
             width: 100%;
-            margin-top: 12px;
+            margin-top: 10px;
             background: #ffffff;
-            border-radius: 14px;
-            padding: 12px 15px;
-            font-size: 0.85rem;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 0.82rem;
             color: var(--text-dark);
-            line-height: 1.5;
-            min-height: 65px;
+            line-height: 1.45;
+            min-height: 60px;
             border: 1px solid #FFEBF0;
             font-style: italic;
             display: flex;
@@ -677,12 +626,12 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         .nav-arrow-btn {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             background: var(--rose-primary);
             color: white;
             border-radius: 50%;
@@ -690,25 +639,20 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(232, 130, 149, 0.3);
-            transition: transform 0.2s;
         }
 
-        .nav-arrow-btn:active { transform: scale(0.9); }
-
         .photo-counter-tag {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--rose-primary);
             letter-spacing: 1px;
         }
 
-        /* HIGH-END SURPRISE MENU HUB CARDS */
+        /* --- SURPRISE HUB --- */
         .options-menu-grid {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             width: 100%;
             margin-top: 10px;
         }
@@ -717,55 +661,95 @@
             width: 100%;
             background: #FFF8F9;
             border: 1.5px solid #FFE3E8;
-            border-radius: 20px;
-            padding: 16px 20px;
+            border-radius: 18px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 14px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.25s ease;
         }
 
         .option-hub-card:hover {
-            transform: translateY(-4px);
             border-color: var(--rose-primary);
-            box-shadow: 0 10px 25px rgba(232, 130, 149, 0.2);
             background: #FFFFFF;
+            transform: translateY(-2px);
         }
 
-        .option-hub-icon { font-size: 1.8rem; }
+        .option-hub-icon { font-size: 1.6rem; }
         .option-hub-text { text-align: left; }
-        .option-hub-title { font-size: 0.88rem; font-weight: 700; color: var(--rose-primary); letter-spacing: 1px; text-transform: uppercase; }
-        .option-hub-sub { font-size: 0.75rem; color: var(--text-muted); }
+        .option-hub-title { font-size: 0.85rem; font-weight: 700; color: var(--rose-primary); letter-spacing: 0.5px; }
+        .option-hub-sub { font-size: 0.72rem; color: var(--text-muted); }
 
-        /* ULTRA COOL SECRET GIFT BOXES AREA */
         .gift-boxes-row {
             display: flex;
             justify-content: space-around;
             width: 100%;
-            margin: 20px 0 10px 0;
+            margin: 15px 0 5px 0;
         }
 
         .gift-box-item-cool {
-            font-size: 58px;
+            font-size: 48px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 6px 12px rgba(232, 130, 149, 0.3));
+            transition: transform 0.25s ease;
             animation: floatSlow 3s infinite ease-in-out;
         }
 
         .gift-box-item-cool:hover {
-            transform: scale(1.28) rotate(12deg);
-            filter: drop-shadow(0 0 25px var(--rose-primary));
+            transform: scale(1.2) rotate(8deg);
         }
 
-        /* CUTE CUSTOM POP-UP MODAL */
-        #cute-alert-modal {
+        /* --- VOICE NOTE --- */
+        .voice-card-box {
+            width: 100%;
+            background: #FFF0F3;
+            border: 2px solid #FFE3E8;
+            border-radius: 22px;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 12px 0;
+        }
+
+        .voice-play-button {
+            width: 58px;
+            height: 58px;
+            background: var(--rose-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            margin: 10px 0;
+            box-shadow: 0 6px 16px rgba(232, 130, 149, 0.35);
+        }
+
+        .voice-progress-container {
+            width: 100%;
+            height: 6px;
+            background: #FFE3E8;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .voice-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--rose-primary);
+            transition: width 0.1s linear;
+        }
+
+        /* --- MODALS & OVERLAYS --- */
+        .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -776,76 +760,27 @@
         .cute-modal-card {
             background: #FFF8F6;
             border: 2px solid var(--rose-primary);
-            border-radius: 28px;
-            padding: 28px 20px;
-            width: 88vw;
+            border-radius: 26px;
+            padding: 26px 18px;
+            width: 90vw;
             max-width: 360px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        /* WISH MODAL OVERLAY */
-        #wish-overlay-input {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 700;
-            padding: 20px;
-            color: #ffffff;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
         .wish-field {
             background: transparent;
             border: none;
-            border-bottom: 3px solid var(--rose-primary);
+            border-bottom: 2px solid var(--rose-primary);
             color: #ffffff;
             font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
+            font-size: 2rem;
             text-align: center;
             width: 85%;
-            max-width: 360px;
-            padding: 10px;
+            max-width: 340px;
+            padding: 8px;
             outline: none;
-            margin: 20px 0;
-        }
-
-        /* FULL LETTER MODAL */
-        #letter-full-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 600;
-            padding: 20px;
-        }
-
-        /* ANIMATED GIFT POP-OUT MEME MODAL */
-        #gift-meme-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 850;
-            padding: 20px;
-        }
-
-        .gift-meme-container {
-            animation: boxPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
+            margin: 15px 0;
         }
 
         /* --- STAGE: UNIVERSE ANIMATION --- */
@@ -857,77 +792,119 @@
 
         .actor-gift-box {
             position: absolute;
-            bottom: 25%;
+            bottom: 22vh;
             left: 50%;
             transform: translate(-50%, 0);
             font-size: 55px;
             z-index: 10;
-            transition: transform 3.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
+            transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
         }
 
         .actor-star-descend {
             position: absolute;
-            top: -150px;
+            top: -20vh;
             left: 50%;
             transform: translate(-50%, 0);
-            font-size: 90px;
-            filter: drop-shadow(0 0 30px var(--gold-accent));
+            font-size: 80px;
+            filter: drop-shadow(0 0 25px var(--gold-accent));
             z-index: 11;
-            transition: transform 3.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
+            transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
         }
 
         .universe-msg {
             position: absolute;
-            top: 20%;
+            top: 18vh;
             width: 90%;
             font-family: 'Dancing Script', cursive;
-            font-size: 2.6rem;
+            font-size: 2.3rem;
             color: #ffffff;
             opacity: 0;
-            transition: opacity 1s ease;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            transition: opacity 0.8s ease;
+            text-shadow: 0 0 15px rgba(255,255,255,0.4);
         }
     </style>
 </head>
 <body>
 
-    <!-- BACKGROUND PARALLAX STARDUST CANVAS -->
+    <!-- CANVAS BACKGROUND -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- BACKGROUND MUSIC & VOICE NOTE AUDIO PLACEHOLDERS -->
-    <audio id="custom-bg-music" src="song.mp3" loop></audio>
-    <audio id="special-song-audio" src="song1.mp3"></audio>
-    <audio id="voice-note-audio" src="voice_note.mp3"></audio>
+    <!-- AUDIO ELEMENTS -->
+    <audio id="custom-bg-music" src="song.mp3" loop preload="auto"></audio>
+    <audio id="special-song-audio" src="song1.mp3" preload="none"></audio>
+    <audio id="voice-note-audio" src="voice_note.mp3" preload="none"></audio>
+    <audio id="sound-crunch" src="https://www.myinstants.com/media/sounds/crunch.mp3" preload="auto"></audio>
+    <audio id="sound-magic" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3" preload="auto"></audio>
+    <audio id="sound-buzzer" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
 
-    <!-- Sleek Error Notification -->
+    <!-- TOAST NOTIFICATION -->
     <div id="error-toast">itna bhi nahi pata 😂</div>
 
-    <!-- CUTE CUSTOM POP-UP MODAL -->
-    <div id="cute-alert-modal">
+    <!-- CUTE ALERT MODAL -->
+    <div id="cute-alert-modal" class="modal-overlay">
         <div class="cute-modal-card">
             <div class="pill-badge" id="cute-modal-badge">✿ SPECIAL WISH ✿</div>
             <h3 id="cute-modal-title" style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 8px; font-size: 1.2rem;"></h3>
             <p id="cute-modal-text" style="font-size: 0.88rem; line-height: 1.6; color: var(--text-dark); margin-bottom: 18px;"></p>
-            <button class="btn-next-step" style="margin-top: 0; padding: 10px 28px;" onclick="closeCuteModal()">Close ♡</button>
+            <button class="btn-next-step" style="margin-top: 0; padding: 8px 24px;" onclick="closeModal('cute-alert-modal')">Close ♡</button>
         </div>
     </div>
 
-    <!-- GIFT BOX 1: ANIMATED MEME POP-OUT MODAL (cat1.gif) -->
-    <div id="gift-meme-modal">
-        <div class="gift-meme-container">
+    <!-- GIFT 1: MEME MODAL (cat1.gif) -->
+    <div id="gift-meme-modal" class="modal-overlay">
+        <div style="text-align: center;">
             <div class="pill-badge" style="background: var(--rose-primary); color: white;">✿ SURPRISE MEME ✿</div>
-            <div style="width: 220px; height: 220px; background: white; border-radius: 20px; overflow: hidden; margin: 15px 0; border: 3px solid var(--rose-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                <!-- LOCAL CAT1.GIF WITH FALLBACK -->
-                <img src="cat1.gif" onerror="this.onerror=null; this.src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif';" style="width:100%; height:100%; object-fit:cover;" alt="Dancing Cats Meme">
+            <div style="width: 200px; height: 200px; background: white; border-radius: 18px; overflow: hidden; margin: 15px auto; border: 3px solid var(--rose-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <img src="cat1.gif" onerror="this.onerror=null; this.src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnZ1NDBybmZpY3EzaXJyYm1kZmdmM3lsd3MxbjVpdzF2OGl0cTVydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GeimqsH0TLDt4tA2Ur/giphy.gif';" style="width:100%; height:100%; object-fit:cover;" alt="Dancing Cats">
             </div>
-            <button class="btn-next-step" onclick="closeGiftMemeModal()">Close Gift 🎁</button>
+            <button class="btn-next-step" onclick="closeModal('gift-meme-modal')">Close Gift 🎁</button>
         </div>
+    </div>
+
+    <!-- 2032 TIME CAPSULE MODAL (cat2.gif) -->
+    <div id="modal-2032" class="modal-overlay">
+        <div class="cute-modal-card" style="max-width: 380px;">
+            <div class="pill-badge">⏳ 2032 TIME CAPSULE ⏳</div>
+            <img src="cat2.gif" onerror="this.onerror=null; this.src='https://media.tenor.com/u3pMShu9kDAAAAAC/yapapa-cat-hapapa.gif';" style="width: 90px; height: 90px; border-radius: 12px; margin-bottom: 8px; object-fit: cover;" alt="Time Cat">
+            <h3 style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--cherry); margin-bottom: 4px;">Abhi aane to de 2032! 😂😜</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">Type things you want to do until 2032:</p>
+            <input type="text" id="capsule-2032-input" class="wish-field" style="color: var(--text-dark); font-size: 1.3rem;" placeholder="Type your 2032 bucket list..." autocomplete="off">
+            <div style="display: flex; gap: 8px; justify-content: center;">
+                <button class="btn-next-step" id="submit-capsule-btn" style="margin-top:0;" onclick="submit2032Capsule()">Lock in ⏳</button>
+                <button class="btn-dark-stage" style="padding: 8px 16px; background: var(--text-muted); border: none;" onclick="closeModal('modal-2032')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULL LETTER MODAL -->
+    <div id="letter-full-modal" class="modal-overlay">
+        <div class="aesthetic-card" style="background: #FFF8F6; border: 2px solid var(--rose-primary);">
+            <div class="pill-badge">✿ A LETTER, JUST FOR YOU ✿</div>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 8px;">My Madam Jii,</h2>
+            <div class="divider-dots">✿ ------------ ✿</div>
+            <p class="letter-body-text">
+                There's no card big enough for everything I'd like to say, so I made you this little digital garden.
+                <br><br>
+                Thank you for the small and unseen things — the way you check in, the jokes only we get, and the quiet patience when I'm being too much. I noticed. I still notice.
+                <br><br>
+                I hope today you feel celebrated. I hope you eat something delicious and someone tells you how loved you are! 🎀
+            </p>
+            <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 10px 24px; margin-top: 10px;" onclick="closeModal('letter-full-modal')">Close Letter ♡</button>
+        </div>
+    </div>
+
+    <!-- WISH OVERLAY (cat4.gif) -->
+    <div id="wish-overlay-input" class="modal-overlay" style="flex-direction: column;">
+        <img src="cat4.gif" onerror="this.onerror=null; this.src='https://media.tenor.com/u3pMShu9kDAAAAAC/yapapa-cat-hapapa.gif';" style="width: 110px; height: 110px; object-fit: cover; border-radius: 14px;" alt="Wish Cat">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #ffffff; margin-top: 10px;">First type your wish 😉</h2>
+        <input type="text" id="wish-text-input" class="wish-field" placeholder="Make a wish..." autocomplete="off">
+        <button class="btn-dark-stage" id="submit-wish-btn" style="background: var(--rose-primary); border: none; padding: 12px 30px;" onclick="processWishSubmission()">Send Wish to Stars ⭐</button>
     </div>
 
     <!-- STAGE 1: THE BULB -->
     <div id="stage-bulb" class="stage active">
         <p class="prompt-text">Want to light up?</p>
-        <div class="bulb-icon" onclick="playMagic(); startBgMusic(); switchStageSlow('stage-quiz', 1200); initPinkStars('star-field-quiz', 160);">💡</div>
+        <div class="bulb-icon" onclick="startExperience()">💡</div>
     </div>
 
     <!-- STAGE 2: PASSWORD SCREEN -->
@@ -956,78 +933,70 @@
 
     <!-- STAGE 4: ARE YOU EXCITED? -->
     <div id="stage-excite" class="stage">
-        <h1 style="font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--rose-primary); margin-bottom: 25px;">Are u excited?</h1>
-        <div style="display: flex; gap: 20px;">
-            <button class="btn-dark-stage" style="width: 120px;" onclick="handleExciteChoice('yes')">Yes</button>
-            <button class="btn-dark-stage" style="width: 120px;" onclick="handleExciteChoice('no')">No</button>
+        <h1 style="font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: var(--rose-primary); margin-bottom: 25px;">Are u excited?</h1>
+        <div style="display: flex; gap: 15px;">
+            <button class="btn-dark-stage" style="width: 110px;" onclick="handleExciteChoice('yes')">Yes</button>
+            <button class="btn-dark-stage" style="width: 110px;" onclick="handleExciteChoice('no')">No</button>
         </div>
     </div>
 
     <!-- STAGE 5: RESPONSE SCREEN -->
     <div id="stage-response" class="stage">
-        <h1 id="response-msg-text" style="font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: #ffffff; margin-bottom: 30px; padding: 0 20px;"></h1>
-        <button class="btn-dark-stage" style="padding: 14px 35px; background: var(--rose-primary); border: none;" onclick="switchStageSlow('stage-letter', 1000)">Open Letter 🌸</button>
+        <h1 id="response-msg-text" style="font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: #ffffff; margin-bottom: 25px; padding: 0 20px;"></h1>
+        <button class="btn-dark-stage" style="padding: 12px 30px; background: var(--rose-primary); border: none;" onclick="switchStageSlow('stage-letter', 800)">Open Letter 🌸</button>
     </div>
 
-    <!-- STAGE 6: LETTER ENVELOPE SCREEN -->
-    <div id="stage-letter" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+    <!-- STAGE 6: LETTER SCREEN -->
+    <div id="stage-letter" class="stage" style="background-color: var(--bg-pink-soft);">
         <div class="aesthetic-card">
             <div class="pill-badge">🌸 MADE WITH SO MUCH LOVE 🌸</div>
-            
             <div class="chibi-avatar-frame">
-                <!-- cat5.gif LOCAL WITH FALLBACK -->
-                <img src="cat5.gif" onerror="this.onerror=null; this.src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif';" alt="Chibi White Cat">
+                <img src="cat5.gif" onerror="this.onerror=null; this.src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z2b3F3Y3gzeTN2MmRwbmd4eXpxMXJ1dms2MmdocjlydW43MmJuZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif';" alt="Chibi Cat">
             </div>
-
             <h1 class="letter-heading">Hello Cutieee</h1>
             <h2 class="letter-sub">happy birthday ♡</h2>
-
             <div class="divider-dots">✿ ------------ ✿</div>
-
-            <!-- Envelope Wax Seal Button -->
-            <div class="envelope-card-btn" onclick="openLetterModal()">
+            <div class="envelope-card-btn" onclick="openModal('letter-full-modal')">
                 <div class="wax-seal-btn">✉️</div>
-                <p style="font-size: 0.82rem; font-weight: 600; color: var(--rose-primary); letter-spacing: 1px;">READ MY LETTER →</p>
+                <p style="font-size: 0.8rem; font-weight: 600; color: var(--rose-primary); letter-spacing: 0.5px;">READ MY LETTER →</p>
             </div>
-
-            <button class="btn-next-step" onclick="switchStageSlow('stage-cake', 1000)">Next: Cut the Cake 🍰 →</button>
+            <button class="btn-next-step" onclick="switchStageSlow('stage-cake', 800)">Next: Cut the Cake 🍰 →</button>
         </div>
     </div>
 
-    <!-- STAGE 7: CAKE & CANDLES SCREEN (STRICT CAKE GUARD) -->
-    <div id="stage-cake" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+    <!-- STAGE 7: CAKE & CANDLES SCREEN -->
+    <div id="stage-cake" class="stage" style="background-color: var(--bg-pink-soft);">
         <div class="aesthetic-card">
             <div class="pill-badge">✿ MAKE A WISH & CUT THE CAKE ✿</div>
 
-            <div class="cake-wrapper">
+            <!-- Cake & Candles Structure (Independent targets) -->
+            <div class="cake-outer-container">
+                <div class="candles-row">
+                    <div class="candle-item" id="candle-1" onclick="tapCandle(1)"><div class="candle-flame"></div></div>
+                    <div class="candle-item" id="candle-2" onclick="tapCandle(2)"><div class="candle-flame"></div></div>
+                    <div class="candle-item" id="candle-3" onclick="tapCandle(3)"><div class="candle-flame"></div></div>
+                </div>
+
                 <div class="cake-layer-bottom" id="main-cake-element" onclick="handleCakeEat()">
                     <div class="cake-frosting-top"></div>
-                    <div class="drip-item" style="left: 12px; height: 28px;"></div>
-                    <div class="drip-item" style="left: 50px; height: 38px;"></div>
-                    <div class="drip-item" style="left: 100px; height: 22px;"></div>
-                    <div class="drip-item" style="left: 148px; height: 34px;"></div>
-                    
-                    <!-- 3 Candles -->
-                    <div class="candle-item" id="candle-1" style="left: 32px;" onclick="tapCandle(1, event)"><div class="candle-flame"></div></div>
-                    <div class="candle-item" id="candle-2" style="left: 90px;" onclick="tapCandle(2, event)"><div class="candle-flame"></div></div>
-                    <div class="candle-item" id="candle-3" style="left: 148px;" onclick="tapCandle(3, event)"><div class="candle-flame"></div></div>
+                    <div class="drip-item" style="left: 12px; height: 24px;"></div>
+                    <div class="drip-item" style="left: 50px; height: 34px;"></div>
+                    <div class="drip-item" style="left: 100px; height: 20px;"></div>
+                    <div class="drip-item" style="left: 148px; height: 30px;"></div>
                 </div>
             </div>
 
-            <!-- MEME CAT ROW IN CAKE CARD -->
+            <!-- MEME CAT ROW -->
             <div class="card-memes-row">
-                <!-- cat.gif ON LEFT -->
-                <div class="meme-box-custom" style="border:none;">
-                    <img src="cat.gif" onerror="this.onerror=null; this.src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGxibnV4ZzE5aGd5Mm13b3o5aDV5cnM3eTJreThmbDFreXVvOHBhOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lq0h93752f6J9tijrh/giphy.gif';" style="width:100%; height:100%; object-fit:cover; border-radius:12px;" alt="Scuba Cat Stank Dance">
+                <div class="meme-box-custom">
+                    <img src="cat.gif" onerror="this.onerror=null; this.src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGxibnV4ZzE5aGd5Mm13b3o5aDV5cnM3eTJreThmbDFreXVvOHBhOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lq0h93752f6J9tijrh/giphy.gif';" alt="Meme Cat">
                 </div>
-
-                <!-- cat3.gif ON RIGHT -->
                 <div class="meme-box-right">
-                    <img src="cat3.gif" onerror="this.onerror=null; this.src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif';" alt="Shocked White Cat Meme">
+                    <img src="cat3.gif" onerror="this.onerror=null; this.src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN6bmdic3BtdHRyOW4wdzF5dXBtbDZ4a3B2cWh1MmFicmswbzFubCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vFKqnCdLPNOKc/giphy.gif';" alt="Shocked Cat">
                 </div>
             </div>
 
-            <!-- Music Player Widget with Equalizer -->
+            <!-- MUSIC PLAYER WIDGET -->
             <div class="music-widget" id="musicWidget">
                 <div class="music-info">
                     <p class="music-title">Special Song For You</p>
@@ -1036,21 +1005,21 @@
                 <div class="eq-bars-row">
                     <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
                 </div>
-                <div class="play-btn-circle" onclick="toggleSpecialSong(this)">▶</div>
+                <div class="play-btn-circle" id="specialSongBtn" onclick="toggleSpecialSong()">▶</div>
             </div>
 
             <button class="btn-next-step" onclick="attemptGoToGallery()">Next: Photo Album 📸 →</button>
         </div>
     </div>
 
-    <!-- STAGE 8: PHOTO ALBUM GALLERY STAGE -->
-    <div id="stage-gallery" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+    <!-- STAGE 8: PHOTO ALBUM GALLERY -->
+    <div id="stage-gallery" class="stage" style="background-color: var(--bg-pink-soft);">
         <div class="aesthetic-card">
             <div class="pill-badge">✿ OUR MEMORIES ALBUM ✿</div>
 
             <div class="photo-frame-wrapper">
-                <span class="floral-corner-icon" style="top: 8px; left: 10px;">🌸</span>
-                <span class="floral-corner-icon" style="top: 8px; right: 10px;">🌸</span>
+                <span style="position: absolute; top: 8px; left: 10px; font-size: 1.1rem; color: var(--rose-primary);">🌸</span>
+                <span style="position: absolute; top: 8px; right: 10px; font-size: 1.1rem; color: var(--rose-primary);">🌸</span>
 
                 <div class="photo-display-area">
                     <img id="gallery-photo-img" src="1.jpg" alt="Memory Photo">
@@ -1067,17 +1036,17 @@
                 </div>
             </div>
 
-            <button class="btn-next-step" onclick="switchStageSlow('stage-hub', 1000)">Next: Surprise Menu ✨ →</button>
+            <button class="btn-next-step" onclick="switchStageSlow('stage-hub', 800)">Next: Surprise Menu ✨ →</button>
         </div>
     </div>
 
-    <!-- STAGE 9: HIGH-END INTERACTIVE SURPRISE HUB MENU -->
-    <div id="stage-hub" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+    <!-- STAGE 9: SURPRISE HUB MENU -->
+    <div id="stage-hub" class="stage" style="background-color: var(--bg-pink-soft);">
         <div class="aesthetic-card">
             <div class="pill-badge">✿ SPECIAL SURPRISES FOR YOU ✿</div>
 
             <div class="options-menu-grid">
-                <!-- Option 1: OUR MEMORY LANE -->
+                <!-- Option 1 -->
                 <div class="option-hub-card" onclick="switchStageSlow('stage-memory-lane', 800)">
                     <span class="option-hub-icon">🌸</span>
                     <div class="option-hub-text">
@@ -1086,8 +1055,8 @@
                     </div>
                 </div>
 
-                <!-- Option 2: OPEN THIS IN 2032 -->
-                <div class="option-hub-card" onclick="open2032CapsuleModal()">
+                <!-- Option 2 -->
+                <div class="option-hub-card" onclick="openModal('modal-2032'); playMagic();">
                     <span class="option-hub-icon">⏳</span>
                     <div class="option-hub-text">
                         <div class="option-hub-title">✿ OPEN THIS IN 2032 ✿</div>
@@ -1095,7 +1064,7 @@
                     </div>
                 </div>
 
-                <!-- Option 3: THREE SECRET GIFTS -->
+                <!-- Option 3 -->
                 <div class="option-hub-card" onclick="openThreeGiftsSection()">
                     <span class="option-hub-icon">🎁</span>
                     <div class="option-hub-text">
@@ -1105,13 +1074,13 @@
                 </div>
             </div>
 
-            <!-- THREE GIFTS DISPLAY AREA -->
+            <!-- THREE GIFTS DISPLAY -->
             <div id="gifts-display-area" style="display: none; width: 100%; margin-top: 15px;">
                 <p style="font-size: 0.78rem; color: var(--rose-primary); font-weight: 600;">Tap any box to open!</p>
                 <div class="gift-boxes-row">
                     <div class="gift-box-item-cool" onclick="openGiftBox(1)">🎁</div>
-                    <div class="gift-box-item-cool" style="animation-delay: 0.5s;" onclick="openGiftBox(2)">🎁</div>
-                    <div class="gift-box-item-cool" style="animation-delay: 1s;" onclick="openGiftBox(3)">🎁</div>
+                    <div class="gift-box-item-cool" style="animation-delay: 0.4s;" onclick="openGiftBox(2)">🎁</div>
+                    <div class="gift-box-item-cool" style="animation-delay: 0.8s;" onclick="openGiftBox(3)">🎁</div>
                 </div>
             </div>
 
@@ -1119,16 +1088,15 @@
         </div>
     </div>
 
-    <!-- STAGE 10: DEDICATED VOICE NOTE STAGE -->
-    <div id="stage-voice-note" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
+    <!-- STAGE 10: VOICE NOTE -->
+    <div id="stage-voice-note" class="stage" style="background-color: var(--bg-pink-soft);">
         <div class="aesthetic-card">
             <div class="pill-badge">🌸 A SPECIAL VOICE MESSAGE 🌸</div>
-            
             <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 5px;">Listen To My Message ♡</h2>
             <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">A special voice note recorded just for you!</p>
 
             <div class="voice-card-box">
-                <div style="font-size: 45px; margin-bottom: 10px;">🎙️</div>
+                <div style="font-size: 40px; margin-bottom: 5px;">🎙️</div>
                 <div class="voice-play-button" id="voicePlayBtn" onclick="toggleVoiceNote()">▶</div>
                 
                 <div class="voice-progress-container">
@@ -1141,9 +1109,9 @@
         </div>
     </div>
 
-    <!-- STAGE: DEDICATED OUR MEMORY LANE STAGE WITH YOUR EXACT ROBLOX STORY -->
-    <div id="stage-memory-lane" class="stage" style="background-color: var(--bg-pink-soft); background-image: radial-gradient(#ffc2d1 1.5px, transparent 1.5px); background-size: 24px 24px;">
-        <div class="aesthetic-card" style="max-height: 85vh; overflow-y: auto;">
+    <!-- STAGE: MEMORY LANE -->
+    <div id="stage-memory-lane" class="stage" style="background-color: var(--bg-pink-soft);">
+        <div class="aesthetic-card">
             <div class="pill-badge">✿ OUR MEMORY LANE ✿</div>
             <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 10px;">Our Journey Together ♡</h2>
             <div class="divider-dots">✿ ------------ ✿</div>
@@ -1162,52 +1130,6 @@
         </div>
     </div>
 
-    <!-- 2032 TIME CAPSULE MODAL (cat2.gif) -->
-    <div id="modal-2032" style="position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(12px); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 750; padding: 20px; color: white;">
-        <div style="background: #FFF8F6; color: var(--text-dark); border-radius: 28px; padding: 28px 22px; width: 88vw; max-width: 380px; text-align: center; border: 2px solid var(--rose-primary);">
-            <div class="pill-badge">⏳ 2032 TIME CAPSULE ⏳</div>
-            
-            <!-- cat2.gif LOCAL WITH FALLBACK -->
-            <img src="cat2.gif" onerror="this.onerror=null; this.src='https://media.tenor.com/u3pMShu9kDAAAAAC/yapapa-cat-hapapa.gif';" style="width: 110px; height:110px; border-radius: 14px; margin-bottom: 10px; object-fit: cover;" alt="Time Cat">
-            
-            <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--cherry); margin-bottom: 5px;">Abhi aane to de 2032! 😂😜</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Type things you want to do until 2032:</p>
-            
-            <input type="text" id="capsule-2032-input" class="wish-field" style="color: var(--text-dark); border-bottom-color: var(--rose-primary); font-size: 1.5rem; margin: 10px 0;" placeholder="Type your 2032 bucket list..." autocomplete="off">
-            
-            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 10px;">
-                <button class="btn-next-step" style="margin-top:0;" onclick="submit2032Capsule()">Lock in Time Capsule ⏳</button>
-                <button class="btn-dark-stage" style="padding: 10px 20px; background: var(--text-muted); border: none;" onclick="close2032CapsuleModal()">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- FULL LETTER MODAL -->
-    <div id="letter-full-modal">
-        <div class="aesthetic-card" style="max-height: 85vh; overflow-y: auto; background: #FFF8F6; border: 2px solid var(--rose-primary);">
-            <div class="pill-badge">✿ A LETTER, JUST FOR YOU ✿</div>
-            <h2 style="font-family: 'Playfair Display', serif; color: var(--text-dark); margin-bottom: 10px;">My Madam Jii,</h2>
-            <div class="divider-dots">✿ ------------ ✿</div>
-            <p class="letter-body-text">
-                There's no card big enough for everything I'd like to say, so I made you this little digital garden.
-                <br><br>
-                Thank you for the small and unseen things — the way you check in, the jokes only we get, and the quiet patience when I'm being too much. I noticed. I still notice.
-                <br><br>
-                I hope today you feel celebrated. I hope you eat something delicious and someone tells you how loved you are! 🎀
-            </p>
-            <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 12px 30px; margin-top: 15px;" onclick="closeLetterModal()">Close Letter ♡</button>
-        </div>
-    </div>
-
-    <!-- WISH INPUT OVERLAY (cat4.gif) -->
-    <div id="wish-overlay-input">
-        <!-- cat4.gif LOCAL WITH FALLBACK -->
-        <img src="cat4.gif" onerror="this.onerror=null; this.src='https://media.tenor.com/u3pMShu9kDAAAAAC/yapapa-cat-hapapa.gif';" style="width: 130px; height: 130px; object-fit: cover; border-radius: 15px;" alt="Wish Cat">
-        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ffffff; margin-top: 12px;">First type your wish 😉</h2>
-        <input type="text" id="wish-text-input" class="wish-field" placeholder="Make a wish..." autocomplete="off">
-        <button class="btn-dark-stage" style="background: var(--rose-primary); border: none; padding: 14px 40px;" onclick="processWishSubmission()">Send Wish to Stars ⭐</button>
-    </div>
-
     <!-- STAGE: UNIVERSE ANIMATION -->
     <div id="stage-universe" class="stage">
         <div class="stars-container" id="star-field-universe"></div>
@@ -1216,33 +1138,35 @@
         <h2 class="universe-msg" id="universe-text">Your wish is traveling through the universe... ⭐</h2>
     </div>
 
-    <!-- AUDIO EFFECTS -->
-    <audio id="sound-crunch" src="https://www.myinstants.com/media/sounds/crunch.mp3"></audio>
-    <audio id="sound-magic" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
-    <audio id="sound-buzzer" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
-
     <script>
+        // --- STATE MANAGEMENT ---
         let blownCandleCount = 0;
         let isCakeCut = false;
+        let currentPhotoIndex = 0;
 
+        // AUDIO ELEMENTS
         const soundMagic = document.getElementById('sound-magic');
         const soundBuzzer = document.getElementById('sound-buzzer');
         const soundCrunch = document.getElementById('sound-crunch');
-        
-        // AUDIO ELEMENTS
         const bgMusic = document.getElementById('custom-bg-music');
         const specialSong = document.getElementById('special-song-audio');
         const voiceNoteAudio = document.getElementById('voice-note-audio');
 
-        // RESTART & LOOP BACKGROUND MUSIC AUTOMATICALLY
-        bgMusic.loop = true;
-        bgMusic.onended = function() {
-            bgMusic.currentTime = 0;
-            bgMusic.play().catch(() => {});
-        };
+        // AUDIO UTILITIES
+        function playMagic() { soundMagic.play().catch(() => {}); }
+        
+        function triggerError() {
+            soundBuzzer.play().catch(() => {});
+            const toast = document.getElementById('error-toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1600);
+        }
 
-        function startBgMusic() {
+        function startExperience() {
+            playMagic();
             bgMusic.play().catch(() => {});
+            switchStageSlow('stage-quiz', 800);
+            initPinkStars('star-field-quiz', 40);
         }
 
         // --- BACKGROUND STARDUST CANVAS ENGINE ---
@@ -1259,20 +1183,20 @@
 
         class Particle {
             constructor() {
+                this.reset();
+            }
+            reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * -0.6 - 0.2;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * -0.5 - 0.2;
                 this.opacity = Math.random() * 0.7 + 0.3;
             }
             update() {
                 this.y += this.speedY;
                 this.x += this.speedX;
-                if (this.y < 0) {
-                    this.y = canvas.height;
-                    this.x = Math.random() * canvas.width;
-                }
+                if (this.y < 0) this.reset();
             }
             draw() {
                 ctx.fillStyle = `rgba(255, 194, 209, ${this.opacity})`;
@@ -1282,7 +1206,7 @@
             }
         }
 
-        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        for (let i = 0; i < 45; i++) particles.push(new Particle());
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1291,20 +1215,198 @@
         }
         animateParticles();
 
-        // --- 3D TILT EFFECT ON CARDS ---
-        document.querySelectorAll('.aesthetic-card, .glass-card-premium').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                card.style.transform = `perspective(1000px) rotateX(${-y / 25}deg) rotateY(${x / 25}deg)`;
+        // --- DESKTOP 3D TILT EFFECT ---
+        if (window.matchMedia('(hover: hover)').matches) {
+            document.querySelectorAll('.aesthetic-card, .glass-card-premium').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    card.style.transform = `perspective(1000px) rotateX(${-y / 28}deg) rotateY(${x / 28}deg)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+                });
             });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-            });
-        });
+        }
 
-        // --- PHOTO ALBUM DATA WITH YOUR EXACT HINDI/HINGLISH CAPTIONS ---
+        // --- STAGE SWITCHER ---
+        function switchStageSlow(targetStageId, delayMs = 600) {
+            const activeStage = document.querySelector('.stage.active');
+            if (activeStage) {
+                activeStage.style.opacity = '0';
+            }
+            setTimeout(() => {
+                document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+                const target = document.getElementById(targetStageId);
+                target.classList.add('active');
+                setTimeout(() => { target.style.opacity = '1'; }, 50);
+            }, delayMs);
+        }
+
+        // --- MODAL UTILITIES ---
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function openCuteModal(title, text) {
+            document.getElementById('cute-modal-title').innerText = title;
+            document.getElementById('cute-modal-text').innerText = text;
+            openModal('cute-alert-modal');
+        }
+
+        // --- STAGE 2 & 3: QUIZ & LOADER ---
+        function runLoadingStage() {
+            switchStageSlow('stage-loading', 600);
+            let progress = 0;
+            const fill = document.getElementById('progress-bar');
+            const interval = setInterval(() => {
+                progress += 2;
+                fill.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => switchStageSlow('stage-excite', 600), 400);
+                }
+            }, 30);
+        }
+
+        function handleExciteChoice(choice) {
+            const responseText = document.getElementById('response-msg-text');
+            responseText.innerText = (choice === 'yes') 
+                ? "Okay waiting is over! 😉" 
+                : "i know u r excited don't tell lie 😁";
+            switchStageSlow('stage-response', 600);
+        }
+
+        // --- STAGE 7: CAKE & CANDLE LOGIC ---
+        function tapCandle(candleNumber) {
+            const candle = document.getElementById('candle-' + candleNumber);
+            if (candle.style.opacity === '0') return;
+
+            if (candleNumber < 3) {
+                candle.style.opacity = '0';
+                blownCandleCount++;
+                playMagic();
+            } else if (candleNumber === 3) {
+                openModal('wish-overlay-input');
+            }
+        }
+
+        async function processWishSubmission() {
+            const input = document.getElementById('wish-text-input');
+            const submitBtn = document.getElementById('submit-wish-btn');
+            const wishValue = input.value.trim();
+            if (!wishValue) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Sending Wish...";
+
+            try {
+                await fetch("https://formspree.io/f/xoeaeqjp", {
+                    method: "POST",
+                    body: JSON.stringify({ wish: wishValue }),
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+                });
+            } catch (e) {
+                console.error(e);
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Send Wish to Stars ⭐";
+            closeModal('wish-overlay-input');
+            document.getElementById('candle-3').style.opacity = '0';
+            blownCandleCount = 3;
+
+            fireConfetti();
+            triggerUniverseAnimation();
+        }
+
+        function triggerUniverseAnimation() {
+            switchStageSlow('stage-universe', 600);
+            initPinkStars('star-field-universe', 50);
+
+            const giftBox = document.getElementById('gift-box-actor');
+            const star = document.getElementById('star-actor');
+            const uniText = document.getElementById('universe-text');
+
+            giftBox.style.transform = "translate(-50%, 0)";
+            giftBox.style.opacity = "1";
+            star.style.transform = "translate(-50%, 0)";
+            uniText.style.opacity = "0";
+
+            setTimeout(() => {
+                star.style.transform = "translate(-50%, 65vh)";
+
+                setTimeout(() => {
+                    uniText.style.opacity = "1";
+
+                    setTimeout(() => {
+                        star.style.transform = "translate(-50%, -50vh)";
+                        giftBox.style.transform = "translate(-50%, -70vh)";
+                        giftBox.style.opacity = "0";
+
+                        setTimeout(() => {
+                            switchStageSlow('stage-cake', 800);
+                        }, 2500);
+                    }, 1200);
+                }, 1800);
+            }, 300);
+        }
+
+        function handleCakeEat() {
+            if (blownCandleCount < 3) {
+                openCuteModal('🕯️ BLOW THE CANDLES! 🕯️', 'Madam Ji, pehle saari candles toh bujhao! Phir cake cut hoga 😜');
+                return;
+            }
+            soundCrunch.play().catch(() => {});
+            isCakeCut = true;
+            fireConfetti();
+            const cake = document.getElementById('main-cake-element');
+            cake.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                cake.style.transform = "scale(1)";
+                cake.style.opacity = "0.35";
+                openCuteModal('🎂 HAPPY BIRTHDAY PAGLI! 🍰', 'Yummm! You cut the cake! Wishing you the sweetest and most amazing year ahead! ✨🌸');
+            }, 150);
+        }
+
+        function attemptGoToGallery() {
+            if (!isCakeCut) {
+                openCuteModal('🎂 CAKE PEHLE KAATO! 😋', 'Madam Ji, pehle saari candles bujha ke cake toh kaato! Phir aage badhenge 😉🌸');
+            } else {
+                switchStageSlow('stage-gallery', 800);
+            }
+        }
+
+        // --- MUSIC WIDGET LOGIC ---
+        function toggleSpecialSong() {
+            const widget = document.getElementById('musicWidget');
+            const btn = document.getElementById('specialSongBtn');
+            if (specialSong.paused) {
+                bgMusic.pause();
+                voiceNoteAudio.pause();
+                document.getElementById('voicePlayBtn').innerText = '▶';
+
+                specialSong.play().then(() => {
+                    btn.innerText = '⏸';
+                    widget.classList.add('playing');
+                }).catch(() => {
+                    alert("Please ensure 'song1.mp3' is placed in the folder!");
+                });
+            } else {
+                specialSong.pause();
+                btn.innerText = '▶';
+                widget.classList.remove('playing');
+                bgMusic.play().catch(() => {});
+            }
+        }
+
+        specialSong.onended = function() {
+            document.getElementById('specialSongBtn').innerText = '▶';
+            document.getElementById('musicWidget').classList.remove('playing');
+            bgMusic.play().catch(() => {});
+        };
+
+        // --- PHOTO GALLERY DATA ---
         const galleryData = [
             {
                 url: "1.jpg",
@@ -1323,7 +1425,6 @@
                 caption: "Yaar is photo me kuch to alag hai 🤔,pata nahi kyu mujhe sabse yahi achhi lagti hai isme tu kuch ajeeb hi lagti hai waise ajib nahi achha wala,pata nahi kya mestry hai 🧐"
             }
         ];
-        let currentPhotoIndex = 0;
 
         function updateGalleryDisplay() {
             document.getElementById('gallery-photo-img').src = galleryData[currentPhotoIndex].url;
@@ -1341,256 +1442,7 @@
             updateGalleryDisplay();
         }
 
-        function playMagic() { soundMagic.play().catch(() => {}); }
-
-        function fireConfetti() {
-            if (typeof confetti === 'function') {
-                confetti({
-                    particleCount: 80,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#ff85a2', '#ffffff', '#ffd700']
-                });
-            }
-        }
-
-        function initPinkStars(containerId, starCount) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star-pixel';
-                const size = (Math.random() * 3 + 1.5) + 'px';
-                star.style.width = size; star.style.height = size;
-                star.style.top = Math.random() * 100 + '%';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.setProperty('--duration', (Math.random() * 3 + 1.5) + 's');
-                container.appendChild(star);
-            }
-        }
-
-        function switchStageSlow(targetStageId, delayMs) {
-            const activeStage = document.querySelector('.stage.active');
-            if (activeStage) {
-                activeStage.style.opacity = '0';
-            }
-            setTimeout(() => {
-                document.querySelectorAll('.stage').forEach(stage => stage.classList.remove('active'));
-                const target = document.getElementById(targetStageId);
-                target.classList.add('active');
-                setTimeout(() => {
-                    target.style.opacity = '1';
-                }, 50);
-            }, delayMs || 600);
-        }
-
-        function triggerError() {
-            soundBuzzer.play().catch(() => {});
-            const toast = document.getElementById('error-toast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 1800);
-        }
-
-        function runLoadingStage() {
-            switchStageSlow('stage-loading', 800);
-            let progress = 0;
-            const fill = document.getElementById('progress-bar');
-            const interval = setInterval(() => {
-                progress += 1;
-                fill.style.width = progress + '%';
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => switchStageSlow('stage-excite', 800), 500);
-                }
-            }, 35);
-        }
-
-        function handleExciteChoice(choice) {
-            const responseText = document.getElementById('response-msg-text');
-            responseText.innerText = (choice === 'yes') ? "Okay waiting is over! 😉" : "i know u r excited don't tell lie 😁";
-            switchStageSlow('stage-response', 800);
-        }
-
-        function openLetterModal() { document.getElementById('letter-full-modal').style.display = 'flex'; }
-        function closeLetterModal() { document.getElementById('letter-full-modal').style.display = 'none'; }
-
-        function openCuteModal(title, text) {
-            document.getElementById('cute-modal-title').innerText = title;
-            document.getElementById('cute-modal-text').innerText = text;
-            document.getElementById('cute-alert-modal').style.display = 'flex';
-        }
-
-        function closeCuteModal() {
-            document.getElementById('cute-alert-modal').style.display = 'none';
-        }
-
-        // --- SMART AUDIO LOGIC FOR SPECIAL SONG (song1.mp3) ---
-        function toggleSpecialSong(btn) {
-            const widget = document.getElementById('musicWidget');
-            if (specialSong.paused) {
-                bgMusic.pause();
-                voiceNoteAudio.pause();
-                document.getElementById('voicePlayBtn').innerText = '▶';
-                document.getElementById('voicePlayBtn').classList.remove('playing');
-
-                specialSong.play().then(() => {
-                    btn.innerText = '⏸';
-                    widget.classList.add('playing');
-                }).catch(() => {
-                    alert("Please place 'song1.mp3' in the same folder!");
-                });
-            } else {
-                specialSong.pause();
-                btn.innerText = '▶';
-                widget.classList.remove('playing');
-                bgMusic.play().catch(() => {});
-            }
-        }
-
-        specialSong.onended = function() {
-            const btn = document.querySelector('#musicWidget .play-btn-circle');
-            if (btn) btn.innerText = '▶';
-            document.getElementById('musicWidget').classList.remove('playing');
-            bgMusic.play().catch(() => {});
-        };
-
-        // --- SMART AUDIO LOGIC FOR VOICE NOTE (voice_note.mp3) ---
-        function toggleVoiceNote() {
-            const playBtn = document.getElementById('voicePlayBtn');
-            const timeText = document.getElementById('voiceTimeText');
-
-            if (voiceNoteAudio.paused) {
-                bgMusic.pause();
-                specialSong.pause();
-                const specBtn = document.querySelector('#musicWidget .play-btn-circle');
-                if (specBtn) specBtn.innerText = '▶';
-                document.getElementById('musicWidget').classList.remove('playing');
-
-                voiceNoteAudio.play().then(() => {
-                    playBtn.innerText = '⏸';
-                    playBtn.classList.add('playing');
-                    timeText.innerText = 'Playing voice message... 🎙️';
-                }).catch(() => {
-                    alert("Please place your voice note file named 'voice_note.mp3' in the same folder!");
-                });
-            } else {
-                voiceNoteAudio.pause();
-                playBtn.innerText = '▶';
-                playBtn.classList.remove('playing');
-                timeText.innerText = 'Paused';
-                bgMusic.play().catch(() => {});
-            }
-        }
-
-        voiceNoteAudio.ontimeupdate = function() {
-            if (voiceNoteAudio.duration) {
-                const pct = (voiceNoteAudio.currentTime / voiceNoteAudio.duration) * 100;
-                document.getElementById('voiceProgress').style.width = pct + '%';
-            }
-        };
-
-        voiceNoteAudio.onended = function() {
-            const playBtn = document.getElementById('voicePlayBtn');
-            playBtn.innerText = '▶';
-            playBtn.classList.remove('playing');
-            document.getElementById('voiceProgress').style.width = '0%';
-            document.getElementById('voiceTimeText').innerText = 'Replay Voice Message 🎙️';
-            bgMusic.play().catch(() => {});
-        };
-
-        function tapCandle(candleNumber, event) {
-            event.stopPropagation();
-            const candle = document.getElementById('candle-' + candleNumber);
-            if (candle.style.opacity === '0') return;
-
-            if (candleNumber < 3) {
-                candle.style.opacity = '0';
-                blownCandleCount++;
-            } 
-            else if (candleNumber === 3) {
-                document.getElementById('wish-overlay-input').style.display = 'flex';
-            }
-        }
-
-        function processWishSubmission() {
-            const wishValue = document.getElementById('wish-text-input').value.trim();
-            if (!wishValue) return;
-
-            // Formspree Dispatch with JSON Headers
-            fetch("https://formspree.io/f/xoeaeqjp", {
-                method: "POST",
-                body: JSON.stringify({ wish: wishValue }),
-                headers: { 
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            }).catch(() => {});
-
-            document.getElementById('wish-overlay-input').style.display = 'none';
-            document.getElementById('candle-3').style.opacity = '0';
-            blownCandleCount = 3;
-
-            fireConfetti();
-            triggerUniverseAnimation();
-        }
-
-        // UNIVERSE ANIMATION
-        function triggerUniverseAnimation() {
-            switchStageSlow('stage-universe', 800);
-            initPinkStars('star-field-universe', 220);
-
-            const giftBox = document.getElementById('gift-box-actor');
-            const star = document.getElementById('star-actor');
-            const uniText = document.getElementById('universe-text');
-
-            giftBox.style.transform = "translate(-50%, 0)";
-            giftBox.style.opacity = "1";
-            star.style.transform = "translate(-50%, 0)";
-            uniText.style.opacity = "0";
-
-            setTimeout(() => {
-                star.style.transform = "translate(-50%, 550px)";
-
-                setTimeout(() => {
-                    uniText.style.opacity = "1";
-
-                    setTimeout(() => {
-                        star.style.transform = "translate(-50%, -400px)";
-                        giftBox.style.transform = "translate(-50%, -650px)";
-                        giftBox.style.opacity = "0";
-
-                        setTimeout(() => {
-                            switchStageSlow('stage-cake', 1000);
-                        }, 2800);
-                    }, 1200);
-                }, 2000);
-            }, 300);
-        }
-
-        function handleCakeEat() {
-            if (blownCandleCount < 3) return;
-            soundCrunch.play().catch(() => {});
-            isCakeCut = true;
-            fireConfetti();
-            const cake = document.getElementById('main-cake-element');
-            cake.style.transform = "scale(0.92)";
-            setTimeout(() => {
-                cake.style.transform = "scale(1)";
-                cake.style.opacity = "0.4";
-                openCuteModal('🎂 HAPPY BIRTHDAY PAGLI! 🍰', 'Yummm! You cut the cake! Wishing you the sweetest and most amazing year ahead! ✨🌸');
-            }, 150);
-        }
-
-        // STRICT CAKE GUARD NAVIGATION
-        function attemptGoToGallery() {
-            if (!isCakeCut) {
-                openCuteModal('🎂 CAKE PEHLE KAATO! 😋', 'Madam Ji, pehle saari candles bujha ke cake toh kaato! Phir aage badhenge 😉🌸');
-            } else {
-                switchStageSlow('stage-gallery', 1000);
-            }
-        }
-
-        // OPTIONS HUB FUNCTIONS
+        // --- SURPRISE HUB LOGIC ---
         function openThreeGiftsSection() {
             document.getElementById('gifts-display-area').style.display = 'block';
             playMagic();
@@ -1599,7 +1451,7 @@
         function openGiftBox(boxNumber) {
             playMagic();
             if (boxNumber === 1) {
-                document.getElementById('gift-meme-modal').style.display = 'flex';
+                openModal('gift-meme-modal');
             } else if (boxNumber === 2) {
                 openCuteModal('✿ SECRET GIFT 2 ✿', 'Suno Madam Ji, waise to tu poori pagal hai, par mere liye thodi special aur pyaari bhi hai! Stay happy always! 😜🌸');
             } else if (boxNumber === 3) {
@@ -1607,40 +1459,100 @@
             }
         }
 
-        function closeGiftMemeModal() {
-            document.getElementById('gift-meme-modal').style.display = 'none';
-        }
+        async function submit2032Capsule() {
+            const input = document.getElementById('capsule-2032-input');
+            const submitBtn = document.getElementById('submit-capsule-btn');
+            const listVal = input.value.trim();
+            if (!listVal) return;
 
-        // 2032 TIME CAPSULE FUNCTIONS
-        function open2032CapsuleModal() {
-            document.getElementById('modal-2032').style.display = 'flex';
-            playMagic();
-        }
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Locking...";
 
-        function close2032CapsuleModal() {
-            document.getElementById('modal-2032').style.display = 'none';
-        }
+            try {
+                await fetch("https://formspree.io/f/xzepvrpl", {
+                    method: "POST",
+                    body: JSON.stringify({ bucket_list_2032: listVal }),
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+                });
+            } catch (e) {
+                console.error(e);
+            }
 
-        function submit2032Capsule() {
-            const listVal = document.getElementById('capsule-2032-input').value.trim();
-            if(!listVal) return;
-
-            // Formspree Dispatch for 2032 Bucket List
-            fetch("https://formspree.io/f/xzepvrpl", {
-                method: "POST",
-                body: JSON.stringify({ bucket_list_2032: listVal }),
-                headers: { 
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            }).catch(() => {});
-
-            close2032CapsuleModal();
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Lock in ⏳";
+            closeModal('modal-2032');
             fireConfetti();
             openCuteModal('⏳ 2032 TIME CAPSULE LOCKED! 🔒', 'Your 2032 bucket list has been locked in time! See you in 2032 Pagli! 😜✨');
         }
 
-        // Initialize First Photo Display
+        // --- VOICE NOTE PLAYER LOGIC ---
+        function toggleVoiceNote() {
+            const playBtn = document.getElementById('voicePlayBtn');
+            const timeText = document.getElementById('voiceTimeText');
+
+            if (voiceNoteAudio.paused) {
+                bgMusic.pause();
+                specialSong.pause();
+                document.getElementById('specialSongBtn').innerText = '▶';
+                document.getElementById('musicWidget').classList.remove('playing');
+
+                voiceNoteAudio.play().then(() => {
+                    playBtn.innerText = '⏸';
+                    timeText.innerText = 'Playing voice message... 🎙️';
+                }).catch(() => {
+                    alert("Please ensure 'voice_note.mp3' is placed in the folder!");
+                });
+            } else {
+                voiceNoteAudio.pause();
+                playBtn.innerText = '▶';
+                timeText.innerText = 'Paused';
+                bgMusic.play().catch(() => {});
+            }
+        }
+
+        voiceNoteAudio.ontimeupdate = function() {
+            if (isFinite(voiceNoteAudio.duration) && voiceNoteAudio.duration > 0) {
+                const pct = (voiceNoteAudio.currentTime / voiceNoteAudio.duration) * 100;
+                document.getElementById('voiceProgress').style.width = pct + '%';
+            }
+        };
+
+        voiceNoteAudio.onended = function() {
+            document.getElementById('voicePlayBtn').innerText = '▶';
+            document.getElementById('voiceProgress').style.width = '0%';
+            document.getElementById('voiceTimeText').innerText = 'Replay Voice Message 🎙️';
+            bgMusic.play().catch(() => {});
+        };
+
+        // --- UTILS: CONFETTI & LIGHTWEIGHT STARS ---
+        function fireConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { y: 0.6 },
+                    colors: ['#ff85a2', '#ffffff', '#ffd700']
+                });
+            }
+        }
+
+        function initPinkStars(containerId, starCount = 35) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-pixel';
+                const size = (Math.random() * 2.5 + 1.5) + 'px';
+                star.style.width = size;
+                star.style.height = size;
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 1.5) + 's');
+                container.appendChild(star);
+            }
+        }
+
+        // Initialize First Photo
         updateGalleryDisplay();
     </script>
 </body>
